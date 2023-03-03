@@ -8,28 +8,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 
 @Controller
-public class SiteEGgController {
-    @GetMapping
+public class SiteController {
+    @GetMapping("/")
     public String home() {
         return "index.html";
     }
 
-    @GetMapping
+    @GetMapping("/cart")
     public String cart() {
         return "cart.html";
     }
 
-    @GetMapping
+    @GetMapping("/login")
     public String login() {
         return "login.html";
     }
 
-    @GetMapping
+    @GetMapping("/register")
     public String register() {
         return "register.html";
     }
 
-    @GetMapping
+    @GetMapping("/payment")
     public String payment() {
         return "payment.html";
     }
