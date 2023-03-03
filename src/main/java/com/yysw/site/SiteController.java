@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 
 @Controller
-public class SiteEGgController {
+public class SiteController {
     @GetMapping
     public String home() {
         return "index.html";
