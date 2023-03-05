@@ -47,11 +47,11 @@
 
 <div>
   <h1>AI MODEL MARKETPLACE</h1>
-  <form th:action="@{/submit-login}" method="get">
+  <form th:action="@{/submit-login}" method="post">
     <label for="username">Username</label>
-    <input type="text" id="username" th:name="username"/>
+    <input type="text" id="username" th:name="username" required/>
     <label for="passwd">Password</label>
-    <input type="password" id="passwd" th:name="passwd"/>
+    <input type="password" id="passwd" th:name="passwd" required/>
     <input type="submit"/>
   </form>
 </div>

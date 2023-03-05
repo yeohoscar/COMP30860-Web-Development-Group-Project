@@ -44,7 +44,8 @@ public class SiteController {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String login(Model model) {
+        model.addAttribute("user", new User());
         return "login.html";
     }
 
@@ -73,13 +74,13 @@ public class SiteController {
         }
     }
 
-    @GetMapping("/submit-login")
-    public String loginAcc(
-            @RequestParam(value = "username") String username,
-            @RequestParam(value = "passwd") String passwd
-    ) {
-        User user = userRepository.findByUsernameAndPasswd(username, passwd);
-        if (user != null && Objects.equals(user.getUsername(), username) && Objects.equals(user.getPasswd(), passwd)) {
+    @PostMapping("/submit-login")
+    public String loginAcc(@ModelAttribute("user") User user) {
+        User repoUser = userRepository.findByUsernameAndPasswd(user.getUsername(), user.getPasswd());
+        if (repoUser != null &&
+                Objects.equals(repoUser.getUsername(), user.getUsername()) &&
+                Objects.equals(repoUser.getPasswd(), user.getPasswd())
+        ) {
                 /*TODO: smth about differentiating owner and customer acc
                         and persisting login
                  */
