@@ -11,25 +11,25 @@ import java.util.Date;
 
 public class ContactInformation implements Serializable {
     @NotBlank
-    private String name;
+    private String contactName;
     @NotNull
     //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
-    private String date;
+    private String contactDate;
 
-    public String getName() {
-        return name;
+    public String getContactName() {
+        return contactName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
     }
 
-    public String getDate() {
-        return date;
+    public String getContactDate() {
+        return contactDate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setContactDate(String contactDate) {
+        this.contactDate = contactDate;
     }
 }
