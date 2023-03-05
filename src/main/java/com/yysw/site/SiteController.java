@@ -1,5 +1,6 @@
 package com.yysw.site;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Controller
 public class SiteController {
+    @Autowired private LoggedInUser loggedInUser;
 
     @GetMapping("/")
     public String home() {
@@ -60,5 +62,14 @@ public class SiteController {
         } else {
             return "payment_success.html";
         }
+    }
+
+    @PostMapping("/login")
+    public String loginAcc() {
+        /* Im half asleep so idk what im doing but
+           idea here is that you create an object for @RequestBody annotated method parameter that holds
+           the username and password. Then you authenticate it against the database. Redirect back to login
+           if wrong else, redirect to god knows where.
+         */
     }
 }
