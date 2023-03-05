@@ -1,4 +1,4 @@
-package com.yysw.site;
+package com.yysw.general;
 
 import java.io.Serializable;
 

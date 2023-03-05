@@ -1,12 +1,8 @@
-package com.yysw.site;
-
-import org.springframework.format.annotation.DateTimeFormat;
+package com.yysw.payment;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Date;
 
 public class PaymentInformation implements Serializable {
     @NotBlank

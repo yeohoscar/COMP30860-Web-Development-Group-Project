@@ -1,5 +1,6 @@
-package com.yysw.site;
+package com.yysw.payment;
 
+import com.yysw.general.AiModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
