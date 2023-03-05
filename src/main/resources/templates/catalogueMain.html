@@ -46,11 +46,13 @@
         </p>
     </div>
 
+
     <div class="container-fluid">
-        <div class="row">
+        <!-- Thymeleaf iterator that takes a model containing all the models and formats them into rows of three -->
+        <div class="row" th:each="model, iter : ${catalogue}" th:if="${iter.index % 3 == 0 && iter.index < catalogue.size()}">
             <div class="col-md-4">
                 <div class="content bg-green">
-                    <p>Anonymity</p>
+                    <p th:text="${model.name}"></p>
                     <!--can use <a href> too-->
                     <button type = "button" onclick="window.location.href='/login'">
                         <p>1st AI Model</p>
@@ -58,25 +60,28 @@
                     </button>
                 </div>
             </div>
-            <div class="col-md-4 ">
-                <div class="content bg-pink">
-                    <p>Lack of Consequences</p>
+            <div class="col-md-4" th:if="${iter.index + 1 < catalogue.size()}" th:with="middleModel=${catalogue.get(iter.index+1)}">
+                <div class="content bg-green">
+                    <p th:text="${middleModel.name}"></p>
+                    <!--can use <a href> too-->
                     <button type = "button" onclick="window.location.href='/login'">
-                        <p>2nd AI Model</p>
+                        <p>1st AI Model</p>
                         <img src="https://www.tutorialspoint.com/latest/inter-process-communication.png " />
                     </button>
-                </div>
+                </div>1
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4" th:if="${iter.index + 2 < catalogue.size()}" th:with="rightModel=${catalogue.get(iter.index+2)}">
                 <div class="content bg-green">
-                    <p>Jealousy and Envy</p>
+                    <p th:text="${rightModel.name}"></p>
+                    <!--can use <a href> too-->
                     <button type = "button" onclick="window.location.href='/login'">
-                        <p>3rd AI Model</p>
+                        <p>1st AI Model</p>
                         <img src="https://www.tutorialspoint.com/latest/inter-process-communication.png " />
                     </button>
                 </div>
             </div>
         </div>
+
         <div class="row" style="padding: 16px 0px;">
             <div class="col-md-4">
                 <div class="content bg-pink">

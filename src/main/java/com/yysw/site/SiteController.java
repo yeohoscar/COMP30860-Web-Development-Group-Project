@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class SiteController {
@@ -22,7 +24,14 @@ public class SiteController {
     }
 
     @GetMapping("/catalogue")
-    public String catalogue() {
+    public String catalogue(Model model) {
+        List<AiModel> catalogue = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            AiModel tmp = new AiModel();
+            tmp.setName("Egg " + i);
+            catalogue.add(tmp);
+        }
+        model.addAttribute("catalogue", catalogue);
         return "catalogueMain.html";
     }
 
@@ -49,7 +58,7 @@ public class SiteController {
         if (bindingResult.hasErrors()) {
             return "payment.html";
         } else {
-            return "catalogueMain.html";
+            return "payment_success.html";
         }
     }
 }

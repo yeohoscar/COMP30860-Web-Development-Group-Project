@@ -21,7 +21,6 @@ public class PaymentInformation implements Serializable {
 
     private Integer cvv;
 
-
     public String getName() {
         return name;
     }
@@ -52,5 +51,15 @@ public class PaymentInformation implements Serializable {
 
     public void setCvv(Integer cvv) {
         this.cvv = cvv;
+    }
+
+    @Override
+    public String toString() {
+        return "PaymentInformation{" +
+                "name='" + name + '\'' +
+                ", cardNum='" + cardNum + '\'' +
+                ", expiry=" + expiry +
+                ", cvv=" + cvv +
+                '}';
     }
 }
