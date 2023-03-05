@@ -26,9 +26,23 @@ public class SiteController {
         return "index.html";
     }
 
-    @GetMapping("/cart")
-    public String cart() {
-        return "cart.html";
+    @GetMapping("/shoppingCart")
+    public String shoppingCart(Model model) {
+        //TODO: just random value, no data storing, missing price etc.. need change
+        List<AiModel> modelsInCart = new ArrayList<>();
+        model.addAttribute("size",modelsInCart.size());
+        model.addAttribute("products",modelsInCart);
+        double sub=0.0;
+        double processfee=200;
+//        for (AiModel a:modelsInCart) {
+//            sub += a.price();
+//        }
+        model.addAttribute("subtotal", sub);
+        model.addAttribute("fee", processfee);
+        model.addAttribute("discount", sub*0.2);
+        model.addAttribute("tot",sub+processfee-(sub*0.2));
+
+        return "shoppingCart.html";
     }
 
     @GetMapping("/catalogue")
