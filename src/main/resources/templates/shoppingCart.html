@@ -23,7 +23,7 @@
                     <h1>Cart</h1>
                 </div>
                 <div class="col-sm-4">
-                    <h1 th:text="${size}+'items'">Empty</h1>
+                    <h1 th:text="${size}+' items'">Empty</h1>
                 </div>
             </div>
 
@@ -40,12 +40,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
+                <tr th:each="ele:${products}">
                     <td>Picture</td>
-                    <td class="wrapTextInTableCell">Name+Descritpion</td>
-                    <td class="wrapTextInTableCell">Q</td>
-                    <td class="wrapTextInTableCell">£</td>
-                    <td class="wrapTextInTableCell">£</td>
+                    <td class="wrapTextInTableCell" th:text="${ele.name}">Name+Descritpion</td>
+                    <td class="wrapTextInTableCell">0</td>
+                    <td class="wrapTextInTableCell">£0</td>
+                    <td class="wrapTextInTableCell">£0</td>
                 </tr>
                 </tbody>
             </table>
@@ -58,22 +58,22 @@
             <hr class="solid">
             <div class="row">
                 <div class="col-sm-6">Subtotal</div>
-                <div class="col-sm-6 text-end">£0</div>
+                <div class="col-sm-6 text-end" th:text="'£'+${subtotal}">£0</div>
             </div>
             <div class="row">
                 <div class="col-sm-6">Processing fee</div>
-                <div class="col-sm-6 text-end">£0</div>
+                <div class="col-sm-6 text-end" th:text="'£'+${fee}">£0</div>
             </div>
             <div class="row">
                 <div class="col-sm-6">Discount</div>
-                <div class="col-sm-6 text-end">-£0</div>
+                <div class="col-sm-6 text-end" th:text="'£'+${discount}">-£0</div>
             </div>
 
             <br><br><br>
 
             <div class="row">
                 <div class="col-sm-6">Total</div>
-                <div class="col-sm-6 text-end">£0</div>
+                <div class="col-sm-6 text-end" th:text="'£'+${tot}">£0</div>
             </div>
 
             <form method="post">
