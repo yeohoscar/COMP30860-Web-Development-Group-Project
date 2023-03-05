@@ -1,17 +1,25 @@
 package com.yysw.site;
 
+import com.yysw.user.User;
+import com.yysw.user.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class SiteController {
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/")
     public String home() {
@@ -36,7 +44,8 @@ public class SiteController {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String login(Model model) {
+        model.addAttribute("user", new User());
         return "login.html";
     }
 
@@ -52,7 +61,10 @@ public class SiteController {
     }
 
     @PostMapping("/payment")
-    public String submitPayment(@Valid @ModelAttribute("paymentInformation") PaymentInformation paymentInformation, BindingResult bindingResult) {
+    public String submitPayment(
+            @Valid @ModelAttribute("paymentInformation") PaymentInformation paymentInformation,
+            BindingResult bindingResult
+    ) {
         System.out.println(paymentInformation.getExpiry());
         System.out.println(paymentInformation.getCvv());
         if (bindingResult.hasErrors()) {
@@ -60,5 +72,20 @@ public class SiteController {
         } else {
             return "payment_success.html";
         }
+    }
+
+    @PostMapping("/submit-login")
+    public String loginAcc(@ModelAttribute("user") User user) {
+        User repoUser = userRepository.findByUsernameAndPasswd(user.getUsername(), user.getPasswd());
+        if (repoUser != null &&
+                Objects.equals(repoUser.getUsername(), user.getUsername()) &&
+                Objects.equals(repoUser.getPasswd(), user.getPasswd())
+        ) {
+                /*TODO: smth about differentiating owner and customer acc
+                        and persisting login
+                 */
+            return "index.html";
+        }
+        return "login.html";
     }
 }
