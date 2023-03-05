@@ -1,6 +1,9 @@
 package com.yysw.site;
 
+import com.yysw.user.customer.Customer;
+import com.yysw.user.customer.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,11 +16,23 @@ import java.util.List;
 
 @Controller
 public class SiteController {
-    @Autowired private LoggedInUser loggedInUser;
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @GetMapping("/")
     public String home() {
+        customerRepository.save(customer("Egg", "Egg"));
+        if (customerRepository.exists(Example.of(customer("Egg", "Egg")))) {
+            return "payment.html";
+        }
         return "index.html";
+    }
+
+    private Customer customer(String username, String passwd) {
+        Customer customer = new Customer();
+        customer.setUsername(username);
+        customer.setPasswd(passwd);
+        return customer;
     }
 
     @GetMapping("/cart")
@@ -71,5 +86,6 @@ public class SiteController {
            the username and password. Then you authenticate it against the database. Redirect back to login
            if wrong else, redirect to god knows where.
          */
+        return "";
     }
 }
