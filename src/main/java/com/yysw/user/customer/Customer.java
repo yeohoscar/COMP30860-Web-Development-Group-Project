@@ -10,8 +10,16 @@ import com.yysw.user.User;
 import javax.persistence.*;
 
 @Entity
-@DiscriminatorValue("2")
+@DiscriminatorValue("C")
 public class Customer extends User implements Serializable {
     @OneToMany
     private List<Order> order = new ArrayList<Order>();
+
+    public List<Order> getOrder() {
+        return order;
+    }
+
+    public void setOrder(List<Order> order) {
+        this.order = order;
+    }
 }
