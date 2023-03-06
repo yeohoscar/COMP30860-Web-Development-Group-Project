@@ -13,12 +13,13 @@ public class OrderHistoryController {
     //assume customers' orders are stored in the HashMap below
     HashMap<Integer, Order> myOrders = new HashMap<>();
 
-    @GetMapping("/orderHistory")
-    public String orderHistory(Model model)
-    {
-        model.addAttribute("orders", myOrders.values());
-        return "orderHistory.html";
-    }
+   //DO NOT DELETE THIS METHOD!!!
+//    @GetMapping("/orderHistory")
+//    public String orderHistory(Model model)
+//    {
+//        model.addAttribute("orders", myOrders.values());
+//        return "orderHistory.html";
+//    }
 
     //this one is the one with specific order ID, DO NOT DELETE!!!
 //    @GetMapping("/viewOrder/{id}")
@@ -27,6 +28,21 @@ public class OrderHistoryController {
 //        model.addAttribute("view", myOrders.get(id));
 //        return "viewOrder.html";
 //    }
+
+
+
+    //just for testing viewOrder, deletable
+    @GetMapping("/orderHistory")
+    public String orderHistory()
+    {
+        return "orderHistory.html";
+    }
+
+    @GetMapping("/viewOrder")
+    public String viewOrder()
+    {
+        return "viewOrder.html";
+    }
 
 
 }
