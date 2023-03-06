@@ -24,18 +24,6 @@ public class SiteController {
         return "cart.html";
     }
 
-    @GetMapping("/catalogue")
-    public String catalogue(Model model) {
-        List<AiModel> catalogue = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            AiModel tmp = new AiModel();
-            tmp.setName("Egg " + i);
-            catalogue.add(tmp);
-        }
-        model.addAttribute("catalogue", catalogue);
-        return "catalogueMain.html";
-    }
-
     @GetMapping("/login")
     public String login() {
         return "login.html";

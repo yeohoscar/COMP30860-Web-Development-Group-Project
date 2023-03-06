@@ -28,12 +28,12 @@ public class ContactController {
         if (bindingResult.hasErrors()) {
             return "contactUs.html";
         } else {
-            return "catalogueMain.html";
+            return "marketplace.html";
         }
     }
 
     @GetMapping("/catalogueD")
     public String catalogueM() {
-        return "catalogueDetail.html";
+        return "modelDetail.html";
     }
 }
