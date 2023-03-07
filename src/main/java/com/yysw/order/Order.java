@@ -1,12 +1,10 @@
 package com.yysw.order;
 
-import com.yysw.site.AiModel;
+import com.yysw.user.customer.Customer;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Entity
 public class Order implements Serializable {
@@ -14,13 +12,17 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long order_id;
 
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private Customer customer;
+
     @ElementCollection
-    @MapKeyColumn(name="model_id")
-    @Column(name="price_at_order")
-    @CollectionTable(name="order_history_model_price", joinColumns = @JoinColumn(name="order_id"))
-    private Map<Integer, Double> orderedModels = new HashMap<>();
+    private List<OrderedModel> orderedModels = new ArrayList<OrderedModel>();
 
     private State state;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date orderDate;
 
     public Long getOrder_id() {
         return order_id;
@@ -30,19 +32,35 @@ public class Order implements Serializable {
         this.order_id = order_id;
     }
 
-    public Map<Integer, Double> getOrderedModels() {
-        return orderedModels;
-    }
-
-    public void setOrderedModels(Map<Integer, Double> orderedModels) {
-        this.orderedModels = orderedModels;
-    }
-
     public State getState() {
         return state;
     }
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public List<OrderedModel> getOrderedModels() {
+        return orderedModels;
+    }
+
+    public void setOrderedModels(List<OrderedModel> orderedModels) {
+        this.orderedModels = orderedModels;
+    }
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
     }
 }
