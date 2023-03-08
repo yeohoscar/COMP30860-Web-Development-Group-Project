@@ -39,14 +39,14 @@
                     <div class="col-lg-10"></div>
                     <div class="col-lg-2 ">
 <!--                        this one is the one with specific order ID, DO NOT DELETE!!!-->
-<!--                        <form method="get" th:action="@{/viewOrder/{id}(id=${order.id})}">-->
-<!--                            <input type="submit"  value="details >>>">-->
-<!--                        </form>-->
-
-<!--                        this one has no ID, just for testing, deletable-->
-                        <form method="get" action="/viewOrder">
+                        <form method="get" th:action="@{/viewOrder/{id}(id=${order.id})}">
                             <input class="buttonStyle" type="submit"  value="details >>>">
                         </form>
+
+<!--                        this one has no ID, just for testing, deletable-->
+<!--                        <form method="get" action="/viewOrder">-->
+<!--                            <input class="buttonStyle" type="submit"  value="details >>>">-->
+<!--                        </form>-->
                     </div>
                 </div>
         </div>
