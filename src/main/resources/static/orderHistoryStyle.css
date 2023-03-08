@@ -1,3 +1,11 @@
 .orderBack{
     background-color: grey;
 }
+.buttonStyle{
+    background-color: grey;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
