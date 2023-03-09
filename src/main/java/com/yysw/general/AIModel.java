@@ -2,7 +2,7 @@ package com.yysw.general;
 
 import java.io.Serializable;
 
-public class AiModel implements Serializable {
+public class AIModel implements Serializable {
     private int id;
 
     private String name;

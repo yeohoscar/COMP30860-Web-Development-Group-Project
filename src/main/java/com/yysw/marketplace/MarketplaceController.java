@@ -1,7 +1,6 @@
 package com.yysw.marketplace;
 
-import com.yysw.general.AiModel;
-import com.yysw.payment.PaymentInformation;
+import com.yysw.general.AIModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,18 +10,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 @Controller
 public class MarketplaceController {
-    private HashMap<Integer, AiModel> catalogue = new HashMap<>();
+    private HashMap<Integer, AIModel> catalogue = new HashMap<>();
 
     @GetMapping("/marketplace")
     public String marketplace(Model model) {
         for (int i = 0; i < 7; i++) {
-            AiModel tmp = new AiModel();
+            AIModel tmp = new AIModel();
             tmp.setId(i);
             tmp.setName("Egg" + i);
             tmp.setPhotoURL("/image/RemoveBG.jpg");

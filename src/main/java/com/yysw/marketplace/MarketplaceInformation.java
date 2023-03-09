@@ -1,19 +1,19 @@
 package com.yysw.marketplace;
 
-import com.yysw.general.AiModel;
+import com.yysw.general.AIModel;
 
 import java.io.Serializable;
 
 public class MarketplaceInformation implements Serializable {
-    private AiModel item;
+    private AIModel item;
     private int quantity;
     private double price;
 
-    public AiModel getItem() {
+    public AIModel getItem() {
         return item;
     }
 
-    public void setItem(AiModel item) {
+    public void setItem(AIModel item) {
         this.item = item;
     }
 
