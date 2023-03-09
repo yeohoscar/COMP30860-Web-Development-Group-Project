@@ -16,11 +16,11 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     User findByUsernameAndPasswd(String username, String passwd);
 
     @Query("from Customer")
-    List<AIModel> findCartById(Integer id);
+    List<AIModel> findCartById(Long id);
 
     @Modifying
     @Query("update Customer c set c.cart= :newCart where c.user_id = :id")
-    int updateCart(@Param("newCart") List<AIModel> newCart, @Param("id") Integer customer);
+    int updateCart(@Param("newCart") List<AIModel> newCart, @Param("id") Long customerId);
 
 
 }
