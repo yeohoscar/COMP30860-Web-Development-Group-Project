@@ -22,6 +22,8 @@ public class AiModel implements Serializable {
 
     private String description;
 
+    private String photoURL;
+
     public String getName() {
         return name;
     }
@@ -69,4 +71,8 @@ public class AiModel implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getPhotoURL() { return photoURL; }
+
+    public void setPhotoURL(String photoURL) { this.photoURL = photoURL; }
 }

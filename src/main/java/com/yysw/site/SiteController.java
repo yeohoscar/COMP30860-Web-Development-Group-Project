@@ -51,6 +51,8 @@ public class SiteController {
         for (int i = 0; i < 7; i++) {
             AiModel tmp = new AiModel();
             tmp.setName("Egg " + i);
+            tmp.setTrained_price(10.7);
+            tmp.setPhotoURL("image/RemoveBG.jpg");
             catalogue.add(tmp);
         }
         model.addAttribute("catalogue", catalogue);
