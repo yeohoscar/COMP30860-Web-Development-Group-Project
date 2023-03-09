@@ -56,11 +56,18 @@
             <div class="col-md-4">
                 <div class="content bg-green">
                     <!--can use <a href> too-->
+<<<<<<< HEAD:src/main/resources/templates/marketplace.html
                     <a th:href="@{/marketplace/{id}/{name}(id=${model.key}, name=${model.value.name})}">
                         <img th:src="${model.value.photoURL}" alt="image"/>
                         <span th:text="${model.value.name}"></span>
                         <span th:text="${model.key}"></span>
                     </a>
+=======
+                    <button type = "button" onclick="window.location.href='/login'">
+                        <p>1st AI Model</p>
+                        <img src="${model.photoURL}" />
+                    </button>
+>>>>>>> order:src/main/resources/templates/catalogueMain.html
                 </div>
             </div>
             <div class="col-md-4" th:if="${iter.index + 1 < catalogue.size()}" th:with="middleModel=${catalogue.get(iter.index+1)}">

@@ -11,7 +11,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.'[[['']0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script defer src="scripts.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".date").datepicker({dateFormat: "dd.mm.yyyy"});
+        });
+    </script>
 </head>
 <body data-spy="scroll" data-target="#navbar0" data-offser="0">
     <nav class="navbar sticky-top navbar-expand-md bg-body-tertiary" id="navbar0">
@@ -20,8 +24,8 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <a href="/">YYWS</a>
-            <ul class="navbar-nav mx-auto mb-md-0">
+            <span>YYWS</span>
+            <ul class="navbar-nav mx-auto mb-md-0" onclick="changeActive(event)">
                 <li class="nav-item">
                     <a class="nav-link" id="intro" href="#Intro">Solutions</a>
                 </li>
@@ -40,39 +44,10 @@
         </div>
     </nav>
 
-    <h2>Have questions?</h2>
+    <button type="button" onclick="window.location.href='/'">Go Back</button>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="content bg-green">
-                    <p>
-                        Email: contact@yyws.ai<br>
-                        Phone: 0818 265 265
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-6 ">
-                <div class="content bg-pink">
-                    <h4>Schedule A Call with Our Team</h4>
-                    <ul>
-                        <li>15 mins call</li>
-                        <li>Meeting details provided upon confirmation</li>
-                    </ul>
-                    <form action="#" th:action="@{/contactUs}" th:object="${contactInformation}" method="POST">
-                        <div class="row">
-                            <input type="text" th:field="*{contactName}" placeholder="Name" required/>
-                            <span th:if="${#fields.hasErrors('contactName')}" th:errors="*{contactName}">Valid Name Required</span>
-                        </div>
-                        <div class="row">
-                            <input type="datetime-local" th:field="*{contactDate}" id="contactDate" required/>
-                            <span th:if="${#fields.hasErrors('contactDate')}" th:errors="*{contactDate}">Valid Date Required</span>
-                        </div>
-                        <input type="submit" value="Submit">
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h2>You have successfully booked a meeting with us!</h2>
+    <span>The details of the meeting will be sent to your email soon.</span>
+
 </body>
 </html>

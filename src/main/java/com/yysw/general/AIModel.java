@@ -3,7 +3,7 @@ package com.yysw.general;
 import java.io.Serializable;
 
 public class AIModel implements Serializable {
-    private int id;
+    private Long id;
 
     private String name;
 
@@ -15,11 +15,11 @@ public class AIModel implements Serializable {
 
     private String photoURL;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

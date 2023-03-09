@@ -20,7 +20,7 @@ public class MarketplaceController {
     public String marketplace(Model model) {
         for (int i = 0; i < 7; i++) {
             AIModel tmp = new AIModel();
-            tmp.setId(i);
+            tmp.setId((long) i);
             tmp.setName("Egg" + i);
             tmp.setPhotoURL("/image/RemoveBG.jpg");
             tmp.setDescription("twinkle twinkle little star, how i wonder what you are, up above the world so high, like a diamond in the sky. Twinkle twinkle little star, how i wonder what you are.");

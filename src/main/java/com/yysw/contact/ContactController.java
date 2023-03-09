@@ -22,18 +22,13 @@ public class ContactController {
 
     @PostMapping("/contactUs")
     public String submitContact(@Valid @ModelAttribute("contactInformation") ContactInformation contactInformation, BindingResult bindingResult) {
-        System.out.println(contactInformation.getName());
-        System.out.println(contactInformation.getDate());
+        System.out.println(contactInformation.getContactName());
+        System.out.println(contactInformation.getContactDate());
         System.out.println(bindingResult.toString());
         if (bindingResult.hasErrors()) {
             return "contactUs.html";
         } else {
-            return "marketplace.html";
+            return "contactSuccess.html";
         }
-    }
-
-    @GetMapping("/catalogueD")
-    public String catalogueM() {
-        return "modelDetail.html";
     }
 }

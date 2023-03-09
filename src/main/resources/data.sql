@@ -1,0 +1,1 @@
+INSERT INTO User (id, username, passwd, USER_TYPE) VALUES (1, 'Egg', 'Egg', 2);
