@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @DiscriminatorValue("Customer")
 public class Customer extends User implements Serializable {
-    @OneToMany
+    @OneToMany(mappedBy = "customer")
     private List<Order> orders = new ArrayList<Order>();
 
     public List<Order> getOrder() {
