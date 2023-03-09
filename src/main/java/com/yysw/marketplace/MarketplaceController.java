@@ -25,7 +25,8 @@ public class MarketplaceController {
             AiModel tmp = new AiModel();
             tmp.setId(i);
             tmp.setName("Egg" + i);
-            tmp.setPhotoURL("image/RemoveBG.jpg");
+            tmp.setPhotoURL("/image/RemoveBG.jpg");
+            tmp.setDescription("twinkle twinkle little star, how i wonder what you are, up above the world so high, like a diamond in the sky. Twinkle twinkle little star, how i wonder what you are.");
             catalogue.put(i, tmp);
         }
 
@@ -57,7 +58,7 @@ public class MarketplaceController {
         }
     }
 
-    @PostMapping("/marketplace")
+    /*@PostMapping("/marketplace")
     public String add(@Valid @ModelAttribute("marketplaceInformation") MarketplaceInformation marketplaceInformation, BindingResult bindingResult) {
 
         System.out.println(marketplaceInformation.getItem());
@@ -67,5 +68,5 @@ public class MarketplaceController {
         } else {
             return "modelDetail.html";
         }
-    }
+    }*/
 }

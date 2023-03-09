@@ -49,13 +49,13 @@
         <div class="row">
             <div class="col-md-5">
                 <div class="content bg-green">
-                    <img src="https://www.tutorialspoint.com/assets/questions/media/426142-1668760765.png" alt="pic">
+                    <img th:src="${marketplaceInformation.item.photoURL}" alt="pic">
                 </div>
             </div>
             <div class="col-md">
                 <div class="content bg-pink">
-                    <h4>Lack of Consequences</h4>
-                    <p class="text0">Another reason why people may engage in cyberbullying is because they feel there will be no consequences for their actions. They may feel that because they are hiding behind a screen, they will not be held accountable for their behavior. This lack of accountability can lead individuals to engage in more aggressive or harmful behavior.</p>
+                    <h4 th:text="${marketplaceInformation.item.name}"></h4>
+                    <p th:text="${marketplaceInformation.item.description}"></p>
                     <form action="#" th:action="@{/marketplace/__${id}__/__${name}__}" th:object="${marketplaceInformation}" method="POST">
                         <input type="number" min="1" value="1" th:field="*{quantity}">
                         <span th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}">Valid Name Required</span>
