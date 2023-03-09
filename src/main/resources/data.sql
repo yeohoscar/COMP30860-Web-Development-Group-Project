@@ -1,1 +1,1 @@
-INSERT INTO User (id, username, passwd, USER_TYPE) VALUES (1, 'Egg', 'Egg', 2);
+INSERT INTO User (username, passwd, USER_TYPE) VALUES ('Egg', 'Egg', 'Customer');

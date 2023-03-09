@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import java.io.Serializable;
 
 @Entity
-@DiscriminatorValue("O")
+@DiscriminatorValue("Owner")
 public class Owner extends User implements Serializable {
 
 }
