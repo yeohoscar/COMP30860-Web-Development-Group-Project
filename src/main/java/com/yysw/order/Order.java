@@ -7,13 +7,14 @@ import java.io.Serializable;
 import java.util.*;
 
 @Entity
-public class Order implements Serializable {
+@Table(name = "orders")
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long order_id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private Customer customer;
 
     @ElementCollection
