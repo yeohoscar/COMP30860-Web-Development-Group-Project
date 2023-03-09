@@ -1,6 +1,7 @@
 package com.yysw.orderHistory;
 
 import com.yysw.order.Order;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,9 @@ import java.util.HashMap;
 
 @Controller
 public class OrderHistoryController {
+    @Autowired
+    private OrderRepository orderRepository;
+    List<Order> orders = orderRepository.findByCustomerOrderByOrderDateDesc(Customer customer);
     //assume customers' orders are stored in the HashMap below
     HashMap<Integer, Order> myOrders = new HashMap<>();
 
