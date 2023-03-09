@@ -1,11 +1,18 @@
 package com.yysw.general;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.io.Serializable;
 
+@Entity
 public class AIModel implements Serializable {
-    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long model_id;
 
-    private String name;
+    private String model_name;
 
     private double trainedPrice;
 
@@ -15,20 +22,16 @@ public class AIModel implements Serializable {
 
     private String photoURL;
 
-    public Long getId() {
-        return id;
-    }
+    private boolean available;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Long getModel_id() { return model_id; }
 
-    public String getName() {
-        return name;
-    }
+    public void setModel_id(Long model_id) { this.model_id = model_id; }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getModel_name() { return model_name; }
+
+    public void setModel_name(String model_name) {
+        this.model_name = model_name;
     }
 
     public double getTrainedPrice() { return trainedPrice; }
@@ -46,4 +49,8 @@ public class AIModel implements Serializable {
     public String getPhotoURL() { return photoURL; }
 
     public void setPhotoURL(String photoURL) { this.photoURL = photoURL; }
+
+    public boolean isAvailable() { return available; }
+
+    public void setAvailable(boolean available) { this.available = available; }
 }

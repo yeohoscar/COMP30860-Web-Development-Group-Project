@@ -57,10 +57,9 @@
                 <div class="content bg-green">
                     <!--can use <a href> too-->
 <<<<<<< HEAD:src/main/resources/templates/marketplace.html
-                    <a th:href="@{/marketplace/{id}/{name}(id=${model.key}, name=${model.value.name})}">
-                        <img th:src="${model.value.photoURL}" alt="image"/>
-                        <span th:text="${model.value.name}"></span>
-                        <span th:text="${model.key}"></span>
+                    <a th:href="@{/marketplace/{name}(name=${model.name})}">
+                        <img th:src="${model.photoURL}" alt="image"/>
+                        <span th:text="${model.name}"></span>
                     </a>
 =======
                     <button type = "button" onclick="window.location.href='/login'">
@@ -73,17 +72,16 @@
             <div class="col-md-4" th:if="${iter.index + 1 < catalogue.size()}" th:with="middleModel=${catalogue.get(iter.index+1)}">
                 <div class="content bg-green">
                     <!--can use <a href> too-->
-                    <a th:href="@{/marketplace/{id}/{name}(id=${middleModel.id}, name=${middleModel.name})}">
+                    <a th:href="@{/marketplace/{name}(name=${middleModel.name})}">
                         <img src="https://www.tutorialspoint.com/latest/inter-process-communication.png" alt="image"/>
                         <span th:text="${middleModel.name}"></span>
-                        <span th:text="${middleModel.id}"></span>
                     </a>
                 </div>
             </div>
             <div class="col-md-4" th:if="${iter.index + 2 < catalogue.size()}" th:with="rightModel=${catalogue.get(iter.index+2)}">
                 <div class="content bg-green">
                     <!--can use <a href> too-->
-                    <a th:href="@{/marketplace/{id}/{name}(id=${rightModel.id}, name=${rightModel.name})}">
+                    <a th:href="@{/marketplace/{name}(name=${rightModel.name})}">
                         <img src="https://www.tutorialspoint.com/latest/inter-process-communication.png" alt="image"/>
                         <span th:text="${rightModel.name}"></span>
                     </a>

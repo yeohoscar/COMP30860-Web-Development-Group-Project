@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
 public interface AIModelRepository extends JpaRepository<AIModel, Long> {
-
+    AIModel findAIModelByName(String model_name);
 }

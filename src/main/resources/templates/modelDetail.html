@@ -56,7 +56,7 @@
                 <div class="content bg-pink">
                     <h4 th:text="${marketplaceInformation.item.name}"></h4>
                     <p th:text="${marketplaceInformation.item.description}"></p>
-                    <form action="#" th:action="@{/marketplace/__${id}__/__${name}__}" th:object="${marketplaceInformation}" method="POST">
+                    <form action="#" th:action="@{/marketplace/__${name}__}" th:object="${marketplaceInformation}" method="POST">
                         <input type="number" min="1" value="1" th:field="*{quantity}">
                         <span th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}">Valid Name Required</span>
                         <input type="submit" value="Add To Cart">
