@@ -1,9 +1,8 @@
 package com.yysw.general;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.yysw.user.customer.Customer;
+
+import javax.persistence.*;
 import java.io.Serializable;
 @Entity
 public class AIModel implements Serializable {
@@ -20,6 +19,12 @@ public class AIModel implements Serializable {
     private String description;
 
     private String photoURL;
+
+    private boolean available;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Customer customer;
 
     public Long getId() {
         return id;

@@ -16,7 +16,7 @@ public class Customer extends User implements Serializable {
     @OneToMany(mappedBy = "customer")
     private List<Order> orders = new ArrayList<Order>();
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private List<AIModel> cart;
 
     public List<Order> getOrder() {
@@ -25,5 +25,13 @@ public class Customer extends User implements Serializable {
 
     public void setOrder(List<Order> order) {
         this.orders = order;
+    }
+
+    public List<AIModel> getCart() {
+        return cart;
+    }
+
+    public void setCart(List<AIModel> cart) {
+        this.cart = cart;
     }
 }
