@@ -56,34 +56,29 @@
             <div class="col-md-4">
                 <div class="content bg-green">
                     <!--can use <a href> too-->
-<<<<<<< HEAD:src/main/resources/templates/marketplace.html
-                    <a th:href="@{/marketplace/{name}(name=${model.name})}">
+                    <a th:href="@{/marketplace/{id}/{name}(id=${model.id}, name=${model.modelName})}">
                         <img th:src="${model.photoURL}" alt="image"/>
-                        <span th:text="${model.name}"></span>
+                        <span th:text="${model.modelName}"></span>
+                        <span th:text="${model.id}"></span>
                     </a>
-=======
-                    <button type = "button" onclick="window.location.href='/login'">
-                        <p>1st AI Model</p>
-                        <img src="${model.photoURL}" />
-                    </button>
->>>>>>> order:src/main/resources/templates/catalogueMain.html
                 </div>
             </div>
             <div class="col-md-4" th:if="${iter.index + 1 < catalogue.size()}" th:with="middleModel=${catalogue.get(iter.index+1)}">
                 <div class="content bg-green">
                     <!--can use <a href> too-->
-                    <a th:href="@{/marketplace/{name}(name=${middleModel.name})}">
+                    <a th:href="@{/marketplace/{id}/{name}(id=${middleModel.id}, name=${middleModel.modelName})}">
                         <img src="https://www.tutorialspoint.com/latest/inter-process-communication.png" alt="image"/>
-                        <span th:text="${middleModel.name}"></span>
+                        <span th:text="${middleModel.modelName}"></span>
+                        <span th:text="${middleModel.id}"></span>
                     </a>
                 </div>
             </div>
             <div class="col-md-4" th:if="${iter.index + 2 < catalogue.size()}" th:with="rightModel=${catalogue.get(iter.index+2)}">
                 <div class="content bg-green">
                     <!--can use <a href> too-->
-                    <a th:href="@{/marketplace/{name}(name=${rightModel.name})}">
+                    <a th:href="@{/marketplace/{id}/{name}(id=${rightModel.id}, name=${rightModel.modelName})}">
                         <img src="https://www.tutorialspoint.com/latest/inter-process-communication.png" alt="image"/>
-                        <span th:text="${rightModel.name}"></span>
+                        <span th:text="${rightModel.modelName}"></span>
                     </a>
                 </div>
             </div>

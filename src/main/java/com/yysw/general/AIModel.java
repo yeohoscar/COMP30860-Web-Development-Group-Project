@@ -10,9 +10,9 @@ import java.io.Serializable;
 public class AIModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long model_id;
+    private Long id;
 
-    private String model_name;
+    private String modelName;
 
     private double trainedPrice;
 
@@ -24,15 +24,13 @@ public class AIModel implements Serializable {
 
     private boolean available;
 
-    public Long getModel_id() { return model_id; }
+    public Long getId() { return id; }
 
-    public void setModel_id(Long model_id) { this.model_id = model_id; }
+    public void setId(Long id) { this.id = id; }
 
-    public String getModel_name() { return model_name; }
+    public String getModelName() { return modelName; }
 
-    public void setModel_name(String model_name) {
-        this.model_name = model_name;
-    }
+    public void setModelName(String modelName) { this.modelName = modelName; }
 
     public double getTrainedPrice() { return trainedPrice; }
 

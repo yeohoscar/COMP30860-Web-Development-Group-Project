@@ -27,10 +27,10 @@ public class MarketplaceController {
         return "marketplace.html";
     }
 
-    @GetMapping("/marketplace/{name}")
-    public String viewModel(@PathVariable(value="name") String name, Model model) {
+    @GetMapping("/marketplace/{id}/{name}")
+    public String viewModel(@PathVariable(value="id") Long id, @PathVariable(value="name") String name, Model model) {
         MarketplaceInformation marketplaceInformation = new MarketplaceInformation();
-        AIModel ai = aiModelRepository.findAIModelByName(name);
+        AIModel ai = aiModelRepository.findAIModelByModelName(name);
         marketplaceInformation.setItem(ai);
         marketplaceInformation.setQuantity(0);
         model.addAttribute("marketplaceInformation", marketplaceInformation);
@@ -38,9 +38,10 @@ public class MarketplaceController {
         return "modelDetail.html";
     }
 
-    @PostMapping("/marketplace/{name}")
-    public String addCart(@Valid @ModelAttribute("marketplaceInformation") MarketplaceInformation marketplaceInformation, @PathVariable(value="name") String name, BindingResult bindingResult) {
-        System.out.println(marketplaceInformation.getItem().getModel_name());
+    @PostMapping("/marketplace/{id}/{name}")
+    public String addCart(@Valid @ModelAttribute("marketplaceInformation") MarketplaceInformation marketplaceInformation, @PathVariable(value="id") Long id, @PathVariable(value="name") String name, BindingResult bindingResult) {
+        System.out.println(marketplaceInformation.getItem().getId());
+        System.out.println(marketplaceInformation.getItem().getModelName());
         System.out.println(marketplaceInformation.getQuantity());
         if (bindingResult.hasErrors()) {
             return "index.html";
