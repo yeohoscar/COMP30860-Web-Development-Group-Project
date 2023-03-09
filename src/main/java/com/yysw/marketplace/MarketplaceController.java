@@ -1,6 +1,5 @@
 package com.yysw.marketplace;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.yysw.general.AiModel;
 import com.yysw.payment.PaymentInformation;
 import org.springframework.stereotype.Controller;
@@ -26,6 +25,7 @@ public class MarketplaceController {
             AiModel tmp = new AiModel();
             tmp.setId(i);
             tmp.setName("Egg" + i);
+            tmp.setPhotoURL("image/RemoveBG.jpg");
             catalogue.put(i, tmp);
         }
 

@@ -57,7 +57,7 @@
                 <div class="content bg-green">
                     <!--can use <a href> too-->
                     <a th:href="@{/marketplace/{id}/{name}(id=${model.key}, name=${model.value.name})}">
-                        <img src="https://www.tutorialspoint.com/latest/inter-process-communication.png" alt="image"/>
+                        <img th:src="${model.value.photoURL}" alt="image"/>
                         <span th:text="${model.value.name}"></span>
                         <span th:text="${model.key}"></span>
                     </a>
