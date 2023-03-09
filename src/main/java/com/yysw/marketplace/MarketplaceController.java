@@ -34,6 +34,7 @@ public class MarketplaceController {
         return "modelDetail.html";
     }
 
+    // have to figure out how to link add to cart so its added when you press the button
     @PostMapping("/marketplace/{id}/{name}")
     public String addCart(@Valid @ModelAttribute("marketplaceInformation") MarketplaceInformation marketplaceInformation, @PathVariable(value="id") Long id, @PathVariable(value="name") String name, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
