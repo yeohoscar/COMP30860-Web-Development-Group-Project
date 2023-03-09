@@ -1,4 +1,4 @@
-package com.yysw.customer;
+package com.yysw.user.customer;
 
 import org.springframework.stereotype.Controller;
 
