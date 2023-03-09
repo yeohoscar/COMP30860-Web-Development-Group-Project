@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 @Controller
 public class ShoppingCartController {
-
     @PostMapping("/shoppingCart")
     public String shoppingCart(Model model) {
         return "shoppingCart.html";
