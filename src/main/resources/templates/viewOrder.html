@@ -15,15 +15,16 @@
 
 </head>
 <body>
-<div th:each="view: ${views}">
+<div >
     <div class="row">
         <div class="col-lg">
             <div class="row">
                 <div class="col-sm-8">
-                    <h1 th:text="'Order: '+${view.getKey().getOrder_id()}">Order #123456</h1>
+                    <h1 th:text="'Order: '+${view.getOrder_id()}"></h1>
                 </div>
                 <div class="col-sm-4">
-                    <h5 th:text="${view.getKey().getOrderDate()}">dd/mm/yyyy</h5>
+                    <h5 th:text="${view.getOrderDate()}"></h5>
+                    <h5 th:text="'Date:'+' '+${#dates.format(view.getOrderDate(), 'yyyy-mm-dd')}"></h5>
                 </div>
             </div>
 
@@ -43,7 +44,7 @@
                 </thead>
 
                 <tbody>
-                <tr th:each="model: ${view.getKey().getOrderedModels()}">
+                <tr th:each="model: ${view.getOrderedModels()}">
                     <td th:text="${model.getModel_id()}" class="wrapTextInTableCell col-sm-2" ></td>
                     <td class="col-sm-2"></td>
                     <td class="col-sm-2"></td>
@@ -61,58 +62,39 @@
             <div class="row ">
                 <div class="col-sm-8"></div>
                 <div class="col-sm-4">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h6>SUBTOTAL</h6>
-                        </div>
-                        <div class="col-sm-6">
-                            <h7 th:text="${view.getValue()}">SUBTOTAL</h7>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h6>FEES</h6>
-                        </div>
-                        <div class="col-sm-6">
-                            <h7>XX.XX</h7>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h6>DISCOUNT</h6>
-                        </div>
-                        <div class="col-sm-6">
-                            <h7>XX.XX</h7>
-                        </div>
-                    </div>
-                    <br>
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-6">-->
+<!--                            <h6>SUBTOTAL</h6>-->
+<!--                        </div>-->
+<!--                        <div class="col-sm-6">-->
+<!--                            <h7 th:text="${view.totalPriceOfOrderedModels()}">SUBTOTAL</h7>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-6">-->
+<!--                            <h6>FEES</h6>-->
+<!--                        </div>-->
+<!--                        <div class="col-sm-6">-->
+<!--                            <h7>XX.XX</h7>-->
+<!--                        </div>-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-6">-->
+<!--                            <h6>DISCOUNT</h6>-->
+<!--                        </div>-->
+<!--                        <div class="col-sm-6">-->
+<!--                            <h7>XX.XX</h7>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <br>-->
                     <div class="row">
                         <div class="col-sm-6">
                             <h6>TOTAL</h6>
                         </div>
                         <div class="col-sm-6">
-                            <h7 th:text="${view.getValue()}"></h7>
+                            <h7 th:text="${view.totalPriceOfOrderedModels()}"></h7>
                         </div>
                     </div>
-<!--                    <table class="table">-->
-<!--                        <tr>-->
-<!--                            <td>SUBTOTAL</td>-->
-<!--                            <td>XXX.XX</td>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <td>FEES</td>-->
-<!--                            <td>XX.XX</td>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <td>DISCOUNT</td>-->
-<!--                            <td>XX.XX</td>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <td>TOTAL</td>-->
-<!--                            <td>XXXX.XX</td>-->
-<!--                        </tr>-->
-
-<!--                    </table>-->
                 </div>
             </div>
         </div>
