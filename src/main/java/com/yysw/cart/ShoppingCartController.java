@@ -67,20 +67,33 @@ public class ShoppingCartController {
         System.out.println("hi");
         Customer tmp = customerRepository.findCustomerByUser_id(1L);
         System.out.println("hi1");
-        tmp.getCart().add(modelsInCart.get(modelsInCart.size()-1));
-        System.out.println("hi2");
+        ShoppingCartItem sp = new ShoppingCartItem();
+        sp.setItem(aiModelRepository.findAIModelById(1L));
+        sp.setPrice(10.9);
+        tmp.getCart().add(sp);
+        System.out.println(tmp.getCart().size());
+        for (ShoppingCartItem ai : tmp.getCart()) {
+            System.out.println(ai.getItem().getModelName());
+        }
         customerRepository.save(tmp);
+        List<ShoppingCartItem> cart = customerRepository.findCustomerByUser_id(1L).getCart();
+        for (ShoppingCartItem a : cart) {
+            System.out.println(a.getItem().getModelName());
+        }
     }
 
     @GetMapping("/shoppingCart")
     public String shoppingCart(Model model) {
         System.out.println("hi4");
         updateCart();
-        System.out.println("hi3");
+        List<ShoppingCartItem> userCart = customerRepository.findCustomerByUser_id(1L).getCart();
         //TODO: just random value, no data storing, missing price etc.. need change
 //        modelsInCart = customerRepository.findCartById(1L);
-        model.addAttribute("size",modelsInCart.size());
-        model.addAttribute("products",modelsInCart);
+        for (ShoppingCartItem s : userCart) {
+            System.out.println(s.getItem());
+        }
+        model.addAttribute("size", userCart.size());
+        model.addAttribute("products", userCart);
         double sub=0.0;
         double processfee=200;
 //        for (AiModel a:modelsInCart) {
