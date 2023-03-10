@@ -67,7 +67,7 @@ public class ShoppingCartController {
         System.out.println("hi");
         Customer tmp = customerRepository.findCustomerByUser_id(1L);
         System.out.println("hi1");
-        tmp.setCart(modelsInCart);
+        tmp.getCart().add(modelsInCart.get(modelsInCart.size()-1));
         System.out.println("hi2");
         customerRepository.save(tmp);
     }
