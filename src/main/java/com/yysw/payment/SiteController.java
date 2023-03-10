@@ -1,4 +1,4 @@
-package com.yysw.site;
+package com.yysw.payment;
 
 import com.yysw.user.User;
 import com.yysw.user.UserRepository;
@@ -9,11 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -24,37 +21,6 @@ public class SiteController {
     @GetMapping("/")
     public String home() {
         return "index.html";
-    }
-
-    @GetMapping("/shoppingCart")
-    public String shoppingCart(Model model) {
-        //TODO: just random value, no data storing, missing price etc.. need change
-        List<AiModel> modelsInCart = new ArrayList<>();
-        model.addAttribute("size",modelsInCart.size());
-        model.addAttribute("products",modelsInCart);
-        double sub=0.0;
-        double processfee=200;
-//        for (AiModel a:modelsInCart) {
-//            sub += a.price();
-//        }
-        model.addAttribute("subtotal", sub);
-        model.addAttribute("fee", processfee);
-        model.addAttribute("discount", sub*0.2);
-        model.addAttribute("tot",sub+processfee-(sub*0.2));
-
-        return "shoppingCart.html";
-    }
-
-    @GetMapping("/catalogue")
-    public String catalogue(Model model) {
-        List<AiModel> catalogue = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            AiModel tmp = new AiModel();
-            tmp.setName("Egg " + i);
-            catalogue.add(tmp);
-        }
-        model.addAttribute("catalogue", catalogue);
-        return "catalogueMain.html";
     }
 
     @GetMapping("/login")

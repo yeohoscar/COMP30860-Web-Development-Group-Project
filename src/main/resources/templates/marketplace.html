@@ -19,13 +19,13 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <span>YYWS</span>
-            <ul class="navbar-nav mx-auto mb-md-0" onclick="changeActive(event)">
+            <a href="/">YYWS</a>
+            <ul class="navbar-nav mx-auto mb-md-0">
                 <li class="nav-item">
-                    <a class="nav-link" id="intro" href="#Intro">Solutions</a>
+                    <a class="nav-link" id="intro" href="/marketplace">Marketplace</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="c1" href="#Chap1">Marketplace</a>
+                    <a class="nav-link" id="c1" href="/shoppingCart">Sales</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="c2" href="#Chap2">Pricing</a>
@@ -34,12 +34,15 @@
                     <a class="nav-link" id="c3" href="#Chap3">Contact Us</a>
                 </li>
             </ul>
+            <button type="button" onclick="window.location.href='/payment'">Pay</button>
+            <button type="button" onclick="window.location.href='/contactUs'">Contact</button>
             <button type="button" onclick="window.location.href='/login'">Log In</button>
             <button type="button" onclick="window.location.href='/register'">Register</button>
         </div>
     </nav>
 
-    <div>
+
+<div>
         <h2>MARKETPLACE for AI Models</h2>
         <p>
             Welcome to our AI model marketplace website! Here, you can easily browse and access a wide range of pre-trained models and algorithms for use in your projects, from image and voice recognition to natural language processing and more.
@@ -52,32 +55,31 @@
         <div class="row" th:each="model, iter : ${catalogue}" th:if="${iter.index % 3 == 0 && iter.index < catalogue.size()}">
             <div class="col-md-4">
                 <div class="content bg-green">
-                    <p th:text="${model.name}"></p>
                     <!--can use <a href> too-->
-                    <button type = "button" onclick="window.location.href='/login'">
-                        <p>1st AI Model</p>
-                        <img src="https://www.tutorialspoint.com/latest/inter-process-communication.png " />
-                    </button>
+                    <a th:href="@{/marketplace/{id}/{name}(id=${model.id}, name=${model.modelName})}">
+                        <img th:src="${model.photoURL}" alt="image"/>
+                        <span th:text="${model.modelName}"></span>
+                        <span th:text="${model.id}"></span>
+                    </a>
                 </div>
             </div>
             <div class="col-md-4" th:if="${iter.index + 1 < catalogue.size()}" th:with="middleModel=${catalogue.get(iter.index+1)}">
                 <div class="content bg-green">
-                    <p th:text="${middleModel.name}"></p>
                     <!--can use <a href> too-->
-                    <button type = "button" onclick="window.location.href='/login'">
-                        <p>1st AI Model</p>
-                        <img src="https://www.tutorialspoint.com/latest/inter-process-communication.png " />
-                    </button>
-                </div>1
+                    <a th:href="@{/marketplace/{id}/{name}(id=${middleModel.id}, name=${middleModel.modelName})}">
+                        <img src="https://www.tutorialspoint.com/latest/inter-process-communication.png" alt="image"/>
+                        <span th:text="${middleModel.modelName}"></span>
+                        <span th:text="${middleModel.id}"></span>
+                    </a>
+                </div>
             </div>
             <div class="col-md-4" th:if="${iter.index + 2 < catalogue.size()}" th:with="rightModel=${catalogue.get(iter.index+2)}">
                 <div class="content bg-green">
-                    <p th:text="${rightModel.name}"></p>
                     <!--can use <a href> too-->
-                    <button type = "button" onclick="window.location.href='/login'">
-                        <p>1st AI Model</p>
-                        <img src="https://www.tutorialspoint.com/latest/inter-process-communication.png " />
-                    </button>
+                    <a th:href="@{/marketplace/{id}/{name}(id=${rightModel.id}, name=${rightModel.modelName})}">
+                        <img src="https://www.tutorialspoint.com/latest/inter-process-communication.png" alt="image"/>
+                        <span th:text="${rightModel.modelName}"></span>
+                    </a>
                 </div>
             </div>
         </div>
