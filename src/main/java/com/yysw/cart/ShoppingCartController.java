@@ -63,63 +63,33 @@ public class ShoppingCartController {
         }
     }
 
-    public void updateCart() {
-        System.out.println("hi");
+    public void addToCart() {
         Customer tmp = customerRepository.findCustomerByUser_id(1L);
-        System.out.println("hi1");
-        ShoppingCartItem sp = new ShoppingCartItem();
-        AIModel newModel = aiModelRepository.findAIModelById(1L);
-        sp.setItem(newModel);
-        sp.setPrice(newModel.getTrainedPrice()); //trained/untrained
-        if (true) {
-            sp.setTrainedModel(true);
-        } else {
-            sp.setUntrainedModel(true);
-        }
-        tmp.getCart().add(sp);
-        System.out.println(tmp.getCart().size());
-        System.out.println(tmp.getCart());
-
-        for (ShoppingCartItem ai : tmp.getCart()) {
-            System.out.println(ai.getItem().getModelName());
-        }
-
+        tmp.getCart().add(modelsInCart.get(modelsInCart.size()-1));
         //customerRepository.save(tmp);
-        System.out.println(customerRepository.findCustomerByUser_id(1L).getCart());
-
-        for (ShoppingCartItem a : customerRepository.findCustomerByUser_id(1L).getCart()) {
-            System.out.println(a.getItem().getModelName());
-        }
     }
 
     @GetMapping("/shoppingCart")
     public String shoppingCart(Model model) {
-        System.out.println("hi4");
-        updateCart();
-        System.out.println("finish update");
+        addToCart();
         List<ShoppingCartItem> userCart = customerRepository.findCustomerByUser_id(1L).getCart();
         //TODO: just random value, no data storing, missing price etc.. need change
 //        modelsInCart = customerRepository.findCartById(1L);
         for (ShoppingCartItem s : userCart) {
-            System.out.println("in loop.....");
             System.out.println(s.getItem());
         }
         model.addAttribute("size", userCart.size());
         model.addAttribute("products", userCart);
-        double sub=0.0;
-        double processfee=200;
-//        for (AiModel a:modelsInCart) {
-//            sub += a.price();
-//        }
+        double sub = 0.0;
+//      double processfee=200;
+        for (ShoppingCartItem item : modelsInCart) {
+            sub += item.getPrice();
+        }
         model.addAttribute("subtotal", sub);
-        model.addAttribute("fee", processfee);
+        /*model.addAttribute("fee", processfee);
         model.addAttribute("discount", sub*0.2);
-        model.addAttribute("tot",sub+processfee-(sub*0.2));
+        model.addAttribute("tot",sub+processfee-(sub*0.2));*/
 
         return "shoppingCart.html";
     }
-
-
-
-
 }
