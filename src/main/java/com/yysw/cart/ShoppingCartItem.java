@@ -9,6 +9,7 @@ import java.io.Serializable;
 @Entity
 public class ShoppingCartItem implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
@@ -42,4 +43,16 @@ public class ShoppingCartItem implements Serializable {
     public Double getPrice() { return price; }
 
     public void setPrice(Double price) { this.price = price; }
+
+    @Override
+    public String toString() {
+        return "ShoppingCartItem{" +
+                "id=" + id +
+                ", item=" + item +
+                ", trainedModel=" + trainedModel +
+                ", untrainedModel=" + untrainedModel +
+                ", price=" + price +
+                ", customer=" + customer +
+                '}';
+    }
 }

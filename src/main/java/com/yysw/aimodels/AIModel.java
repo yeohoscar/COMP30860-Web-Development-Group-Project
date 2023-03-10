@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 
+import com.yysw.cart.ShoppingCartItem;
 import com.yysw.user.customer.Customer;
 
 import javax.persistence.*;
@@ -27,6 +28,9 @@ public class AIModel implements Serializable {
     private String photoURL;
 
     private boolean available;
+
+    @OneToOne(mappedBy = "item")
+    private ShoppingCartItem item;
 
     public Long getId() { return id; }
 
@@ -55,4 +59,17 @@ public class AIModel implements Serializable {
     public boolean isAvailable() { return available; }
 
     public void setAvailable(boolean available) { this.available = available; }
+
+    @Override
+    public String toString() {
+        return "AIModel{" +
+                "id=" + id +
+                ", modelName='" + modelName + '\'' +
+                ", trainedPrice=" + trainedPrice +
+                ", untrainedPrice=" + untrainedPrice +
+                ", description='" + description + '\'' +
+                ", photoURL='" + photoURL + '\'' +
+                ", available=" + available +
+                '}';
+    }
 }

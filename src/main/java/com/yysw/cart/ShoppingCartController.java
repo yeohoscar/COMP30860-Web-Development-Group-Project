@@ -68,16 +68,26 @@ public class ShoppingCartController {
         Customer tmp = customerRepository.findCustomerByUser_id(1L);
         System.out.println("hi1");
         ShoppingCartItem sp = new ShoppingCartItem();
-        sp.setItem(aiModelRepository.findAIModelById(1L));
-        sp.setPrice(10.9);
+        AIModel newModel = aiModelRepository.findAIModelById(1L);
+        sp.setItem(newModel);
+        sp.setPrice(newModel.getTrainedPrice()); //trained/untrained
+        if (true) {
+            sp.setTrainedModel(true);
+        } else {
+            sp.setUntrainedModel(true);
+        }
         tmp.getCart().add(sp);
         System.out.println(tmp.getCart().size());
+        System.out.println(tmp.getCart());
+
         for (ShoppingCartItem ai : tmp.getCart()) {
             System.out.println(ai.getItem().getModelName());
         }
-        customerRepository.save(tmp);
-        List<ShoppingCartItem> cart = customerRepository.findCustomerByUser_id(1L).getCart();
-        for (ShoppingCartItem a : cart) {
+
+        //customerRepository.save(tmp);
+        System.out.println(customerRepository.findCustomerByUser_id(1L).getCart());
+
+        for (ShoppingCartItem a : customerRepository.findCustomerByUser_id(1L).getCart()) {
             System.out.println(a.getItem().getModelName());
         }
     }
@@ -86,10 +96,12 @@ public class ShoppingCartController {
     public String shoppingCart(Model model) {
         System.out.println("hi4");
         updateCart();
+        System.out.println("finish update");
         List<ShoppingCartItem> userCart = customerRepository.findCustomerByUser_id(1L).getCart();
         //TODO: just random value, no data storing, missing price etc.. need change
 //        modelsInCart = customerRepository.findCartById(1L);
         for (ShoppingCartItem s : userCart) {
+            System.out.println("in loop.....");
             System.out.println(s.getItem());
         }
         model.addAttribute("size", userCart.size());
