@@ -1,10 +1,14 @@
-package com.yysw.general;
+package com.yysw.aimodels;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
+
+import com.yysw.user.customer.Customer;
+
+import javax.persistence.*;
 
 @Entity
 public class AIModel implements Serializable {

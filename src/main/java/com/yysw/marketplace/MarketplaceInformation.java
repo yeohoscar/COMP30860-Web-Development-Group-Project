@@ -1,6 +1,6 @@
 package com.yysw.marketplace;
 
-import com.yysw.general.AIModel;
+import com.yysw.aimodels.AIModel;
 
 import java.io.Serializable;
 

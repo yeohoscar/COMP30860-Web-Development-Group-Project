@@ -25,7 +25,7 @@
                     <a class="nav-link" id="intro" href="/marketplace">Marketplace</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="c1" href="#Chap1">Sales</a>
+                    <a class="nav-link" id="c1" href="/shoppingCart">Sales</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="c2" href="#Chap2">Pricing</a>
@@ -56,12 +56,15 @@
                 <div class="content bg-pink">
                     <h4 th:text="${model.modelName}"></h4>
                     <p th:text="${model.description}"></p>
-                    <!--
-                    <form action="#" th:action="@{/marketplace/__${id}__/__${name}__}" th:object="${marketplaceInformation}" method="POST">
-                        <input type="number" min="1" value="1" th:field="*{quantity}">
-                        <span th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}">Valid Name Required</span>
+
+                    <form th:action="@{/marketplace/__${id}__/__${name}__}" method="POST">
+                        <label th:text="'Trained model ' + ${model.trainedPrice}"></label>
+                        <input type="checkbox" name="trained">
+                        <label th:text="'Untrained model ' + ${model.untrainedPrice}"></label>
+                        <input type="checkbox" name="untrained">
+                        <br>
                         <input type="submit" value="Add To Cart">
-                    </form> -->
+                    </form>
                 </div>
             </div>
         </div>
