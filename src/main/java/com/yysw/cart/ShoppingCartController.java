@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -19,7 +17,7 @@ public class ShoppingCartController {
     @Autowired
     private AIModelRepository aiModelRepository;
 
-    public void updateCart() {
+    private void updateCart() {
         Customer tmp = customerRepository.findCustomerByUser_id(1L);
         tmp.getCart().add(aiModelRepository.findAiModelById(1L));
         customerRepository.save(tmp);
@@ -28,15 +26,14 @@ public class ShoppingCartController {
     public String shoppingCart(Model model) {
         updateCart();
         //TODO: just random value, no data storing, missing price etc.. need change
-        List<AIModel> modelsInCart = new ArrayList<>();
-//        modelsInCart = customerRepository.findCartById(1L);
+        List<AIModel> modelsInCart = customerRepository.findCustomerByUser_id(1L).getCart();
         model.addAttribute("size",modelsInCart.size());
         model.addAttribute("products",modelsInCart);
         double sub=0.0;
         double processfee=200;
-//        for (AiModel a:modelsInCart) {
-//            sub += a.price();
-//        }
+        for (AIModel a:modelsInCart) {
+//            sub += a.g;
+        }
         model.addAttribute("subtotal", sub);
         model.addAttribute("fee", processfee);
         model.addAttribute("discount", sub*0.2);
