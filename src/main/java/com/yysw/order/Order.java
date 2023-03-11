@@ -1,6 +1,7 @@
 package com.yysw.order;
 
 import com.yysw.user.customer.Customer;
+import org.aspectj.weaver.ast.Or;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,6 +25,7 @@ public class Order {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
+
 
     public Long getOrder_id() {
         return order_id;
@@ -63,5 +65,17 @@ public class Order {
 
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
+    }
+
+    public int quantityOfOrder() {
+        return this.getOrderedModels().size();
+    }
+    public Double totalPriceOfOrderedModels() {
+        Double totalPrice=0.0;
+        for(OrderedModel a: this.getOrderedModels())
+        {
+            totalPrice += a.getPrice();
+        }
+        return totalPrice;
     }
 }
