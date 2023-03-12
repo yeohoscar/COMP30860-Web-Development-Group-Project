@@ -21,7 +21,7 @@ public class QuitLogIn extends HttpServlet {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                System.out.println(URLDecoder.decode(cookie.getName(), "utf-8"));
+//                System.out.println(URLDecoder.decode(cookie.getName(), "utf-8"));
                 if (URLDecoder.decode(cookie.getName(), "utf-8").equals("username")) { // 表明已经登陆过了，就直接跳转了
                     System.out.println("Quit Log In");
                     cookie.setMaxAge(0);
