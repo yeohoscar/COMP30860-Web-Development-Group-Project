@@ -49,7 +49,7 @@ public class PersistentLogIn extends HttpServlet {
                         cookie.setMaxAge(60);//let's say the cookie is valid in two minutes
                         response.addCookie(cookie);//server return this cookie to browser so that it can be checked next time when user log in
 //                response.sendRedirect(request.getContextPath()+"/");
-                        response.sendRedirect("/");
+                        response.sendRedirect("/successLogIn");
 
                         System.out.println("Customer Log In Successfully");
                     }else {
@@ -75,7 +75,7 @@ public class PersistentLogIn extends HttpServlet {
                         cookie.setMaxAge(60);//let's say the cookie is valid in two minutes
                         response.addCookie(cookie);//server return this cookie to browser so that it can be checked next time when user log in
 //                response.sendRedirect(request.getContextPath()+"/");
-                        response.sendRedirect("/");
+                        response.sendRedirect("/successLogIn");
 
                         System.out.println("Admin Log In Successfully");
                     }else {

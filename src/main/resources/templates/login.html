@@ -54,10 +54,14 @@
     <label for="passwd">Password</label>
     <input type="password" id="passwd" th:name="passwd" required/>
     <input type="submit" value="Log In">
-
-    <label><a href="/stayLogIn">Already log in? Click Here!</a></label>
-    <label><a href="/quitLogIn">Want to quit log in? Click Here!</a></label>
-
+  </form>
+  <form th:action="@{/stayLogIn}" method="get">
+    <h6>Already log in? Click Here!</h6>
+    <button>Already Login</button>
+  </form>
+  <form th:action="@{/quitLogIn}" method="get">
+    <h6>Want to quit log in? Click Here!</h6>
+    <button>Quit Login</button>
   </form>
 </div>
 

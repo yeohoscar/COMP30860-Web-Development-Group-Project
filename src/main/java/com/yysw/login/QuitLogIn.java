@@ -17,7 +17,7 @@ import java.net.URLDecoder;
 public class QuitLogIn extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        //这里就是把username的cookie设置成0秒有效期，就是直接删除掉了
+        //we set cookie of username to 0，which means delete it straightaway
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {

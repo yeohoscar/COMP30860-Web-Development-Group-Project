@@ -24,7 +24,14 @@ public class SiteController {
     public String home() {
         return "index.html";
     }
-
+    @GetMapping("/successLogIn")
+    public String successLogIn() {
+        return "successLogIn.html";
+    }
+    @GetMapping("/logInAgain")
+    public String logInAgain() {
+        return "logInAgain.html";
+    }
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("user", new User());
