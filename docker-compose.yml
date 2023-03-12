@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: app
+    build: .
+    depends_on:
+      yysw-db:
+        condition: service_healthy
+    ports:
+      - 8080:8080
+  yysw-db:
+    container_name: yysw-db
+    image: mysql:latest
+    restart: 'no'
+    ports:
+      - 3307:3306
+    environment:
+      - MYSQL_DATABASE=yysw-db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=root
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 1s
+      timeout: 5s
+      retries: 100
