@@ -26,14 +26,15 @@ public class CheckLogIn extends HttpServlet {
 
         // 判断cookie是否有username，如果有代表登陆过
         Cookie[] cookies = request.getCookies();
-        System.out.println("the number of cookies = "+cookies.length);
+//        System.out.println("the number of cookies = "+cookies.length);
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                System.out.println("cookie name: "+ URLDecoder.decode(cookie.getName(), "utf-8"));
-                System.out.println("tttttthe username in cookie is ="+URLDecoder.decode(cookie.getName(), "utf-8"));
-                System.out.println("username is ="+cookie.getName());
+//                System.out.println("cookie name: "+ URLDecoder.decode(cookie.getName(), "utf-8"));
+//                System.out.println("tttttthe username in cookie is ="+URLDecoder.decode(cookie.getName(), "utf-8"));
+//                System.out.println("username is ="+cookie.getName());
                 if (URLDecoder.decode(cookie.getName(), "utf-8").equals("username")) { // 表明已经登陆过了，就直接跳转了
-                    System.out.println("the username in cookie is ="+URLDecoder.decode(cookie.getName(), "utf-8"));
+//                    System.out.println("the username in cookie is ="+URLDecoder.decode(cookie.getName(), "utf-8"));
+                    System.out.println("Already Log in");
                     flag = true;
                 }
             }
@@ -42,10 +43,11 @@ public class CheckLogIn extends HttpServlet {
         if(flag) {
             response.sendRedirect(request.getContextPath() + "/");
         }else {
+            System.out.println("PLease Log in");
             out.write("<html>"
                     + "<head><script type='text/javascript'> alert('没有登陆过，请登录!');location='login.html';</script></head>"
                     + "<body></body></html>");
-                        response.sendRedirect(request.getContextPath()+"/");
+//                        response.sendRedirect(request.getContextPath()+"/");
 
         }
     }
