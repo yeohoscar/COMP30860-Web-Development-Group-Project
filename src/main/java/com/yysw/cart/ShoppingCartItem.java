@@ -12,7 +12,7 @@ public class ShoppingCartItem implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private AIModel item;
 
     private boolean trainedModel;
