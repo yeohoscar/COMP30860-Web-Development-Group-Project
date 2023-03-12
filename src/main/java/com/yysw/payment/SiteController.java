@@ -2,6 +2,8 @@ package com.yysw.payment;
 
 import com.yysw.user.User;
 import com.yysw.user.UserRepository;
+import com.yysw.user.customer.Customer;
+import com.yysw.user.owner.Owner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,8 +32,20 @@ public class SiteController {
     }
 
     @GetMapping("/register")
-    public String register() {
+    public String register(Model model) {
+        model.addAttribute(new RegisterInformation());
         return "register.html";
+    }
+
+    @PostMapping("/register")
+    public String register(@ModelAttribute("RegisterInformation") RegisterInformation registerInformation) {
+        if (registerInformation.getAdminKey() != null &&
+                Objects.equals(registerInformation.getAdminKey(), "verycooladminkey")) {
+            userRepository.save(new Owner(registerInformation.getUsername(), registerInformation.getPasswd()));
+        } else {
+            userRepository.save(new Customer(registerInformation.getUsername(), registerInformation.getPasswd()));
+        }
+        return "login.html";
     }
 
     @GetMapping("/payment")

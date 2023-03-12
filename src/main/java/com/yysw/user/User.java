@@ -9,11 +9,18 @@ import javax.persistence.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
-    @Column(unique = true, nullable = false)
+    private Long id;
+    @Column(nullable = false)
     private String username;
     @Column(nullable = false)
     private String passwd;
+
+    public User() {}
+
+    public User(String username, String passwd) {
+        this.username = username;
+        this.passwd = passwd;
+    }
 
     public String getUsername() {
         return username;
@@ -31,11 +38,11 @@ public class User {
         this.passwd = passwd;
     }
 
-    public void setUser_id(Long id) {
-        this.user_id = id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getId() {
+        return id;
     }
 }
