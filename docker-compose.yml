@@ -9,6 +9,7 @@ services:
         condition: service_healthy
     ports:
       - 8080:8080
+    restart: always
   yysw-db:
     container_name: yysw-db
     image: mysql:latest
