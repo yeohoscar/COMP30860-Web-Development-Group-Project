@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: app
+    build: .
+    depends_on:
+      - yysw-db
+    ports:
+      - 8080:8080
+    restart: always
+  yysw-db:
+    container_name: yysw-db
+    image: mysql:latest
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=yysw-db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=root

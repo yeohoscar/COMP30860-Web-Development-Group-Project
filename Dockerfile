@@ -7,4 +7,4 @@ FROM dostiharise/ubuntu-java-mysql:latest
 COPY start.sh /app/out/
 COPY --from=build /app/target/COMP30860-Web-Development-Group-Project-1.0-SNAPSHOT.jar /app/out/COMP30860-Web-Development-Group-Project-1.0-SNAPSHOT.jar
 EXPOSE 8080
-ENTRYPOINT ["bash", "/app/out/start.sh"]
+ENTRYPOINT ["java", "-jar", "/app/out/COMP30860-Web-Development-Group-Project-1.0-SNAPSHOT.jar"]
