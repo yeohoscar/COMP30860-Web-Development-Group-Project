@@ -20,6 +20,12 @@ public class Customer extends User implements Serializable {
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private List<ShoppingCartItem> cart;
 
+    public Customer() {}
+
+    public Customer(String username, String passwd) {
+        super(username, passwd);
+    }
+
     public List<Order> getOrder() {
         return orders;
     }

@@ -2,6 +2,7 @@ package com.yysw.cart;
 
 import com.yysw.aimodels.AIModel;
 import com.yysw.user.customer.Customer;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,7 +13,7 @@ public class ShoppingCartItem implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private AIModel item;
 
     private boolean trainedModel;
