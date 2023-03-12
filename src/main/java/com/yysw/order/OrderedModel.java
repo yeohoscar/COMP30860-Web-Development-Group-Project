@@ -4,16 +4,16 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class OrderedModel {
-    private Long model_id;
+    private Long id;
 
     private Double price;
 
-    public Long getModel_id() {
-        return model_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setModel_id(Long model_id) {
-        this.model_id = model_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Double getPrice() {

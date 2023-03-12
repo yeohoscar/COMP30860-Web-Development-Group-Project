@@ -27,7 +27,7 @@ public class OrderHistoryController{
         orders = orderRepository.findByCustomer(customer);
         for(Order a: orders)
         {
-            item.put(a.getOrder_id(), a);
+            item.put(a.getId(), a);
         }
         model.addAttribute("customerOrders", orders);
         return "orderHistory.html";
