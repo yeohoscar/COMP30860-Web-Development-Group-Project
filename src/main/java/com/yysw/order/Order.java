@@ -1,10 +1,8 @@
 package com.yysw.order;
 
 import com.yysw.user.customer.Customer;
-import org.aspectj.weaver.ast.Or;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.*;
 
 @Entity
@@ -12,10 +10,10 @@ import java.util.*;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long order_id;
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "id", nullable = false)
     private Customer customer;
 
     @ElementCollection
@@ -27,12 +25,12 @@ public class Order {
     private Date orderDate;
 
 
-    public Long getOrder_id() {
-        return order_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setOrder_id(Long order_id) {
-        this.order_id = order_id;
+    public void setId(Long order_id) {
+        this.id = order_id;
     }
 
     public State getState() {
