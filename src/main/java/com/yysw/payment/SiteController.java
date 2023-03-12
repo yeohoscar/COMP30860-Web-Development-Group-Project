@@ -64,7 +64,7 @@ public class SiteController {
         if (bindingResult.hasErrors()) {
             return "payment.html";
         } else {
-            return "payment_success.html";
+            return "catalogueMain.html";
         }
     }
 
