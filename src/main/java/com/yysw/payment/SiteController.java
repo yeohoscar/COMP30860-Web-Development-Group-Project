@@ -45,7 +45,7 @@ public class SiteController {
         } else {
             userRepository.save(new Customer(registerInformation.getUsername(), registerInformation.getPasswd()));
         }
-        return "index.html";
+        return "login.html";
     }
 
     @GetMapping("/payment")
