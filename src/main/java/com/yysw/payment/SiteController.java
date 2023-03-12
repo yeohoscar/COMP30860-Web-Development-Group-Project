@@ -54,18 +54,18 @@ public class SiteController {
         }
     }
 
-    @PostMapping("/submit-login")
-    public String loginAcc(@ModelAttribute("user") User user) {
-        User repoUser = userRepository.findByUsernameAndPasswd(user.getUsername(), user.getPasswd());
-        if (repoUser != null &&
-                Objects.equals(repoUser.getUsername(), user.getUsername()) &&
-                Objects.equals(repoUser.getPasswd(), user.getPasswd())
-        ) {
-                /*TODO: smth about differentiating owner and customer acc
-                        and persisting login
-                 */
-            return "index.html";
-        }
-        return "login.html";
-    }
+//    @PostMapping("/submit-login")
+//    public String loginAcc(@ModelAttribute("user") User user) {
+//        User repoUser = userRepository.findByUsernameAndPasswd(user.getUsername(), user.getPasswd());
+//        if (repoUser != null &&
+//                Objects.equals(repoUser.getUsername(), user.getUsername()) &&
+//                Objects.equals(repoUser.getPasswd(), user.getPasswd())
+//        ) {
+//                /*TODO: smth about differentiating owner and customer acc
+//                        and persisting login
+//                 */
+//            return "index.html";
+//        }
+//        return "login.html";
+//    }
 }
