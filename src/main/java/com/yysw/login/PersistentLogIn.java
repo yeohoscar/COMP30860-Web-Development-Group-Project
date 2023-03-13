@@ -33,7 +33,7 @@ public class PersistentLogIn extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("passwd");
-        System.out.println("Before repoUser.getUsername() = "+username);
+        System.out.println("current request's username() = "+username);
 
         User repoUser = userRepository.findByUsernameAndPasswd(username, password);
 //        System.out.println("Null or not = "+ Objects.isNull(repoUser));
@@ -46,9 +46,8 @@ public class PersistentLogIn extends HttpServlet {
                 if(repoUser.getUsername().equals(username)){
                     if(repoUser.getPasswd().equals(password)){
                         Cookie cookie = new Cookie("username", username);
-                        cookie.setMaxAge(60);//let's say the cookie is valid in two minutes
+                        cookie.setMaxAge(-1);//let's say the cookie is valid in two minutes
                         response.addCookie(cookie);//server return this cookie to browser so that it can be checked next time when user log in
-//                response.sendRedirect(request.getContextPath()+"/");
                         response.sendRedirect("/successLogIn");
 
                         System.out.println("Customer Log In Successfully");
@@ -74,7 +73,6 @@ public class PersistentLogIn extends HttpServlet {
                         Cookie cookie = new Cookie("username", username);
                         cookie.setMaxAge(60);//let's say the cookie is valid in two minutes
                         response.addCookie(cookie);//server return this cookie to browser so that it can be checked next time when user log in
-//                response.sendRedirect(request.getContextPath()+"/");
                         response.sendRedirect("/successLogIn");
 
                         System.out.println("Admin Log In Successfully");
@@ -95,56 +93,11 @@ public class PersistentLogIn extends HttpServlet {
                     return;
                 }
             }
-
         }else {
             out.write("<html>"
                     + "<head><script type='text/javascript'> alert('Account Does Not Exist!');location='login.html';</script></head>"
                     + "<body></body></html>");
         }
-
-
-        //check if admin logs in successfully
-//        if("admin".equals(username)){
-//            if("admin".equals(password)){
-//                Cookie cookie = new Cookie("username", username);
-//                cookie.setMaxAge(60);//let's say the cookie is valid in two minutes
-//                response.addCookie(cookie);//server return this cookie to browser so that it can be checked next time when user log in
-//
-//
-////                response.sendRedirect(request.getContextPath()+"/");
-//                response.sendRedirect("/");
-//
-//                System.out.println("successful2");
-//            }else {
-//                out.write("<html"
-//                +"<head><script type='text/javascript'> alert('Wrong Admin Password!');location='login.html';</script></head>"
-//                + "<body></body></html>");
-//                return;
-//            }
-//        //check if customer logs in successfully
-//        }else if("pig".equals(username)){
-//            if("pig".equals(password)){
-//                Cookie cookie = new Cookie("username", username);
-//                cookie.setMaxAge(120);//let's say the cookie is valid in two hours
-//                response.addCookie(cookie);//server return this cookie to browser so that it can be checked next time when user log in
-//
-////                response.sendRedirect(request.getContextPath()+"/");
-//                response.sendRedirect("/");
-//
-//                System.out.println("successful2");
-//            }else {
-//                out.write("<html"
-//                        +"<head><script type='text/javascript'> alert('Wrong Customer Password!');location='login.html';</script></head>"
-//                        + "<body></body></html>");
-//                return;
-//            }
-//        }
-//        else {
-//            out.write("<html>"
-//                    + "<head><script type='text/javascript'> alert('Wrong Admin Username!');location='login.html';</script></head>"
-//                    + "<body></body></html>");
-//            return;
-//        }
     }
 
 }
