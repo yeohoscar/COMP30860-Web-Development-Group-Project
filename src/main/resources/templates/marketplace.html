@@ -54,7 +54,7 @@
         <!-- Thymeleaf iterator that takes a model containing all the models and formats them into rows of three -->
         <div class="row" th:each="model, iter : ${catalogue}" th:if="${iter.index % 3 == 0 && iter.index < catalogue.size()}">
             <div class="col-md-4">
-                <div class="content bg-green">
+                <div th:attr="class=${model.available ? 'model-available' : 'model-unavailable'}">
                     <!--can use <a href> too-->
                     <a th:href="@{/marketplace/{id}/{name}(id=${model.id}, name=${model.modelName})}">
                         <img th:src="${model.photoURL}" alt="image"/>
@@ -80,27 +80,6 @@
                         <img src="https://www.tutorialspoint.com/latest/inter-process-communication.png" alt="image"/>
                         <span th:text="${rightModel.modelName}"></span>
                     </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="row" style="padding: 16px 0px;">
-            <div class="col-md-4">
-                <div class="content bg-pink">
-                    <p>Peer Pressure</p>
-                    <p class="text0">Peer pressure can also be a factor in cyberbullying. People may feel compelled to bully others online because they feel that it is what their friends or peers expect of them. They may also feel that they need to prove their worth or power in order to fit in with a particular group.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="content bg-green">
-                    <p>Low Self-Esteem</p>
-                    <p class="text0">Low self-esteem can also play a role in cyberbullying. People with low self-esteem may engage in bullying behavior as a way to boost their own confidence and make themselves feel better about themselves.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="content bg-pink">
-                    <p>Mental Health Issues</p>
-                    <p class="text0">Mental health issues such as depression, anxiety, and impulsiveness can also contribute to cyberbullying. Individuals with these issues may find it difficult to control their emotions or behavior and may turn to bullying as a way to cope with their feelings.</p>
                 </div>
             </div>
         </div>

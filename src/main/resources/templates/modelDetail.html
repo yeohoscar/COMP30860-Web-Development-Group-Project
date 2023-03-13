@@ -57,7 +57,7 @@
                     <h4 th:text="${model.modelName}"></h4>
                     <p th:text="${model.description}"></p>
 
-                    <form th:action="@{/marketplace/__${id}__/__${name}__}" method="POST">
+                    <form th:action="@{/marketplace/add-to-cart/__${id}__/__${name}__}" method="POST">
                         <label th:text="'Trained model ' + ${model.trainedPrice}"></label>
                         <input type="checkbox" name="trained">
                         <label th:text="'Untrained model ' + ${model.untrainedPrice}"></label>
