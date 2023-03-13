@@ -50,10 +50,34 @@
   <form th:action="@{/submit-login}" method="post">
     <label for="username">Username</label>
     <input type="text" id="username" th:name="username" required/>
+
     <label for="passwd">Password</label>
     <input type="password" id="passwd" th:name="passwd" required/>
-    <input type="submit"/>
+    <input type="submit" value="Log In">
+  </form>
+  <form th:action="@{/stayLogIn}" method="get">
+    <h6>Already log in? Click Here!</h6>
+    <button>Already Login</button>
+  </form>
+  <form th:action="@{/quitLogIn}" method="get">
+    <h6>Want to quit log in? Click Here!</h6>
+    <button>Quit Login</button>
   </form>
 </div>
+
+
+
+<!--<div>-->
+<!--  <h1>AI MODEL MARKETPLACE</h1>-->
+<!--  <form action="/submit-login" method="post">-->
+<!--    <label for="username">Username</label>-->
+<!--    <input type="text" id="username" th:name="username" required/>-->
+
+<!--    <label for="passwd">Password</label>-->
+<!--    <input type="password" id="passwd" th:name="passwd" required/>-->
+
+<!--    <input type="submit"/>-->
+<!--  </form>-->
+<!--</div>-->
 </body>
 </html>
