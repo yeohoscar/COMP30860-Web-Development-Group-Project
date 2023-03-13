@@ -12,6 +12,7 @@ import com.yysw.user.customer.Customer;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "aimodel", schema = "yysw-db")
 public class AIModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

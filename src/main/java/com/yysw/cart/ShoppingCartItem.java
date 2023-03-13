@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "shopping_cart_item", schema = "yysw-db")
 public class ShoppingCartItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
