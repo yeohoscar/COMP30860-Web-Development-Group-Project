@@ -4,13 +4,11 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
+import java.util.Date;
 
 @Component
 @WebServlet("/stayLogIn")
@@ -23,6 +21,14 @@ public class CheckLogIn extends HttpServlet {
 
         boolean alreadyLogIn = false;
         PrintWriter out = response.getWriter();
+
+        HttpSession session = request.getSession();
+        System.out.println("Check Session ID: " + session.getId());
+        System.out.println("Check Creation Time: " + new Date(session.getCreationTime()));
+        System.out.println("Check Last Accessed Time: " + new Date(session.getLastAccessedTime()));
+        out.println();
+        out.println();
+        out. println();
 
         // 判断cookie是否有username，如果有代表登陆过
         Cookie[] cookies = request.getCookies();

@@ -14,6 +14,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
+import java.util.Date;
 import java.util.Objects;
 
 @Component
@@ -40,7 +41,18 @@ public class PersistentLogIn extends HttpServlet {
 //        System.out.println("Null or not = "+ Objects.isNull(repoUser));
 //        System.out.println("repoUser.getUsername() = "+repoUser.getUsername());
 
+
+        HttpSession session = request.getSession();
         PrintWriter out = response.getWriter();
+        System.out.println("Persist Session ID: " + session.getId());
+        System.out.println("Persist Creation Time: " + new Date(session.getCreationTime()));
+        System.out.println("Persist Last Accessed Time: " + new Date(session.getLastAccessedTime()));
+        out.println();
+        out.println();
+        out. println();
+
+        if(session.getAttribute("username"))
+
         if(repoUser != null)
         {
             if(repoUser instanceof Customer){
