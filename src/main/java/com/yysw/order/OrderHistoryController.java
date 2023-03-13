@@ -1,4 +1,4 @@
-package com.yysw.orderHistory;
+package com.yysw.order;
 
 import com.yysw.order.Order;
 import com.yysw.order.OrderRepository;
@@ -17,28 +17,21 @@ import java.util.List;
 public class OrderHistoryController{
     @Autowired
     private OrderRepository orderRepository;
-    List<Order> orders = new ArrayList<>();
-    HashMap<Long, Order> item = new HashMap<>();
 
     //DO NOT DELETE THIS METHOD!!!
     @GetMapping("/orderHistory")
     public String orderHistory(Customer customer, Model model)
     {
-        orders = orderRepository.findByCustomer(customer);
-        for(Order a: orders)
-        {
-            item.put(a.getId(), a);
-        }
+        List<Order> orders = orderRepository.findByCustomerOrderByOrderDateDesc(customer);
         model.addAttribute("customerOrders", orders);
         return "orderHistory.html";
     }
-
 
     @GetMapping("/viewOrder/{id}")
     public String viewOrder(Model model, @PathVariable Long id)
     {
         System.out.println("Successful"+id);
-        model.addAttribute("view", item.get(id));
+        model.addAttribute("view", orderRepository.findById(id));
         return "viewOrder.html";
     }
 }
