@@ -24,21 +24,21 @@ public class ShoppingCartController {
     private AIModelRepository aiModelRepository;
     List<ShoppingCartItem> modelsInCart = new ArrayList<>();
 
-    @GetMapping("/marketplace")
+    @GetMapping("/catalogue")
     public String marketplace(Model model) {
         model.addAttribute("catalogue", aiModelRepository.findAll());
 
-        return "marketplace.html";
+        return "catalogue.html";
     }
 
-    @GetMapping("/marketplace/{id}/{name}")
+    @GetMapping("/catalogue/{id}/{name}")
     public String viewModel(@PathVariable(value="id") Long id, @PathVariable(value="name") String name, Model model) {
         model.addAttribute("model", aiModelRepository.findAIModelById(id));
 
         return "modelDetail.html";
     }
 
-    @PostMapping("/marketplace/{id}/{name}")
+    @PostMapping("/catalogue/{id}/{name}")
     public String addCart(ShoppingCartItem shoppingCartItem, @PathVariable(value="id") Long id, @PathVariable(value="name") String name, Model model, HttpServletRequest request, BindingResult bindingResult) {
         AIModel ai = aiModelRepository.findAIModelById(id);
         shoppingCartItem.setItem(ai);

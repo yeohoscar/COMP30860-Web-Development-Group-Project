@@ -11,35 +11,33 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-    <div>
-      <div class="row">
+    <div class="row">
         <div class="col-sm-7">
-          <h1>Enter Payment Details</h1>
-          <hr class="solid">
-          <!--TODO:Redirect somewhere -->
-          <form action="#" th:action="@{/payment}" th:object="${paymentInformation}" method="POST">
-              <div class="row">
-                  <input type="text" th:field="*{name}" placeholder="Name On Card" required/>
-                  <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Valid Name Required</span>
-              </div>
-              <div class="row">
-                  <input type="text" th:field="*{cardNum}" placeholder="Card Number*" pattern="\d{16}" required/>
-                  <span th:if="${#fields.hasErrors('cardNum')}" th:errors="*{cardNum}">Valid Card Number Required</span>
-              </div>
-              <div class="row">
-                  <div class="col-sm-6">
-                      <input type="month" th:field="*{expiry}" placeholder="MM/YY" required/>
-                      <span th:if="${#fields.hasErrors('expiry')}" th:errors="*{expiry}">Valid Name Required</span>
-                  </div>
-                  <div class="col-sm-6">
-                      <input type="text" th:field="*{cvv}" placeholder="CVV*" pattern="\d{3}" required/>
-                      <span th:if="${#fields.hasErrors('cvv')}" th:errors="*{cvv}">Valid CVV Required</span>
-                  </div>
-              </div>
-              <input type="submit" value="Submit">
-          </form>
+            <h1>Enter Payment Details</h1>
+            <hr class="solid">
+            <!--TODO:Redirect somewhere -->
+            <form action="#" th:action="@{/payment}" th:object="${paymentInformation}" method="POST">
+                <div class="row">
+                    <input type="text" th:field="*{name}" placeholder="Name On Card" required/>
+                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Valid Name Required</span>
+                </div>
+                <div class="row">
+                    <input type="text" th:field="*{cardNum}" placeholder="Card Number*" pattern="\d{16}" required/>
+                    <span th:if="${#fields.hasErrors('cardNum')}" th:errors="*{cardNum}">Valid Card Number Required</span>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <input type="month" th:field="*{expiry}" placeholder="MM/YY" required/>
+                        <span th:if="${#fields.hasErrors('expiry')}" th:errors="*{expiry}">Valid Name Required</span>
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="text" th:field="*{cvv}" placeholder="CVV*" pattern="\d{3}" required/>
+                        <span th:if="${#fields.hasErrors('cvv')}" th:errors="*{cvv}">Valid CVV Required</span>
+                    </div>
+                </div>
+                <input type="submit" value="Submit">
+            </form>
         </div>
-      </div>
     </div>
 </body>
 </html>
