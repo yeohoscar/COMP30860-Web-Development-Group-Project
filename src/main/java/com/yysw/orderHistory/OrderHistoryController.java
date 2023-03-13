@@ -33,12 +33,17 @@ public class OrderHistoryController{
         return "orderHistory.html";
     }
 
-
     @GetMapping("/viewOrder/{id}")
     public String viewOrder(Model model, @PathVariable Long id)
     {
         System.out.println("Successful"+id);
         model.addAttribute("view", item.get(id));
         return "viewOrder.html";
+    }
+
+    @GetMapping("view-all-orders")
+    public String viewAllOrders(Model model) {
+        model.addAttribute("allOrders", orderRepository.findAll());
+        return "view-all-orders";
     }
 }
