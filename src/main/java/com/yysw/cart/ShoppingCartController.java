@@ -1,7 +1,6 @@
 package com.yysw.cart;
 
-import com.yysw.general.AIModel;
-import com.yysw.general.AIModelRepository;
+import com.yysw.aimodels.*;
 import com.yysw.user.customer.Customer;
 import com.yysw.user.customer.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
