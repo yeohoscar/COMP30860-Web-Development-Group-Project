@@ -26,7 +26,7 @@ public class SiteController {
     }
     @GetMapping("/successLogIn")
     public String successLogIn() {
-        return "successLogIn.html";
+        return "login-success.html";
     }
     @GetMapping("/logInAgain")
     public String logInAgain() {

@@ -17,7 +17,7 @@ public class ContactController {
     public String contact(Model model) {
         ContactInformation c = new ContactInformation();
         model.addAttribute("contactInformation", c);
-        return "contactUs.html";
+        return "contact-us.html";
     }
 
     @PostMapping("/contactUs")
@@ -26,9 +26,9 @@ public class ContactController {
         System.out.println(contactInformation.getContactDate());
         System.out.println(bindingResult.toString());
         if (bindingResult.hasErrors()) {
-            return "contactUs.html";
+            return "contact-us.html";
         } else {
-            return "contactSuccess.html";
+            return "contact-success.html";
         }
     }
 }

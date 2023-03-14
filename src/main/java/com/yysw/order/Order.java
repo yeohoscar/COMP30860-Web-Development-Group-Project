@@ -1,5 +1,6 @@
 package com.yysw.order;
 
+import com.yysw.aimodels.AIModel;
 import com.yysw.user.customer.Customer;
 
 import javax.persistence.*;
@@ -24,6 +25,9 @@ public class Order {
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
 
+    public void updateState(Order order) {
+        this.state = order.state;
+    }
 
     public Long getId() {
         return id;
@@ -68,6 +72,7 @@ public class Order {
     public int quantityOfOrder() {
         return this.getOrderedModels().size();
     }
+
     public Double totalPriceOfOrderedModels() {
         Double totalPrice=0.0;
         for(OrderedModel a: this.getOrderedModels())

@@ -13,28 +13,32 @@
 <h1>Order History</h1>
 <hr>
 <div class="container">
-    <div th:each="item: ${customerOrders}" th:id="itm" class="row justify-content-md-center">
+    <div th:each="order: ${orders}" class="row justify-content-md-center">
         <div class="col-lg-8 orderBack" >
                 <div class="row">
                     <div class="col-lg-9">
-                        <h5 th:text="'Order Number: '+${item.getOrder_id()}"></h5>
+                        <h5 th:text="'Order Number: ' + ${order.id}"></h5>
                     </div>
-                    <div class="col-lg-3" th:text="'Date:'+' '+${#dates.format(item.getOrderDate(), 'yyyy-mm-dd')}"></div>
+                    <div class="col-lg-3" th:text="'Date:' + ' ' + ${#dates.format(order.orderDate, 'dd/mm/yyyy')}"></div>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col" th:text="'Quantity:'+' '+${item.quantityOfOrder()}"></div>
+                    <div class="col" th:text="'Quantity:' + ' ' + ${order.quantityOfOrder()}"></div>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col" th:text="'Total:'+' '+${item.totalPriceOfOrderedModels()}">
+                    <div class="col" th:text="'State:' + ' ' + ${order.state}"></div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col" th:text="'Total:' + ' ' + ${order.totalPriceOfOrderedModels()}">
                         Total: sum_up()
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-9"></div>
                     <div class="col-lg-3 ">
-                        <form method="get" th:action="@{/viewOrder/{id}(id=${item.getOrder_id()})}">
+                        <form method="get" th:action="@{/view-order/{id}(id=${order.getOrder_id()})}">
                             <input class="buttonStyle" type="submit"  value="details >>>">
                         </form>
                     </div>

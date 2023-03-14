@@ -43,14 +43,20 @@ public class ShoppingCartController {
     @GetMapping("/marketplace/{id}/{name}")
     public String viewModel(@PathVariable(value="id") Long id, @PathVariable(value="name") String name, Model model) {
         model.addAttribute("model", aiModelRepository.findAIModelById(id));
-        return "modelDetail.html";
+        return "model-detail.html";
+    }
+
+    @GetMapping("/marketplace/edit/{id}/{name}")
+    public String editModel(@PathVariable(value="id") Long id, @PathVariable(value="name") String name, Model model) {
+        model.addAttribute("model", aiModelRepository.findAIModelById(id));
+        return "model-detail.html"; // TODO: TEST AND REDIRECT TO A BETTER PLACE
     }
 
     @PostMapping("/marketplace/edit/{id}/{name}")
     public String editModel(@ModelAttribute("model") AIModel aiModel, @PathVariable(value="id") Long id, @PathVariable(value="name") String name) {
         AIModel aiModelToBeUpdated = aiModelRepository.findAIModelById(id);
         aiModelToBeUpdated.updateModel(aiModel);
-        return "modelDetail.html"; //TODO: TEST AND REDIRECT TO A BETTER PLACE
+        return "model-detail.html"; // TODO: TEST AND REDIRECT TO A BETTER PLACE
     }
 
     @PostMapping("/marketplace/add-to-cart/{id}/{name}")
@@ -75,7 +81,7 @@ public class ShoppingCartController {
         if (bindingResult.hasErrors()) {
             return "index.html";
         } else {
-            return "modelDetail.html";
+            return "model-detail.html";
         }
     }
 
@@ -106,6 +112,6 @@ public class ShoppingCartController {
         model.addAttribute("discount", sub*0.2);
         model.addAttribute("tot",sub+processfee-(sub*0.2));*/
 
-        return "shoppingCart.html";
+        return "shopping-cart.html";
     }
 }
