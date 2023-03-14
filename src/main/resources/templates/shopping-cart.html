@@ -40,12 +40,12 @@
                 </thead>
                 <tbody>
                 <tr th:each="ele:${products}">
-<<<<<<< HEAD:src/main/resources/templates/shopping-cart.html
+<!--
                     <td class="wrapTextInTableCell" th:text="${ele.item.modelName}">Name+Descritpion</td>
                     <td class="wrapTextInTableCell"><span th:if="${ele.trainedModel}">Trained</span><br><span th:if="${ele.untrainedModel}">Untrained</span></td>
                     <td class="wrapTextInTableCell" th:text="'€' + ${ele.price}">£0</td>
                     <td class="wrapTextInTableCell" th:text="'€' + ${subtotal}">£0</td>
-=======
+-->
                     <td class="wrapTextInTableCell" th:text="${ele.name}">Name+Descritpion</td>
                     <td class="wrapTextInTableCell">
                         <select name="priceType">
@@ -55,7 +55,6 @@
                     </td>
                     <td class="wrapTextInTableCell">£0</td>
                     <td class="wrapTextInTableCell">£0</td>
->>>>>>> main:src/main/resources/templates/shoppingCart.html
                 </tr>
                 </tbody>
             </table>

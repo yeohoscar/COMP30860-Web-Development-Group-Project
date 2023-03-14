@@ -62,23 +62,5 @@ public class OrderHistoryController{
         Order orderStateToBeUpdated = orderRepository.findOrderById(id);
         orderStateToBeUpdated.updateState(order);
         return "view-all-orders";
-=======
-
-    //DO NOT DELETE THIS METHOD!!!
-    @GetMapping("/orderHistory")
-    public String orderHistory(Customer customer, Model model)
-    {
-        List<Order> orders = orderRepository.findByCustomerOrderByOrderDateDesc(customer);
-        model.addAttribute("customerOrders", orders);
-        return "orderHistory.html";
-    }
-
-    @GetMapping("/viewOrder/{id}")
-    public String viewOrder(Model model, @PathVariable Long id)
-    {
-        System.out.println("Successful"+id);
-        model.addAttribute("view", orderRepository.findById(id));
-        return "viewOrder.html";
->>>>>>> main
     }
 }
