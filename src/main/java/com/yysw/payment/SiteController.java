@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Objects;
@@ -23,10 +22,13 @@ public class SiteController {
     private UserRepository userRepository;
 
     @GetMapping("/")
-    public String home(HttpServletRequest request) {
+    public String home(HttpServletRequest request, Model model) {
         User sessionUser = (User) request.getSession().getAttribute("username");
-        if (userRepository.findUserById(sessionUser.getId()) instanceof Customer) {
-            return "/payment.html";
+        if (sessionUser == null) {
+            return "index.html";
+        } else {
+            User repoUser = userRepository.findUserById(sessionUser.getId());
+            model.addAttribute("user", repoUser);
         }
         return "index.html";
     }
@@ -82,22 +84,7 @@ public class SiteController {
         if (bindingResult.hasErrors()) {
             return "payment.html";
         } else {
-            return "payment_success.html";
+            return "catalogueMain.html";
         }
     }
-
-//    @PostMapping("/submit-login")
-//    public String loginAcc(@ModelAttribute("user") User user) {
-//        User repoUser = userRepository.findByUsernameAndPasswd(user.getUsername(), user.getPasswd());
-//        if (repoUser != null &&
-//                Objects.equals(repoUser.getUsername(), user.getUsername()) &&
-//                Objects.equals(repoUser.getPasswd(), user.getPasswd())
-//        ) {
-//                /*TODO: smth about differentiating owner and customer acc
-//                        and persisting login
-//                 */
-//            return "index.html";
-//        }
-//        return "login.html";
-//    }
 }
