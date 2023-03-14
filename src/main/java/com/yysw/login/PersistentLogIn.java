@@ -31,7 +31,7 @@ public class PersistentLogIn extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         HttpSession session = request.getSession();
         String sessionId = session.getId();
-        session.setMaxInactiveInterval(30);
+        session.setMaxInactiveInterval(-1);
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
 
@@ -58,7 +58,7 @@ public class PersistentLogIn extends HttpServlet {
                     if (repoUser.getUsername().equals(username)) {
                         if (repoUser.getPasswd().equals(password)) {
                             Cookie cookie = new Cookie("sessionId", sessionId);
-                            cookie.setMaxAge(30);//let's say the cookie is valid in two minutes
+                            cookie.setMaxAge(-1);//let's say the cookie is valid in two minutes
                             response.addCookie(cookie);//server return this cookie to browser so that it can be checked next time when user log in
                             response.sendRedirect("/successLogIn");
 

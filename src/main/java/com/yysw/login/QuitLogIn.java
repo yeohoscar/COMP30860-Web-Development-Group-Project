@@ -37,6 +37,7 @@ public class QuitLogIn extends HttpServlet {
                         alreadyLogIn=true;
                         System.out.println("Quit Log In\n");
                         cookie.setMaxAge(0);
+                        session.invalidate();
                         response.addCookie(cookie);
                     }
                 }
