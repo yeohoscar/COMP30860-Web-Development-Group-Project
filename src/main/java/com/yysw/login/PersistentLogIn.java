@@ -37,7 +37,7 @@ public class PersistentLogIn extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("passwd");
-        System.out.println("current username that wants to login = "+username);
+        System.out.println("current username that wants to login = " + username);
 
         //obtain acc from database
         User repoUser = userRepository.findByUsernameAndPasswd(username, password);
@@ -50,10 +50,9 @@ public class PersistentLogIn extends HttpServlet {
         System.out.println("Persist Last Accessed Time: " + new Date(session.getLastAccessedTime()));
 
         //说明还没有用户登录
-        if(session.getAttribute("username")==null) {
+        if(session.getAttribute("username") == null) {
             session.setAttribute("username", repoUser);
-            if (repoUser != null)
-            {
+            if (repoUser != null) {
                 if (repoUser instanceof Customer) {
                     if (repoUser.getUsername().equals(username)) {
                         if (repoUser.getPasswd().equals(password)) {
@@ -115,10 +114,9 @@ public class PersistentLogIn extends HttpServlet {
             }
         }
         //否则, 已经有一个账户登录了
-        else
-        {
+        else {
             System.out.println("there already has one account login");
-          response.sendRedirect("/logInOccupied");
+            response.sendRedirect("/logInOccupied");
 //            JOptionPane.showMessageDialog(null, "At most log in one account at the same time!");
 
         }
