@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Objects;
 
@@ -21,7 +23,11 @@ public class SiteController {
     private UserRepository userRepository;
 
     @GetMapping("/")
-    public String home() {
+    public String home(HttpServletRequest request) {
+        User sessionUser = (User) request.getSession().getAttribute("username");
+        if (userRepository.findUserById(sessionUser.getId()) instanceof Customer) {
+            return "/payment.html";
+        }
         return "index.html";
     }
     @GetMapping("/successLogIn")
