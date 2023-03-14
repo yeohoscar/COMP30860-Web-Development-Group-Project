@@ -15,42 +15,48 @@ import java.util.Date;
 public class CheckLogIn extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("successful1");
+//        System.out.println("successful1");
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
 
         boolean alreadyLogIn = false;
         PrintWriter out = response.getWriter();
 
-        HttpSession session = request.getSession();
-        System.out.println("Check Session ID: " + session.getId());
-        System.out.println("Check Creation Time: " + new Date(session.getCreationTime()));
-        System.out.println("Check Last Accessed Time: " + new Date(session.getLastAccessedTime()));
-        out.println();
-        out.println();
-        out. println();
+        HttpSession session = request.getSession(false);
 
-        // 判断cookie是否有username，如果有代表登陆过
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (URLDecoder.decode(cookie.getName(), "utf-8").equals("username")) { // 表明已经登陆过了，就直接跳转了
-                    System.out.println("Already Log in");
-                    alreadyLogIn = true;
+        if(session != null) {
+            System.out.println("Check Session ID: " + session.getId());
+            System.out.println("Check Creation Time: " + new Date(session.getCreationTime()));
+            System.out.println("Check Last Accessed Time: " + new Date(session.getLastAccessedTime()));
+            out.println();
+            out.println();
+            out.println();
+
+            // 判断cookie是否有username，如果有代表登陆过
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    System.out.println("Cookie name= "+cookie.getName());
+                    if (cookie.getName().equals("sessionId")) { // 表明已经登陆过了，就直接跳转了
+                        System.out.println("Session name = "+cookie.getName());
+                        System.out.println("Already Log in\n");
+                        alreadyLogIn = true;
+                    }
                 }
             }
-        }
 
-        if(alreadyLogIn) {
-            response.sendRedirect(request.getContextPath() + "/successLogIn");
-        }else {
+            if (alreadyLogIn) {
+                response.sendRedirect(request.getContextPath() + "/successLogIn");
+            } else {
+                System.out.println("PLease Log in\n");
+                response.sendRedirect(request.getContextPath() + "/logInAgain");
+                out.write("<html>"
+                        + "<head><script type='text/javascript'> alert('Never Login, please login!');location='login.html';</script></head>"
+                        + "<body></body></html>");
+            }
+        }else{
             System.out.println("PLease Log in");
             response.sendRedirect(request.getContextPath() + "/logInAgain");
-            out.write("<html>"
-                    + "<head><script type='text/javascript'> alert('Never Login, please login!');location='login.html';</script></head>"
-                    + "<body></body></html>");
-//                        response.sendRedirect(request.getContextPath()+"/");
-
         }
     }
 }

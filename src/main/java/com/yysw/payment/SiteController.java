@@ -37,6 +37,11 @@ public class SiteController {
         model.addAttribute("user", new User());
         return "login.html";
     }
+    @GetMapping("/logInOccupied")
+    public String logInOccupied(Model model) {
+        model.addAttribute("user", new User());
+        return "logInOccupied.html";
+    }
 
     @GetMapping("/register")
     public String register(Model model) {
