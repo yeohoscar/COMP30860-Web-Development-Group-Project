@@ -11,6 +11,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.'[[['']0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="scripts.js"></script>
 </head>
 <body data-spy="scroll" data-target="#navbar0" data-offser="0">
 <div>
@@ -47,37 +48,22 @@
 
 <div>
   <h1>AI MODEL MARKETPLACE</h1>
-  <form th:action="@{/submit-login}" method="post">
+  <form name="register" th:action="@{/register}" onsubmit="return validateRegister()" method="post">
     <label for="username">Username</label>
     <input type="text" id="username" th:name="username" required/>
 
     <label for="passwd">Password</label>
     <input type="password" id="passwd" th:name="passwd" required/>
-    <input type="submit" value="Log In">
-  </form>
-  <form th:action="@{/stayLogIn}" method="get">
-    <h6>Already log in? Click Here!</h6>
-    <button>Already Login</button>
-  </form>
-  <form th:action="@{/quitLogIn}" method="get">
-    <h6>Want to log out? Click Here!</h6>
-    <button>Logout</button>
+
+    <label for="cpasswd">Confirm Password</label>
+    <input type="password" id="cpasswd" th:name="cpasswd" required/>
+
+    <label for="adminCheck">Register as an administrator</label>
+    <input type="checkbox" id="adminCheck" onclick="showAdminKeyInput()">
+
+    <input style="display: none" type="password" id="adminKeyInput" th:name="adminKey">
+    <input type="submit"/>
   </form>
 </div>
-
-
-
-<!--<div>-->
-<!--  <h1>AI MODEL MARKETPLACE</h1>-->
-<!--  <form action="/submit-login" method="post">-->
-<!--    <label for="username">Username</label>-->
-<!--    <input type="text" id="username" th:name="username" required/>-->
-
-<!--    <label for="passwd">Password</label>-->
-<!--    <input type="password" id="passwd" th:name="passwd" required/>-->
-
-<!--    <input type="submit"/>-->
-<!--  </form>-->
-<!--</div>-->
 </body>
 </html>

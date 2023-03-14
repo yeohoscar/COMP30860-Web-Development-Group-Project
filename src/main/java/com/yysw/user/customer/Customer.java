@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.yysw.general.AIModel;
+import com.yysw.aimodels.AIModel;
+import com.yysw.cart.ShoppingCartItem;
 import com.yysw.order.Order;
 import com.yysw.user.User;
 
@@ -17,7 +18,13 @@ public class Customer extends User implements Serializable {
     private List<Order> orders = new ArrayList<Order>();
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
-    private List<AIModel> cart;
+    private List<ShoppingCartItem> cart;
+
+    public Customer() {}
+
+    public Customer(String username, String passwd) {
+        super(username, passwd);
+    }
 
     public List<Order> getOrder() {
         return orders;
@@ -27,11 +34,7 @@ public class Customer extends User implements Serializable {
         this.orders = order;
     }
 
-    public List<AIModel> getCart() {
-        return cart;
-    }
+    public List<ShoppingCartItem> getCart() { return cart; }
 
-    public void setCart(List<AIModel> cart) {
-        this.cart = cart;
-    }
+    public void setCart(List<ShoppingCartItem> cart) { this.cart = cart; }
 }
