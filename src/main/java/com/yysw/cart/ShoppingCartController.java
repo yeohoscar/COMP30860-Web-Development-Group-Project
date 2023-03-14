@@ -2,8 +2,10 @@ package com.yysw.cart;
 
 import com.yysw.aimodels.AIModel;
 import com.yysw.aimodels.AIModelRepository;
+import com.yysw.user.User;
 import com.yysw.user.customer.Customer;
 import com.yysw.user.customer.CustomerRepository;
+import com.yysw.user.owner.Owner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,13 +28,19 @@ public class ShoppingCartController {
     List<ShoppingCartItem> modelsInCart = new ArrayList<>();
 
     @GetMapping("/catalogue")
-    public String marketplace(Model model) {
+    public String marketplace(Model model, HttpServletRequest request) {
+        User sessionUser = (User) request.getSession().getAttribute("user");
+
         List<AIModel> modelsToDisplay;
         //TODO: CHECK IF USER IS OWNER OR CUSTOMER OR RANDOM SCRUB
-        if (false) {
-            modelsToDisplay = aiModelRepository.findAll();
-        } else {
+        if (sessionUser == null) {
             modelsToDisplay = aiModelRepository.findAIModelByAvailable(true);
+        } else {
+            if (sessionUser instanceof Owner) {
+                modelsToDisplay = aiModelRepository.findAll();
+            } else {
+                modelsToDisplay = aiModelRepository.findAIModelByAvailable(true);
+            }
         }
 
         model.addAttribute("catalogue", modelsToDisplay);
@@ -43,6 +51,13 @@ public class ShoppingCartController {
     @GetMapping("/catalogue/add-to-cart/{id}/{name}")
     public String viewModelDetails(@PathVariable(value="id") Long id,
                                    @PathVariable(value="name") String name, Model model) {
+        model.addAttribute("model", aiModelRepository.findAIModelById(id));
+        return "model-detail.html";
+    }
+
+    @GetMapping("/catalogue/edit/{id}/{name}")
+    public String viewModel(@PathVariable(value="id") Long id,
+                            @PathVariable(value="name") String name, Model model) {
         model.addAttribute("model", aiModelRepository.findAIModelById(id));
         return "model-detail.html";
     }
@@ -72,13 +87,6 @@ public class ShoppingCartController {
         } else {
             return "model-detail.html";
         }
-    }
-
-    @GetMapping("/catalogue/edit/{id}/{name}")
-    public String viewModel(@PathVariable(value="id") Long id,
-                            @PathVariable(value="name") String name, Model model) {
-        model.addAttribute("model", aiModelRepository.findAIModelById(id));
-        return "model-detail.html";
     }
 
     @PostMapping("/catalogue/edit/{id}/{name}")

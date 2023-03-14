@@ -41,7 +41,7 @@
                     <div class="col-lg-9">
                         <h5 th:text="'Order Number: ' + ${order.id}"></h5>
                     </div>
-                    <div class="col-lg-3" th:text="'Date:' + ' ' + ${#dates.format(order.orderDate, 'dd/mm/yyyy')}"></div>
+                    <div class="col-lg-3" th:text="'Date:' + ' ' + ${#dates.format(order.orderDate, 'dd/MM/yyyy')}"></div>
                 </div>
                 <br>
                 <div class="row">
@@ -60,7 +60,7 @@
                 <div class="row">
                     <div class="col-lg-9"></div>
                     <div class="col-lg-3 ">
-                        <form method="get" th:action="@{/view-order/{id}(id=${order.getOrder_id()})}">
+                        <form method="get" th:action="@{/view-order/{id}(id=${order.getId()})}">
                             <input class="buttonStyle" type="submit"  value="details >>>">
                         </form>
                     </div>

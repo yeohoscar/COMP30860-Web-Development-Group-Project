@@ -18,13 +18,30 @@
 <div >
     <div class="row">
         <div class="col-lg">
+            <div class="row" th:if="${user.class.name eq 'com.yysw.user.customer.Customer'}">
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4">
+                    <form action="#" th:action="@{/view-order/{id}(id=${order.getOrder_id()})}" th:object="${order}" method="POST">
+                        <select name="state">
+                            <option th:each="stateOpt: ${T(com.yysw.order.State).values()}"
+                                    th:value="${stateOpt}" th:text="${stateOpt.displayValue}"></option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+            <div class="row" th:if="${user.class.name eq 'com.yysw.user.owner.Owner'}">
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4">
+                    <h5 th:text="${order.state}"></h5>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-sm-8">
-                    <h1 th:text="'Order: ' + ${order.getOrder_id()}"></h1>
+                    <h1 th:text="'Order: ' + ${order.getId()}"></h1>
                 </div>
                 <div class="col-sm-4">
                     <h5 th:text="${order.getOrderDate()}"></h5>
-                    <h5 th:text="'Date:' + ' ' + ${#dates.format(order.getOrderDate(), 'dd/mm/yyyy')}"></h5>
+                    <h5 th:text="'Date:' + ' ' + ${#dates.format(order.getOrderDate(), 'dd/MM/yyyy')}"></h5>
                 </div>
             </div>
 
