@@ -37,15 +37,21 @@
         </div>
     </nav>
 
-    <div>
-        <h1>AI MODEL MARKETPLACE</h1>
-        <form th:action="@{/submit-login}" method="post">
-            <label for="username">Username</label>
-            <input type="text" id="username" th:name="username" required/>
-            <label for="passwd">Password</label>
-            <input type="password" id="passwd" th:name="passwd" required/>
-            <input type="submit"/>
-        </form>
-    </div>
+<div>
+  <h1>AI MODEL MARKETPLACE</h1>
+  <form th:action="@{/submit-login}" method="post">
+    <label for="username">Username</label>
+    <input type="text" id="username" th:name="username" required/>
+
+    <label for="passwd">Password</label>
+    <input type="password" id="passwd" th:name="passwd" required/>
+    <input type="submit" value="Log In">
+  </form>
+  <form th:action="@{/stayLogIn}" method="get">
+    <h6>Already log in? Click Here!</h6>
+    <button>Already Login</button>
+  </form>
+
+</div>
 </body>
 </html>
