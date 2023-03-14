@@ -1,3 +1,7 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+
 .opening {
     background-image: url("image/background.jpg");
     background-repeat: no-repeat;
@@ -6,7 +10,7 @@
     text-align: center;
     color: white;
     max-width: 100%;
-    height: 520px;
+    height: 100vw;
 
 }
 
@@ -14,4 +18,34 @@
     position: absolute;
     top: 40%;
     left: 3%
+}
+
+.main-color {
+    color: #FFB394;
+}
+
+.orange-button-sm, .white-button-sm {
+    border-radius: 5px;
+}
+
+.orange-button-md, .white-button-md {
+    border-radius: 10px;
+}
+
+.orange-button-sm, .orange-button-md {
+    color: white;
+    background-color: #FFB394;
+    border: none;
+}
+
+.white-button-sm, .white-button-md {
+    color: #FFB394;
+    border-color: #FFB394;
+    background-color: white;
+}
+
+input[type=text], input[type=password] {
+    border-radius: 10px;
+    border-color: #FFB394;
+    background-color: rgba(255, 179, 100, 0.2);
 }

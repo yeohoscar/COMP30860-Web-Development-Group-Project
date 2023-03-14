@@ -14,29 +14,52 @@
 </head>
 <body data-spy="scroll" data-target="#navbar0" data-offser="0">
 
-    <nav class="navbar sticky-top navbar-expand-md bg-body-tertiary" id="navbar0">
+    <nav class="navbar sticky-top navbar-expand-md bg-body-tertiary" id="navbar0" th:object="${user}">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <a href="/">YYWS</a>
+            <a href="/">
+                <img src="/image/logo.png" width="30" height="30" alt="">
+                YYWS
+            </a>
             <ul class="navbar-nav mx-auto mb-md-0">
                 <li class="nav-item">
-                    <a class="nav-link" id="catalogue" href="/catalogue">Catalogue</a>
+                    <a class="nav-link main-color" id="catalogue" href="/catalogue">Catalogue</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="contact" href="/contactUs">Contact Us</a>
+                    <a class="nav-link main-color" id="contact" href="/contactUs">Contact Us</a>
                 </li>
             </ul>
-            <button type="button" onclick="window.location.href='/login'">Log In</button>
-            <button type="button" onclick="window.location.href='/register'">Register</button>
+            <span th:if="${user eq null}">
+                <button class="orange-button-sm" type="button" onclick="window.location.href='/register'">Register</button>
+                <button class="white-button-sm" type="button" onclick="window.location.href='/login'">Log In</button>
+            </span>
+            <span th:unless="${user eq null}">
+                <span style="display: inline-block; width: 100px" th:if="${user.class.name eq 'com.yysw.user.customer.Customer'}">
+                    <a th:href="@{/orderHistory}"><img src="/image/order-history.png " width="30" height="30" alt=""></a>
+                    <a th:href="@{/shoppingCart}"><img src="/image/shopping-cart.png " width="30" height="30" alt=""></a>
+                    <div>
+                        <a
+                            role="button"
+                            id="dropDownMenuLink"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                        >
+                            <img src="/image/acc-icon.png" width="30" height="30" alt="">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropDownMenuLink">
+                            <li><a class="dropdown-item" th:href="@{/quitLogin}">Log out</a></li>
+                        </ul>
+                    </div>
+                </span>
+            </span>
         </div>
     </nav>
-
-    <div class="opening" th:object="${user}">
-        <h1 class="title">AI MODEL MARKETPLACE</h1>
-        <a th:text="${user.class.name}" th:if="${user ne null}"></a>
+    <div class="opening">
+        <h1 class="title">AI MODEL<br>MARKETPLACE</h1>
     </div>
 </body>
 </html>

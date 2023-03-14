@@ -59,7 +59,7 @@ public class PersistentLogIn extends HttpServlet {
                             Cookie cookie = new Cookie("sessionId", sessionId);
                             cookie.setMaxAge(-1);//let's say the cookie is valid in two minutes
                             response.addCookie(cookie);//server return this cookie to browser so that it can be checked next time when user log in
-                            response.sendRedirect("/customer");
+                            response.sendRedirect("/");
 
                             System.out.println("Customer Log In Successfully\n");
 

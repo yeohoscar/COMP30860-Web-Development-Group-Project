@@ -23,7 +23,7 @@ public class SiteController {
 
     @GetMapping("/")
     public String home(HttpServletRequest request, Model model) {
-        User sessionUser = (User) request.getSession().getAttribute("username");
+        User sessionUser = (User) request.getSession().getAttribute("user");
         if (sessionUser == null) {
             return "index.html";
         } else {
