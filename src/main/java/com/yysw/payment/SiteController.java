@@ -32,9 +32,9 @@ public class SiteController {
         }
         return "index.html";
     }
-    @GetMapping("/successLogIn")
-    public String successLogIn() {
-        return "successLogIn.html";
+    @GetMapping("/customer")
+    public String customer() {
+        return "customer.html";
     }
     @GetMapping("/logInAgain")
     public String logInAgain() {
