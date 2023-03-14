@@ -2,10 +2,11 @@ package com.yysw.cart;
 
 import com.yysw.aimodels.AIModel;
 import com.yysw.aimodels.AIModelRepository;
+import com.yysw.user.User;
+import com.yysw.user.UserRepository;
 import com.yysw.user.customer.Customer;
 import com.yysw.user.customer.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,32 +15,57 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class ShoppingCartController {
     @Autowired
+    private UserRepository userRepository;
+    @Autowired
     private CustomerRepository customerRepository;
     @Autowired
     private AIModelRepository aiModelRepository;
+    @Autowired
+    private ShoppintCartRespository shoppintCartRespository;
     List<ShoppingCartItem> modelsInCart = new ArrayList<>();
 
     @GetMapping("/marketplace")
-    public String marketplace(Model model) {
-        model.addAttribute("catalogue", aiModelRepository.findAll());
+    public String marketplace(HttpServletRequest request, Model model) {
+        User sessionUser = (User) request.getSession().getAttribute("username");
+        if(sessionUser == null)
+        {
+            model.addAttribute("catalogue", aiModelRepository.findAll());
+            return "marketplace.html";
 
-        return "marketplace.html";
+        }
+        else {
+            User repoUser = userRepository.findUserById(sessionUser.getId());
+            model.addAttribute("catalogue", aiModelRepository.findAll());
+            model.addAttribute("user", repoUser);
+            return "marketplace.html";
+        }
+
     }
 
     @GetMapping("/marketplace/{id}/{name}")
-    public String viewModel(@PathVariable(value="id") Long id, @PathVariable(value="name") String name, Model model) {
+    public String viewModel(@PathVariable(value="id") Long id, @PathVariable(value="name") String name, Model model, HttpServletRequest request) {
 
-        System.out.println("model name = "+name);
+        System.out.println("model namehbjh = "+name);
         System.out.println("model id = "+aiModelRepository.findAIModelById(id).getId());
-        model.addAttribute("model", aiModelRepository.findAIModelById(id));
-        System.out.println("get here");
-        return "modelDetail.html";
+        User sessionUser = (User) request.getSession().getAttribute("username");
+        if(sessionUser == null)
+        {
+            model.addAttribute("model", aiModelRepository.findAIModelById(id));
+            return "modelDetail.html";
+        }
+        else {
+            User repoUser = userRepository.findUserById(sessionUser.getId());
+            model.addAttribute("model", aiModelRepository.findAIModelById(id));
+            model.addAttribute("user", repoUser);
+            return "modelDetail.html";
+        }
     }
 
 //    @PostMapping("/marketplace/{id}/{name}")
@@ -65,45 +91,113 @@ public class ShoppingCartController {
 //        } else {
 //            return "modelDetail.html";
 //        }
-//    }
+//    }'
+
+    //we add the items that customer buy into database
     @PostMapping("/marketplace/{id}/{name}")
-    public String addCart(ShoppingCartItem shoppingCartItem, @PathVariable(value="id") Long id, @PathVariable(value="name") String name, Model model, HttpServletRequest request, BindingResult bindingResult) {
+    public String addCart(ShoppingCartItem shoppingCartItem1, ShoppingCartItem shoppingCartItem2, @PathVariable(value="id") Long id, @PathVariable(value="name") String name, Model model, HttpServletRequest request, BindingResult bindingResult) {
 //        System.out.println("model name = "+name);
 //        System.out.println("model id = "+id);
-        AIModel ai = aiModelRepository.findAIModelById(id);
-        shoppingCartItem.setItem(ai);
-        shoppingCartItem.setTrainedModel(request.getParameter("trained") != null);
-        shoppingCartItem.setUntrainedModel(request.getParameter("untrained") != null);
-        if (shoppingCartItem.isTrainedModel()) {
-            if (shoppingCartItem.isUntrainedModel()) {
-                shoppingCartItem.setPrice((ai.getTrainedPrice() + ai.getUntrainedPrice()));
-            } else {
-                shoppingCartItem.setPrice(ai.getTrainedPrice());
+        HttpSession session = request.getSession();
+        if(session.getAttribute("username") != null) {
+            System.out.println("User exists");
+            Customer customer = (Customer) session.getAttribute("username");
+            System.out.println("Obtain Customer name: "+customer.getUsername());
+            AIModel ai = aiModelRepository.findAIModelById(id);
+            //我们需要考虑当user什么都没选但是点击了 Add To Cart button的情况
+            //        if(request.getParameter("trained") == null && request.getParameter("untrained") == null)
+            //        {
+            //
+            //        }
+            //如果是trained
+            if (request.getParameter("trained") != null) {
+                System.out.println("Trained is true\n");
+                shoppingCartItem1.setItem(ai);
+                shoppingCartItem1.setTrainedModel(true);
+                shoppingCartItem1.setPrice(ai.getTrainedPrice());
+                shoppingCartItem1.setCustomer(customer);
+                modelsInCart.add(shoppingCartItem1);
+                updateCustomerCart(customer);
+                shoppintCartRespository.save(shoppingCartItem1);
+                model.addAttribute("model", ai);
             }
-        } else {
-            shoppingCartItem.setPrice(ai.getUntrainedPrice());
-        }
-        model.addAttribute("model", shoppingCartItem.getItem());
-        modelsInCart.add(shoppingCartItem);
+            //如果是untrained
+            else if (request.getParameter("untrained") != null) {
+                System.out.println("Untrained is true\n");
 
-        if (bindingResult.hasErrors()) {
-            return "index.html";
-        } else {
-            return "modelDetail.html";
+                shoppingCartItem2.setItem(ai);
+                shoppingCartItem2.setTrainedModel(false);
+                shoppingCartItem2.setPrice(ai.getUntrainedPrice());
+                shoppingCartItem2.setCustomer(customer);
+                modelsInCart.add(shoppingCartItem2);
+                //把当前用户选的model加入到customer的购物车
+                updateCustomerCart(customer);
+                shoppintCartRespository.save(shoppingCartItem2);
+
+                model.addAttribute("model", ai);
+            }
+            //如果既是trained, 又是untrained
+            else if (request.getParameter("trained") != null && request.getParameter("untrained") != null) {
+                //set values for two objects
+                shoppingCartItem1.setItem(ai);
+                shoppingCartItem1.setTrainedModel(true);
+                shoppingCartItem1.setPrice(ai.getTrainedPrice());
+                shoppingCartItem1.setCustomer(customer);
+                shoppintCartRespository.save(shoppingCartItem1);
+
+                shoppingCartItem2.setItem(ai);
+                shoppingCartItem2.setTrainedModel(false);
+                shoppingCartItem2.setPrice(ai.getUntrainedPrice());
+                shoppingCartItem2.setCustomer(customer);
+                shoppintCartRespository.save(shoppingCartItem2);
+
+                modelsInCart.add(shoppingCartItem1);
+                updateCustomerCart(customer);
+                modelsInCart.add(shoppingCartItem2);
+                updateCustomerCart(customer);
+                model.addAttribute("model", ai);
+            }
+            //        shoppingCartItem.setTrainedModel(request.getParameter("trained") != null);
+            //        shoppingCartItem.setUntrainedModel(request.getParameter("untrained") != null);
+            //        if (shoppingCartItem.isTrainedModel()) {
+            //            if (shoppingCartItem.isUntrainedModel()) {
+            //                shoppingCartItem.setPrice((ai.getTrainedPrice() + ai.getUntrainedPrice()));
+            //            } else {
+            //                shoppingCartItem.setPrice(ai.getTrainedPrice());
+            //            }
+            //        } else if(shoppingCartItem.isUntrainedModel()){
+            //            shoppingCartItem.setPrice(ai.getUntrainedPrice());
+            //        }
+
+            if (bindingResult.hasErrors()) {
+                return "index.html";
+            } else {
+                return "modelDetail.html";
+            }
+        }else{
+//            response.sendRedirect(request.getContextPath() + "/logInAgain");
+            return "logInAgain.html";
         }
     }
-    public void addToCart() {
-        Customer tmp = customerRepository.findCustomerByUser_id(1L);
-        tmp.getCart().add(modelsInCart.get(modelsInCart.size()-1));
-        //customerRepository.save(tmp);
+    public void updateCustomerCart(Customer customer) {
+//        Customer tmp = customerRepository.findCustomerByUser_id(1L);
+        System.out.println("updateCustomerCart");
+
+        System.out.println("Updated Customer: "+customerRepository.findCustomerById(customer.getId()).getUsername());
+        customerRepository.findCustomerById(customer.getId()).getCart().add(modelsInCart.get(modelsInCart.size()-1));
+        customer.getCart().add(modelsInCart.get(modelsInCart.size()-1));
+//        customerRepository.save(customer.getCart().add(modelsInCart.get(modelsInCart.size()-1)));
     }
 
     @GetMapping("/shoppingCart")
-    public String shoppingCart(Model model) {
-        addToCart();
-        List<ShoppingCartItem> userCart = customerRepository.findCustomerByUser_id(1L).getCart();
+    public String shoppingCart(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Customer customer = (Customer) session.getAttribute("username");
+//        addToCart(customer);
+        List<ShoppingCartItem> userCart = customerRepository.findCustomerById(customer.getId()).getCart();
         //TODO: just random value, no data storing, missing price etc.. need change
 //        modelsInCart = customerRepository.findCartById(1L);
+        System.out.println("print items in customer cart");
         for (ShoppingCartItem s : userCart) {
             System.out.println(s.getItem());
         }
@@ -111,7 +205,7 @@ public class ShoppingCartController {
         model.addAttribute("products", userCart);
         double sub = 0.0;
 //      double processfee=200;
-        for (ShoppingCartItem item : modelsInCart) {
+        for (ShoppingCartItem item : userCart) {
             sub += item.getPrice();
         }
         model.addAttribute("subtotal", sub);

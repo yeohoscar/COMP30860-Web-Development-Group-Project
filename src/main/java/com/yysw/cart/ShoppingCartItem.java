@@ -16,9 +16,9 @@ public class ShoppingCartItem implements Serializable {
     @OneToOne
     private AIModel item;
 
-    private boolean trainedModel;
+    private boolean trainedModelOrNot;
 
-    private boolean untrainedModel;
+//    private boolean untrainedModel;
 
     private Double price;
 
@@ -33,25 +33,27 @@ public class ShoppingCartItem implements Serializable {
 
     public void setItem(AIModel item) { this.item = item; }
 
-    public boolean isTrainedModel() { return trainedModel; }
+    public boolean isTrainedModel() { return trainedModelOrNot; }
 
-    public void setTrainedModel(boolean trainedModel) { this.trainedModel = trainedModel; }
+    public void setTrainedModel(boolean trainedModel) { this.trainedModelOrNot = trainedModel; }
 
-    public boolean isUntrainedModel() { return untrainedModel; }
+//    public boolean isUntrainedModel() { return untrainedModel; }
 
-    public void setUntrainedModel(boolean untrainedModel) { this.untrainedModel = untrainedModel; }
+//    public void setUntrainedModel(boolean untrainedModel) { this.untrainedModel = untrainedModel; }
 
     public Double getPrice() { return price; }
 
     public void setPrice(Double price) { this.price = price; }
+    public void setCustomer(Customer customer) { this.customer = customer; }
+    public Customer getCustomer() { return customer; }
 
     @Override
     public String toString() {
         return "ShoppingCartItem{" +
                 "id=" + id +
                 ", item=" + item +
-                ", trainedModel=" + trainedModel +
-                ", untrainedModel=" + untrainedModel +
+                ", trainedModel=" + trainedModelOrNot +
+//                ", untrainedModel=" + untrainedModel +
                 ", price=" + price +
                 ", customer=" + customer +
                 '}';
