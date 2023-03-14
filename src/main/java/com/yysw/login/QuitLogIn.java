@@ -15,9 +15,6 @@ import java.util.Date;
 @WebServlet("/quitLogIn")
 public class QuitLogIn extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
-
         HttpSession session = request.getSession(false);
         boolean alreadyLogIn = false;
         if(session != null) {
@@ -34,7 +31,7 @@ public class QuitLogIn extends HttpServlet {
                 for (Cookie cookie : cookies) {
                     System.out.println("cookie name = "+cookie.getName());
                     if (cookie.getName().equals("sessionId")) { // this means current username already logged in
-                        alreadyLogIn=true;
+                        alreadyLogIn = true;
                         System.out.println("Quit Log In\n");
                         cookie.setMaxAge(0);
                         session.invalidate();
