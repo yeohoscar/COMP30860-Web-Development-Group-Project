@@ -26,8 +26,6 @@ public class AIModel implements Serializable {
 
     private String description;
 
-    private String photoURL;
-
     private boolean available;
 
     @OneToOne(mappedBy = "item")
@@ -52,10 +50,6 @@ public class AIModel implements Serializable {
     public String getDescription() { return description; }
 
     public void setDescription(String description) { this.description = description; }
-
-    public String getPhotoURL() { return photoURL; }
-
-    public void setPhotoURL(String photoURL) { this.photoURL = photoURL; }
 
     public boolean isAvailable() { return available; }
 

@@ -41,7 +41,6 @@
                 </thead>
                 <tbody>
                 <tr th:each="ele:${products}">
-                    <td><img th:src="${ele.item.photoURL}" alt="pic"></td>
                     <td class="wrapTextInTableCell" th:text="${ele.item.modelName}">Name+Descritpion</td>
                     <td class="wrapTextInTableCell"><span th:if="${ele.trainedModel}">Trained</span><br><span th:if="${ele.untrainedModel}">Untrained</span></td>
                     <td class="wrapTextInTableCell" th:text="'€' + ${ele.price}">£0</td>
