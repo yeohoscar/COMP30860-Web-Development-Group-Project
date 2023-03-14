@@ -3,7 +3,6 @@ package com.yysw.order;
 import com.yysw.user.customer.Customer;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.*;
 
 @Entity
@@ -11,10 +10,10 @@ import java.util.*;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long order_id;
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
     @ElementCollection
@@ -25,12 +24,13 @@ public class Order {
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
 
-    public Long getOrder_id() {
-        return order_id;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setOrder_id(Long order_id) {
-        this.order_id = order_id;
+    public void setId(Long order_id) {
+        this.id = order_id;
     }
 
     public State getState() {
@@ -63,5 +63,17 @@ public class Order {
 
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
+    }
+
+    public int quantityOfOrder() {
+        return this.getOrderedModels().size();
+    }
+    public Double totalPriceOfOrderedModels() {
+        Double totalPrice=0.0;
+        for(OrderedModel a: this.getOrderedModels())
+        {
+            totalPrice += a.getPrice();
+        }
+        return totalPrice;
     }
 }

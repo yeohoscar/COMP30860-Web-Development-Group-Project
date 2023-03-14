@@ -1,8 +1,9 @@
 package com.yysw.payment;
 
-import com.yysw.general.AIModel;
 import com.yysw.user.User;
 import com.yysw.user.UserRepository;
+import com.yysw.user.customer.Customer;
+import com.yysw.user.owner.Owner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -25,7 +24,14 @@ public class SiteController {
     public String home() {
         return "index.html";
     }
-
+    @GetMapping("/successLogIn")
+    public String successLogIn() {
+        return "successLogIn.html";
+    }
+    @GetMapping("/logInAgain")
+    public String logInAgain() {
+        return "logInAgain.html";
+    }
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("user", new User());
@@ -33,8 +39,20 @@ public class SiteController {
     }
 
     @GetMapping("/register")
-    public String register() {
+    public String register(Model model) {
+        model.addAttribute(new RegisterInformation());
         return "register.html";
+    }
+
+    @PostMapping("/register")
+    public String register(@ModelAttribute("RegisterInformation") RegisterInformation registerInformation) {
+        if (registerInformation.getAdminKey() != null &&
+                Objects.equals(registerInformation.getAdminKey(), "verycooladminkey")) {
+            userRepository.save(new Owner(registerInformation.getUsername(), registerInformation.getPasswd()));
+        } else {
+            userRepository.save(new Customer(registerInformation.getUsername(), registerInformation.getPasswd()));
+        }
+        return "login.html";
     }
 
     @GetMapping("/payment")
@@ -57,18 +75,18 @@ public class SiteController {
         }
     }
 
-    @PostMapping("/submit-login")
-    public String loginAcc(@ModelAttribute("user") User user) {
-        User repoUser = userRepository.findByUsernameAndPasswd(user.getUsername(), user.getPasswd());
-        if (repoUser != null &&
-                Objects.equals(repoUser.getUsername(), user.getUsername()) &&
-                Objects.equals(repoUser.getPasswd(), user.getPasswd())
-        ) {
-                /*TODO: smth about differentiating owner and customer acc
-                        and persisting login
-                 */
-            return "index.html";
-        }
-        return "login.html";
-    }
+//    @PostMapping("/submit-login")
+//    public String loginAcc(@ModelAttribute("user") User user) {
+//        User repoUser = userRepository.findByUsernameAndPasswd(user.getUsername(), user.getPasswd());
+//        if (repoUser != null &&
+//                Objects.equals(repoUser.getUsername(), user.getUsername()) &&
+//                Objects.equals(repoUser.getPasswd(), user.getPasswd())
+//        ) {
+//                /*TODO: smth about differentiating owner and customer acc
+//                        and persisting login
+//                 */
+//            return "index.html";
+//        }
+//        return "login.html";
+//    }
 }
