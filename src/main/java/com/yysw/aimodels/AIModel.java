@@ -36,7 +36,6 @@ public class AIModel implements Serializable {
         this.trainedPrice = model.trainedPrice;
         this.untrainedPrice = model.untrainedPrice;
         this.description = model.description;
-        this.photoURL = model.photoURL;
         this.available = model.available;
     }
 
@@ -72,7 +71,6 @@ public class AIModel implements Serializable {
                 ", trainedPrice=" + trainedPrice +
                 ", untrainedPrice=" + untrainedPrice +
                 ", description='" + description + '\'' +
-                ", photoURL='" + photoURL + '\'' +
                 ", available=" + available +
                 '}';
     }

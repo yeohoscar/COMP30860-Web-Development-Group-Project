@@ -27,9 +27,6 @@ public class ShoppingCartController {
 
     @GetMapping("/marketplace")
     public String marketplace(Model model) {
-<<<<<<< HEAD
-        model.addAttribute("catalogue", aiModelRepository.findAll());
-=======
         List<AIModel> modelsToDisplay;
         //TODO: CHECK IF USER IS OWNER OR CUSTOMER OR RANDOM SCRUB
         if (false) {
@@ -39,7 +36,7 @@ public class ShoppingCartController {
         }
 
         model.addAttribute("catalogue", modelsToDisplay);
->>>>>>> 1a147ff4af793c0e05853a77e6e91dffdf9228c0
+
         return "marketplace.html";
     }
 

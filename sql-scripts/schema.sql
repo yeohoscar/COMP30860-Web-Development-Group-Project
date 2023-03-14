@@ -29,7 +29,6 @@ CREATE TABLE `aimodel` (
   `available` bit(1) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `model_name` varchar(255) DEFAULT NULL,
-  `photourl` varchar(255) DEFAULT NULL,
   `trained_price` double NOT NULL,
   `untrained_price` double NOT NULL,
   PRIMARY KEY (`id`)
