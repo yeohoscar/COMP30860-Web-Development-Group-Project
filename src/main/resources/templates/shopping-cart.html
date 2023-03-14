@@ -32,19 +32,30 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th class="col-sm-2">Items</th>
-                    <th class="col-sm-2"></th>
-                    <th class="col-sm-3">Trained/Untrained</th>
+                    <th class="col-sm-4">items</th>
+                    <th class="col-sm-3">Type</th>
                     <th class="col-sm-2">Price</th>
                     <th class="col-sm-3">Subtotal</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="ele:${products}">
+<<<<<<< HEAD:src/main/resources/templates/shopping-cart.html
                     <td class="wrapTextInTableCell" th:text="${ele.item.modelName}">Name+Descritpion</td>
                     <td class="wrapTextInTableCell"><span th:if="${ele.trainedModel}">Trained</span><br><span th:if="${ele.untrainedModel}">Untrained</span></td>
                     <td class="wrapTextInTableCell" th:text="'€' + ${ele.price}">£0</td>
                     <td class="wrapTextInTableCell" th:text="'€' + ${subtotal}">£0</td>
+=======
+                    <td class="wrapTextInTableCell" th:text="${ele.name}">Name+Descritpion</td>
+                    <td class="wrapTextInTableCell">
+                        <select name="priceType">
+                            <option value ="trained">trained</option>
+                            <option value ="untrained">untrained</option>
+                        </select>
+                    </td>
+                    <td class="wrapTextInTableCell">£0</td>
+                    <td class="wrapTextInTableCell">£0</td>
+>>>>>>> main:src/main/resources/templates/shoppingCart.html
                 </tr>
                 </tbody>
             </table>
@@ -57,7 +68,7 @@
             <hr class="solid">
             <div class="row">
                 <div class="col-sm-6">Subtotal</div>
-                <div class="col-sm-6 text-end" th:text="'€'+${subtotal}"></div>
+                <div class="col-sm-6 text-end" th:text="'£'+${subtotal}">£0</div>
             </div>
             <div class="row">
                 <div class="col-sm-6">Processing fee</div>
@@ -79,19 +90,19 @@
                 <input type="submit" value="CHECKOUT">
             </form>
 
-            <div class="container">
-                <form method="post">
-                    <table>
-                        <tr>
-                            <label for="promo">Apply Promo Code</label>
-                        </tr>
-                        <tr>
-                            <td><input id="promo" type="text"></td>
-                            <td><input type="submit" value="APPLY"></td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
+<!--            <div class="container">-->
+<!--                <form method="post">-->
+<!--                    <table>-->
+<!--                        <tr>-->
+<!--                            <label for="promo">Apply Promo Code</label>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td><input id="promo" type="text"></td>-->
+<!--                            <td><input type="submit" value="APPLY"></td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--                </form>-->
+<!--            </div>-->
         </div>
     </div>
 </div>

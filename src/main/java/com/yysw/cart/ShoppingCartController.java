@@ -25,7 +25,7 @@ public class ShoppingCartController {
     private AIModelRepository aiModelRepository;
     List<ShoppingCartItem> modelsInCart = new ArrayList<>();
 
-    @GetMapping("/marketplace")
+    @GetMapping("/catalogue")
     public String marketplace(Model model) {
         List<AIModel> modelsToDisplay;
         //TODO: CHECK IF USER IS OWNER OR CUSTOMER OR RANDOM SCRUB
@@ -37,31 +37,20 @@ public class ShoppingCartController {
 
         model.addAttribute("catalogue", modelsToDisplay);
 
-        return "marketplace.html";
+        return "catalogue.html";
     }
 
-    @GetMapping("/marketplace/{id}/{name}")
-    public String viewModel(@PathVariable(value="id") Long id, @PathVariable(value="name") String name, Model model) {
+    @GetMapping("/catalogue/add-to-cart/{id}/{name}")
+    public String viewModelDetails(@PathVariable(value="id") Long id,
+                                   @PathVariable(value="name") String name, Model model) {
         model.addAttribute("model", aiModelRepository.findAIModelById(id));
         return "model-detail.html";
     }
 
-    @GetMapping("/marketplace/edit/{id}/{name}")
-    public String editModel(@PathVariable(value="id") Long id, @PathVariable(value="name") String name, Model model) {
-        model.addAttribute("model", aiModelRepository.findAIModelById(id));
-        return "model-detail.html"; // TODO: TEST AND REDIRECT TO A BETTER PLACE
-    }
-
-    @PostMapping("/marketplace/edit/{id}/{name}")
-    public String editModel(@ModelAttribute("model") AIModel aiModel, @PathVariable(value="id") Long id, @PathVariable(value="name") String name) {
-        AIModel aiModelToBeUpdated = aiModelRepository.findAIModelById(id);
-        aiModelToBeUpdated.updateModel(aiModel);
-        return "model-detail.html"; // TODO: TEST AND REDIRECT TO A BETTER PLACE
-    }
-
-    @PostMapping("/marketplace/add-to-cart/{id}/{name}")
+    @PostMapping("/catalogue/add-to-cart/{id}/{name}")
     public String addCart(ShoppingCartItem shoppingCartItem, @PathVariable(value="id") Long id,
-                          @PathVariable(value="name") String name, Model model, HttpServletRequest request, BindingResult bindingResult) {
+                          @PathVariable(value="name") String name, Model model,
+                          HttpServletRequest request, BindingResult bindingResult) {
         AIModel ai = aiModelRepository.findAIModelById(id);
         shoppingCartItem.setItem(ai);
         shoppingCartItem.setTrainedModel(request.getParameter("trained") != null);
@@ -83,6 +72,21 @@ public class ShoppingCartController {
         } else {
             return "model-detail.html";
         }
+    }
+
+    @GetMapping("/catalogue/edit/{id}/{name}")
+    public String viewModel(@PathVariable(value="id") Long id,
+                            @PathVariable(value="name") String name, Model model) {
+        model.addAttribute("model", aiModelRepository.findAIModelById(id));
+        return "model-detail.html";
+    }
+
+    @PostMapping("/catalogue/edit/{id}/{name}")
+    public String editModel(@ModelAttribute("model") AIModel aiModel,
+                            @PathVariable(value="id") Long id, @PathVariable(value="name") String name) {
+        AIModel aiModelToBeUpdated = aiModelRepository.findAIModelById(id);
+        aiModelToBeUpdated.updateModel(aiModel);
+        return "model-detail.html"; // TODO: TEST AND REDIRECT TO A BETTER PLACE
     }
 
     public void addToCart() {
