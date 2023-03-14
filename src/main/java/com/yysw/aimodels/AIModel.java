@@ -31,6 +31,15 @@ public class AIModel implements Serializable {
     @OneToOne(mappedBy = "item")
     private ShoppingCartItem item;
 
+    public void updateModel(AIModel model) {
+        this.modelName = model.modelName;
+        this.trainedPrice = model.trainedPrice;
+        this.untrainedPrice = model.untrainedPrice;
+        this.description = model.description;
+        this.photoURL = model.photoURL;
+        this.available = model.available;
+    }
+
     public Long getId() { return id; }
 
     public void setId(Long id) { this.id = id; }

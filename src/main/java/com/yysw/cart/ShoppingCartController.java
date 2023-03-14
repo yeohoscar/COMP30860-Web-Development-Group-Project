@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -26,19 +27,38 @@ public class ShoppingCartController {
 
     @GetMapping("/marketplace")
     public String marketplace(Model model) {
+<<<<<<< HEAD
         model.addAttribute("catalogue", aiModelRepository.findAll());
+=======
+        List<AIModel> modelsToDisplay;
+        //TODO: CHECK IF USER IS OWNER OR CUSTOMER OR RANDOM SCRUB
+        if (false) {
+            modelsToDisplay = aiModelRepository.findAll();
+        } else {
+            modelsToDisplay = aiModelRepository.findAIModelByAvailable(true);
+        }
+
+        model.addAttribute("catalogue", modelsToDisplay);
+>>>>>>> 1a147ff4af793c0e05853a77e6e91dffdf9228c0
         return "marketplace.html";
     }
 
     @GetMapping("/marketplace/{id}/{name}")
     public String viewModel(@PathVariable(value="id") Long id, @PathVariable(value="name") String name, Model model) {
         model.addAttribute("model", aiModelRepository.findAIModelById(id));
-
         return "modelDetail.html";
     }
 
-    @PostMapping("/marketplace/{id}/{name}")
-    public String addCart(ShoppingCartItem shoppingCartItem, @PathVariable(value="id") Long id, @PathVariable(value="name") String name, Model model, HttpServletRequest request, BindingResult bindingResult) {
+    @PostMapping("/marketplace/edit/{id}/{name}")
+    public String editModel(@ModelAttribute("model") AIModel aiModel, @PathVariable(value="id") Long id, @PathVariable(value="name") String name) {
+        AIModel aiModelToBeUpdated = aiModelRepository.findAIModelById(id);
+        aiModelToBeUpdated.updateModel(aiModel);
+        return "modelDetail.html"; //TODO: TEST AND REDIRECT TO A BETTER PLACE
+    }
+
+    @PostMapping("/marketplace/add-to-cart/{id}/{name}")
+    public String addCart(ShoppingCartItem shoppingCartItem, @PathVariable(value="id") Long id,
+                          @PathVariable(value="name") String name, Model model, HttpServletRequest request, BindingResult bindingResult) {
         AIModel ai = aiModelRepository.findAIModelById(id);
         shoppingCartItem.setItem(ai);
         shoppingCartItem.setTrainedModel(request.getParameter("trained") != null);

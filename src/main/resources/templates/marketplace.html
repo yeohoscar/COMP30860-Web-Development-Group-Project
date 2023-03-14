@@ -54,7 +54,7 @@
         <!-- Thymeleaf iterator that takes a model containing all the models and formats them into rows of three -->
         <div class="row" th:each="model, iter : ${catalogue}" th:if="${iter.index % 3 == 0 && iter.index < catalogue.size()}">
             <div class="col-md-4">
-                <div class="content bg-green">
+                <div th:attr="class=${model.available ? 'model-available' : 'model-unavailable'}">
                     <!--can use <a href> too-->
                     <a th:href="@{/marketplace/{id}/{name}(id=${model.id}, name=${model.modelName})}">
                         <span th:text="${model.modelName}"></span>
