@@ -66,7 +66,7 @@ public class PersistentLogIn extends HttpServlet {
                         } else {
                             System.out.println("Wrong Customer Password!");
                             out.write("<html"
-                                    + "<head><script type='text/javascript'> alert('Wrong Customer Password!');location='login.html';</script></head>"
+                                    + "<head><script type='text/javascript'> alert('Wrong Customer Password!');location='login';</script></head>"
                                     + "<body></body></html>");
                             return;
                         }
@@ -75,7 +75,7 @@ public class PersistentLogIn extends HttpServlet {
                         System.out.println("Wrong Customer Username!");
 
                         out.write("<html>"
-                                + "<head><script type='text/javascript'> alert('Wrong Customer Username!');location='login.html';</script></head>"
+                                + "<head><script type='text/javascript'> alert('Wrong Customer Username!');location='login';</script></head>"
                                 + "<body></body></html>");
                         return;
                     }
@@ -91,7 +91,7 @@ public class PersistentLogIn extends HttpServlet {
                         } else {
                             System.out.println("Wrong Admin Password!");
                             out.write("<html"
-                                    + "<head><script type='text/javascript'> alert('Wrong Admin Password!');location='login.html';</script></head>"
+                                    + "<head><script type='text/javascript'> alert('Wrong Admin Password!');location='login';</script></head>"
                                     + "<body></body></html>");
                             return;
                         }
@@ -100,7 +100,7 @@ public class PersistentLogIn extends HttpServlet {
                         System.out.println("Wrong Admin Username!");
 
                         out.write("<html>"
-                                + "<head><script type='text/javascript'> alert('Wrong Admin Username!');location='login.html';</script></head>"
+                                + "<head><script type='text/javascript'> alert('Wrong Admin Username!');location='login';</script></head>"
                                 + "<body></body></html>");
                         return;
                     }
@@ -109,7 +109,7 @@ public class PersistentLogIn extends HttpServlet {
             else {
                 System.out.println();
                 out.write("<html>"
-                        + "<head><script type='text/javascript'> alert('Account Does Not Exist!');location='login.html';</script></head>"
+                        + "<head><script type='text/javascript'> alert('Account Does Not Exist!');location='login';</script></head>"
                         + "<body></body></html>");
             }
         }
