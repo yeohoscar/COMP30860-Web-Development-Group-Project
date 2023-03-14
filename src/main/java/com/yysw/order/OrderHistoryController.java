@@ -1,4 +1,4 @@
-package com.yysw.orderHistory;
+package com.yysw.order;
 
 import com.yysw.order.Order;
 import com.yysw.order.OrderRepository;
