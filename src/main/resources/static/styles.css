@@ -1,3 +1,16 @@
-div.bg {
-    z-index: -1;
+.opening {
+    position: relative;
+    text-align: center;
+}
+
+.bg-img {
+    max-width: 100%;
+    max-height: auto;
+    margin: auto;
+}
+
+.title {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
