@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.net.URLDecoder;
 import java.util.Objects;
 
 @Controller
@@ -24,14 +22,33 @@ public class SiteController {
     private UserRepository userRepository;
 
     @GetMapping("/")
-    public String home() {
+    public String home(HttpServletRequest request, Model model) {
+        User sessionUser = (User) request.getSession().getAttribute("username");
+        if (sessionUser == null) {
+            return "index.html";
+        } else {
+            User repoUser = userRepository.findUserById(sessionUser.getId());
+            model.addAttribute("user", repoUser);
+        }
         return "index.html";
     }
-
+    @GetMapping("/customer")
+    public String customer() {
+        return "customer.html";
+    }
+    @GetMapping("/logInAgain")
+    public String logInAgain() {
+        return "logInAgain.html";
+    }
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("user", new User());
         return "login.html";
+    }
+    @GetMapping("/logInOccupied")
+    public String logInOccupied(Model model) {
+        model.addAttribute("user", new User());
+        return "logInOccupied.html";
     }
 
     @GetMapping("/register")
@@ -69,20 +86,5 @@ public class SiteController {
         } else {
             return "catalogueMain.html";
         }
-    }
-
-    @PostMapping("/submit-login")
-    public String loginAcc(@ModelAttribute("user") User user) {
-        User repoUser = userRepository.findByUsernameAndPasswd(user.getUsername(), user.getPasswd());
-        if (repoUser != null &&
-                Objects.equals(repoUser.getUsername(), user.getUsername()) &&
-                Objects.equals(repoUser.getPasswd(), user.getPasswd())
-        ) {
-                /*TODO: smth about differentiating owner and customer acc
-                        and persisting login
-                 */
-            return "index.html";
-        }
-        return "login.html";
     }
 }
