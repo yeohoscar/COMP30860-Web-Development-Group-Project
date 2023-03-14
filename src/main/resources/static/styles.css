@@ -1,16 +1,17 @@
 .opening {
+    background-image: url("image/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
     position: relative;
     text-align: center;
-}
-
-.bg-img {
+    color: white;
     max-width: 100%;
-    max-height: auto;
-    margin: auto;
+    height: 520px;
+
 }
 
 .title {
     position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    top: 40%;
+    left: 3%
 }
