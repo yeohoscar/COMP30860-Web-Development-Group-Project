@@ -39,6 +39,9 @@
     <button type="button" onclick="window.location.href='/contactUs'">Contact</button>
     <button type="button" onclick="window.location.href='/shoppingCart'">Shopping Cart</button>
     <button type="button" onclick="window.location.href='/orderHistory'">Order History</button>
+    <form th:action="@{/quitLogIn}" method="get">
+      <button>Logout</button>
+    </form>
   </div>
 </nav>
 <div class=".bg">
