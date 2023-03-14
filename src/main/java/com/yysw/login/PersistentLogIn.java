@@ -50,8 +50,8 @@ public class PersistentLogIn extends HttpServlet {
         System.out.println("Persist Last Accessed Time: " + new Date(session.getLastAccessedTime()));
 
         //说明还没有用户登录
-        if(session.getAttribute("username") == null) {
-            session.setAttribute("username", repoUser);
+        if(session.getAttribute("user") == null) {
+            session.setAttribute("user", repoUser);
             if (repoUser != null) {
                 if (repoUser instanceof Customer) {
                     if (repoUser.getUsername().equals(username)) {
