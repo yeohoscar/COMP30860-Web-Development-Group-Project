@@ -5,6 +5,7 @@ import com.yysw.aimodels.AIModelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,7 @@ public class OwnerController {
      * TODO: add html page
      * prolly something like a form that has all the fields
      * redirects back to itself so you can add more
-     * way to exit back to home page or marketplce
+     * way to exit back to home page or marketplace
      */
     @GetMapping("add-model")
     public String addModel(Model model) {
@@ -43,15 +44,17 @@ public class OwnerController {
      * Most simple is to display all models, and have a checkbox that toggles
      * AIModel available field.
      */
-    @GetMapping("toggle-models")
-    public String toggleModels(Model model) {
-        model.addAttribute("models", aiModelRepository.findAll());
-        return "toggle-models";
+    @GetMapping("edit-models")
+    public String toggleModels(ModelMap modelMap) {
+
+        modelMap.addAttribute("models", aiModelRepository.findAll());
+        return "edit-models.html";
     }
 
-    @PostMapping("toggle-models")
-    public String toggleModels(@ModelAttribute("models") List<AIModel> models) {
+    @PostMapping("/edit-models/{id}/{name}")
+    public String toggleModels(@ModelAttribute("models") List<AIModel> models, ModelMap modelMap) {
+        modelMap.addAttribute("models", aiModelRepository.findAll());
         aiModelRepository.saveAll(models);
-        return "toggle-models.html";
+        return "edit-models.html";
     }
 }

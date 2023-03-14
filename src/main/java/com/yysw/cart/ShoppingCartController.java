@@ -27,7 +27,6 @@ public class ShoppingCartController {
     @GetMapping("/marketplace")
     public String marketplace(Model model) {
         model.addAttribute("catalogue", aiModelRepository.findAll());
-
         return "marketplace.html";
     }
 

@@ -29,3 +29,6 @@ services:
     volumes:
       - ./sql-scripts/schema.sql:/docker-entrypoint-initdb.d/1.sql
       - ./sql-scripts/data.sql:/docker-entrypoint-initdb.d/2.sql
+      - sqldata:/var/lib/mysql
+volumes:
+  sqldata:
