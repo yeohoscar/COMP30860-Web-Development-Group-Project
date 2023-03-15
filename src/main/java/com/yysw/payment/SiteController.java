@@ -85,14 +85,16 @@ public class SiteController {
     @PostMapping("/payment")
     public String submitPayment(
             @Valid @ModelAttribute("paymentInformation") PaymentInformation paymentInformation,
-            BindingResult bindingResult
+            BindingResult bindingResult, Model model
     ) {
         System.out.println(paymentInformation.getExpiry());
         System.out.println(paymentInformation.getCvv());
         if (bindingResult.hasErrors()) {
             return "payment.html";
         } else {
-            return "catalogueMain.html";
+//            model.addAttribute("paiedOrder", order);
+//            return "successPayment.html";
+            return "catalogue.html";
         }
     }
 }
