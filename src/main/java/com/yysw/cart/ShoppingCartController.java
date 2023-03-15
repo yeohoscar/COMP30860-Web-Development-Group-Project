@@ -113,8 +113,10 @@ public class ShoppingCartController {
         customerRepository.save(customer);
     }
 
-    public void updateItemInCart(Long customerId, String option, Long itemId) {
-        List<ShoppingCartItem> cart = customerRepository.findCustomerById(customerId).getCart();
+    public void updateItemInCart(Customer customer, String option, Long itemId) {
+        List<ShoppingCartItem> cart = customerRepository.findCustomerById(customer.getId()).getCart();
+
+        System.out.println("OPTION passed in: "+ option);
 
         System.out.println("before");
         System.out.println(cart);
@@ -131,6 +133,12 @@ public class ShoppingCartController {
 
         System.out.println("after");
         System.out.println(cart);
+
+
+        customerRepository.save(customer);
+
+        System.out.println("double check:");
+        System.out.println(customer.getCart());
 
     }
 
@@ -151,8 +159,8 @@ public class ShoppingCartController {
 
     @GetMapping("/shopping-cart/{id}/{option}")
     public void updateCartItem(@PathVariable(value="id") Long id, @PathVariable(value="option") String option, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        User sessionUser = (User) request.getSession().getAttribute("user");
-        updateItemInCart(sessionUser.getId(), option, id);
+        updateItemInCart((Customer) request.getSession().getAttribute("user"), option, id);
+        System.out.println("METHOD update cart item called");
         response.sendRedirect("/shopping-cart");
     }
 }

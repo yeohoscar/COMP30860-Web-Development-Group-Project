@@ -34,8 +34,8 @@
                     <tr th:each="ele:${products}">
                         <td class="wrapTextInTableCell" th:text="${ele.item.getModelName()}">Name+Descritpion</td>
                         <td class="wrapTextInTableCell">
-                            <form action="#" method="get" th:action="@{/shopping-cart/{id}/{option}(id=${ele.getId()}, option=${ele.isTrainedModelOrNot() ? 'trained' : 'untrained'})}">
-                                <select onchange="this.form.submit()">
+                            <form action="#" method="get" th:action="@{/shopping-cart/{id}/{option}(id=${ele.getId()}, option=${selectOption})}" id="shoppingCartForm">
+                                <select onchange="this.form.submit()" id="optionSelect" name="selectOption">
                                     <option value="trained" th:selected="${ele.isTrainedModelOrNot()}">trained</option>
                                     <option value="untrained" th:selected="${!ele.isTrainedModelOrNot()}">untrained</option>
                                 </select>
