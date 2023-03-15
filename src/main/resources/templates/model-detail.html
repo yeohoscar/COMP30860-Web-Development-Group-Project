@@ -67,9 +67,9 @@
                     <p th:text="${model.description}"></p>
                     <form th:action="@{/catalogue/__${id}__/__${name}__}" method="POST">
                         <label th:text="'Trained model ' + ${model.trainedPrice}"></label>
-                        <input type="checkbox" name="trained">
+                        <input type="checkbox" name="trained" onclick="checkOther(this)">
                         <label th:text="'Untrained model ' + ${model.untrainedPrice}"></label>
-                        <input type="checkbox" name="untrained">
+                        <input type="checkbox" name="untrained" onclick="checkOther(this)">
                         <br>
                         <div th:if="${hasItem} == true">
                             <p>Model has added into cart</p>

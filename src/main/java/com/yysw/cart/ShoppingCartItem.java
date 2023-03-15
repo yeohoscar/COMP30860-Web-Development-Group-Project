@@ -31,9 +31,13 @@ public class ShoppingCartItem implements Serializable {
 
     public void setItem(AIModel item) { this.item = item; }
 
-    public boolean isTrainedModel() { return trainedModelOrNot; }
+    public boolean isTrainedModelOrNot() {
+        return trainedModelOrNot;
+    }
 
-    public void setTrainedModel(boolean trainedModel) { this.trainedModelOrNot = trainedModel; }
+    public void setTrainedModelOrNot(boolean trainedModelOrNot) {
+        this.trainedModelOrNot = trainedModelOrNot;
+    }
 
     public Double getPrice() { return price; }
 
@@ -47,7 +51,6 @@ public class ShoppingCartItem implements Serializable {
                 "id=" + id +
                 ", item=" + item +
                 ", trainedModel=" + trainedModelOrNot +
-//                ", untrainedModel=" + untrainedModel +
                 ", price=" + price +
                 ", customer=" + customer +
                 '}';
