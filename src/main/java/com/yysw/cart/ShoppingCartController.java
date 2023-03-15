@@ -66,23 +66,17 @@ public class ShoppingCartController {
 
         if (sessionUser != null) {
             if (sessionUser instanceof Customer) {
+                ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
+                shoppingCartItem.setItem(ai);
                 if (request.getParameter("trained") != null) {
-                    ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
-                    shoppingCartItem.setItem(ai);
                     shoppingCartItem.setPrice(ai.getTrainedPrice());
-                    shoppingCartItem.setTrainedModel(request.getParameter("trained") != null);
-                    shoppingCartItem.setCustomer((Customer) sessionUser);
-                    updateCustomerCart(sessionUser.getId(), shoppingCartItem);
-                }
-
-                if (request.getParameter("untrained") != null) {
-                    ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
-                    shoppingCartItem.setItem(ai);
+                    shoppingCartItem.setTrainedModelOrNot(true);
+                } else {
                     shoppingCartItem.setPrice(ai.getUntrainedPrice());
-                    shoppingCartItem.setTrainedModel(request.getParameter("untrained") != null);
-                    shoppingCartItem.setCustomer((Customer) sessionUser);
-                    updateCustomerCart(sessionUser.getId(), shoppingCartItem);
+                    shoppingCartItem.setTrainedModelOrNot(false);
                 }
+                shoppingCartItem.setCustomer((Customer) sessionUser);
+                updateCustomerCart(sessionUser.getId(), shoppingCartItem);
             } else {
                 ai.updateModel(aiModel);
                 System.out.println(ai.isAvailable());
@@ -123,24 +117,20 @@ public class ShoppingCartController {
         List<ShoppingCartItem> cart = customerRepository.findCustomerById(customerId).getCart();
 
         System.out.println("before");
-        for (ShoppingCartItem s : cart) {
-            System.out.println(s.getItem().toString());
-        }
+        System.out.println(cart);
 
         for (ShoppingCartItem s : cart) {
             if (s.getItem().getId() == itemId) {
                 if (option == "trained") {
-                    s.setTrainedModel(true);
+                    s.setTrainedModelOrNot(true);
                 } else {
-                    s.setTrainedModel(false);
+                    s.setTrainedModelOrNot(false);
                 }
             }
         }
 
         System.out.println("after");
-        for (ShoppingCartItem s : cart) {
-            System.out.println(s.getItem().toString());
-        }
+        System.out.println(cart);
 
     }
 
@@ -164,9 +154,5 @@ public class ShoppingCartController {
         User sessionUser = (User) request.getSession().getAttribute("user");
         updateItemInCart(sessionUser.getId(), option, id);
         response.sendRedirect("/shopping-cart");
-    }
-
-    @PostMapping("/shopping-cart/{id}/{option}")
-    public void updateCartItemPostmapping(@PathVariable(value="id") Long id, @PathVariable(value="option") String option, HttpServletRequest request, HttpServletResponse response) throws IOException {
     }
 }
