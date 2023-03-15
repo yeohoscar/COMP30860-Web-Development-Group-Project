@@ -28,8 +28,19 @@
                     <a class="nav-link" id="contact" href="/contactUs">Contact Us</a>
                 </li>
             </ul>
-            <button type="button" onclick="window.location.href='/login'">Log In</button>
-            <button type="button" onclick="window.location.href='/register'">Register</button>
+            <button type="button" onclick="window.location.href='/payment'">Pay</button>
+            <button type="button" onclick="window.location.href='/contactUs'">Contact</button>
+            <div  th:if="${user ne null}">
+                <button type="button" onclick="window.location.href='/shoppingCart'">Shopping Cart</button>
+                <button type="button" onclick="window.location.href='/orderHistory'">Order History</button>
+                <form th:action="@{/quitLogIn}" method="get">
+                    <button>Logout</button>
+                </form>
+            </div>
+            <div th:unless="${user ne null}">
+                <button type="button" onclick="window.location.href='/login'">Log In</button>
+                <button type="button" onclick="window.location.href='/register'">Register</button>
+            </div>
         </div>
     </nav>
 

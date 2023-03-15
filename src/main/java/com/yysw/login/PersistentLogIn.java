@@ -7,6 +7,7 @@ import com.yysw.user.owner.Owner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -60,9 +61,6 @@ public class PersistentLogIn extends HttpServlet {
                             cookie.setMaxAge(-1);//let's say the cookie is valid in two minutes
                             response.addCookie(cookie);//server return this cookie to browser so that it can be checked next time when user log in
                             response.sendRedirect("/");
-
-                            System.out.println("Customer Log In Successfully\n");
-
                         } else {
                             System.out.println("Wrong Customer Password!");
                             out.write("<html"
@@ -117,8 +115,6 @@ public class PersistentLogIn extends HttpServlet {
         else {
             System.out.println("there already has one account login");
             response.sendRedirect("/logInOccupied");
-//            JOptionPane.showMessageDialog(null, "At most log in one account at the same time!");
-
         }
     }
 
