@@ -32,10 +32,6 @@ public class SiteController {
         }
         return "index.html";
     }
-    @GetMapping("/customer")
-    public String customer() {
-        return "customer.html";
-    }
     @GetMapping("/logInAgain")
     public String logInAgain() {
         return "logInAgain.html";

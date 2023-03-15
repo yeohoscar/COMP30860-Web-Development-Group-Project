@@ -15,6 +15,70 @@
 
 </head>
 <body>
+    <nav class="navbar sticky-top navbar-expand-md bg-body-tertiary pad-side" id="navbar0" th:object="${user}">
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="logo" href="/">
+            <img src="/image/logo.png" width="30" height="30" alt="">
+            YYWS
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto mb-md-0">
+                <li class="nav-item">
+                    <a class="nav-link main-color" id="catalogue" href="/catalogue">Catalogue</a>
+                </li>
+                <li class="nav-item" th:if="${user != null && user.class.name == 'com.yysw.user.customer.Customer'}">
+                    <a class="nav-link main-color" id="contact" href="/contactUs">Contact Us</a>
+                </li>
+            </ul>
+        </div>
+        <div th:if="${user != null}">
+                <span th:if="${user.class.name eq 'com.yysw.user.customer.Customer'}">
+                    <a th:href="@{/orderHistory}"><img src="/image/order-history.png " width="30" height="30" alt=""></a>
+                    <a th:href="@{/shoppingCart}"><img src="/image/shopping-cart.png " width="30" height="30" alt=""></a>
+                    <div class="dropstart" style="display: inline-block">
+                        <a
+                                role="button"
+                                id="dropDownMenuLink1"
+                                data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                        >
+                            <img src="/image/acc-icon.png" width="30" height="30" alt="">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropDownMenuLink1">
+                            <li><a class="dropdown-item" th:href="@{/quitLogin}">Log out</a></li>
+                        </ul>
+                    </div>
+                </span>
+            <span th:if="${user.class.name eq 'com.yysw.user.owner.Owner'}">
+                    <a th:href="@{/orderHistory}"><img src="/image/order-history.png " width="30" height="30" alt=""></a>
+                    <div class="dropstart" style="display: inline-block">
+                        <a
+                                role="button"
+                                id="dropDownMenuLink2"
+                                data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                        >
+                            <img src="/image/acc-icon.png" width="30" height="30" alt="">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropDownMenuLink2">
+                            <li><a class="dropdown-item" th:href="@{/quitLogin}">Log out</a></li>
+                        </ul>
+                    </div>
+                </span>
+        </div>
+    </nav>
 <div>
     <div class="row">
         <div class="col-sm-7">

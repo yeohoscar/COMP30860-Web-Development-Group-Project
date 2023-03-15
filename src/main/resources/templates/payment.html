@@ -15,7 +15,6 @@
         <div class="col-sm-7">
             <h1>Enter Payment Details</h1>
             <hr class="solid">
-            <!--TODO:Redirect somewhere -->
             <form action="#" th:action="@{/payment}" th:object="${paymentInformation}" method="POST">
                 <div class="row">
                     <input type="text" th:field="*{name}" placeholder="Name On Card" required/>
