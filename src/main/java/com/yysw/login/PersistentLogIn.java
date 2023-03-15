@@ -55,6 +55,8 @@ public class PersistentLogIn extends HttpServlet {
             session.setAttribute("user", repoUser);
             if (repoUser != null) {
                 if (repoUser instanceof Customer) {
+                    System.out.println("Customer username = "+repoUser.getUsername());
+                    System.out.println("Customer password = "+repoUser.getPasswd()+"\n");
                     if (repoUser.getUsername().equals(username)) {
                         if (repoUser.getPasswd().equals(password)) {
                             Cookie cookie = new Cookie("sessionId", sessionId);
@@ -75,6 +77,8 @@ public class PersistentLogIn extends HttpServlet {
                         return;
                     }
                 } else if (repoUser instanceof Owner) {
+                    System.out.println("Admin username = "+repoUser.getUsername());
+                    System.out.println("Admin password = "+repoUser.getPasswd()+"\n");
                     if (repoUser.getUsername().equals(username)) {
                         if (repoUser.getPasswd().equals(password)) {
                             Cookie cookie = new Cookie("sessionId", sessionId);
