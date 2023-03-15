@@ -40,10 +40,13 @@ public class PersistentLogIn extends HttpServlet {
         String password = request.getParameter("passwd");
         System.out.println("current username that wants to login = " + username);
 
+
         //obtain acc from database
         User repoUser = userRepository.findByUsernameAndPasswd(username, password);
 //        System.out.println("Null or not = "+ Objects.isNull(repoUser));
-//        System.out.println("repoUser.getUsername() = "+repoUser.getUsername());
+        System.out.println("username from database = "+repoUser.getUsername());
+        System.out.println("password  from database = "+repoUser.getPasswd());
+
 
         PrintWriter out = response.getWriter();
         System.out.println("Persist Session ID: " + session.getId());
