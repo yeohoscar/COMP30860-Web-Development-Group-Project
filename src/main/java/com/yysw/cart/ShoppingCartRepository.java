@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 
 public interface ShoppingCartRepository extends CrudRepository<ShoppingCartItem, Long> {
-    long deleteByIdAndCustomer(Long id, Customer customer);
+    void deleteByIdAndCustomer(Long id, Customer customer);
 }

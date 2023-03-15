@@ -1,6 +1,5 @@
 package com.yysw.order;
 
-import com.yysw.aimodels.AIModel;
 import com.yysw.user.customer.Customer;
 
 import javax.persistence.*;

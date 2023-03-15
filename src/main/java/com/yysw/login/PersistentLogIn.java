@@ -6,18 +6,12 @@ import com.yysw.user.customer.Customer;
 import com.yysw.user.owner.Owner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import javax.swing.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URLDecoder;
 import java.util.Date;
-import java.util.Objects;
 
 @Component
 @WebServlet("/submit-login")
@@ -29,7 +23,7 @@ public class PersistentLogIn extends HttpServlet {
     public PersistentLogIn() {
         super();
     }
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
         HttpSession session = request.getSession();
         String sessionId = session.getId();
         session.setMaxInactiveInterval(-1);
@@ -42,8 +36,6 @@ public class PersistentLogIn extends HttpServlet {
 
         //obtain acc from database
         User repoUser = userRepository.findByUsernameAndPasswd(username, password);
-//        System.out.println("Null or not = "+ Objects.isNull(repoUser));
-//        System.out.println("repoUser.getUsername() = "+repoUser.getUsername());
 
         PrintWriter out = response.getWriter();
         System.out.println("Persist Session ID: " + session.getId());
@@ -65,14 +57,12 @@ public class PersistentLogIn extends HttpServlet {
                             out.write("<html"
                                     + "<head><script type='text/javascript'> alert('Wrong Customer Password!');location='login';</script></head>"
                                     + "<body></body></html>");
-                            return;
                         }
                         //check if customer logs in successfully
                     } else {
                         out.write("<html>"
                                 + "<head><script type='text/javascript'> alert('Wrong Customer Username!');location='login';</script></head>"
                                 + "<body></body></html>");
-                        return;
                     }
                 } else if (repoUser instanceof Owner) {
                     if (repoUser.getUsername().equals(username)) {
@@ -85,14 +75,12 @@ public class PersistentLogIn extends HttpServlet {
                             out.write("<html"
                                     + "<head><script type='text/javascript'> alert('Wrong Admin Password!');location='login';</script></head>"
                                     + "<body></body></html>");
-                            return;
                         }
                         //check if customer logs in successfully
                     } else {
                         out.write("<html>"
                                 + "<head><script type='text/javascript'> alert('Wrong Admin Username!');location='login';</script></head>"
                                 + "<body></body></html>");
-                        return;
                     }
                 }
             }

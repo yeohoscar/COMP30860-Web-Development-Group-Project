@@ -6,9 +6,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 
-import com.yysw.cart.ShoppingCartItem;
-import com.yysw.user.customer.Customer;
-
 import javax.persistence.*;
 
 @Entity

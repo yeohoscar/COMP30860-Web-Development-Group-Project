@@ -41,7 +41,7 @@ public class SiteController {
 
     @GetMapping("/logInAgain")
     public String logInAgain() {
-        return "logInAgain.html";
+        return "login-again.html";
     }
 
     @GetMapping("/login")
@@ -53,7 +53,7 @@ public class SiteController {
     @GetMapping("/logInOccupied")
     public String logInOccupied(Model model) {
         model.addAttribute("user", new User());
-        return "logInOccupied.html";
+        return "login-occupied.html";
     }
 
     @GetMapping("/register")
@@ -87,11 +87,10 @@ public class SiteController {
             @Valid @ModelAttribute("paymentInformation") PaymentInformation paymentInformation,
             BindingResult bindingResult
     ) {
-        System.out.println(paymentInformation.getExpiry());
-        System.out.println(paymentInformation.getCvv());
         if (bindingResult.hasErrors()) {
             return "payment.html";
         } else {
+
             return "catalogueMain.html";
         }
     }

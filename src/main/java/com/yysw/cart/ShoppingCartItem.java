@@ -2,7 +2,6 @@ package com.yysw.cart;
 
 import com.yysw.aimodels.AIModel;
 import com.yysw.user.customer.Customer;
-import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.io.Serializable;
