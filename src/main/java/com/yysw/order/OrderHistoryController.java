@@ -42,22 +42,17 @@ public class OrderHistoryController{
     public String viewOrder(ModelMap modelMap, @PathVariable Long id, HttpServletRequest request) {
         User sessionUser = (User) request.getSession().getAttribute("user");
         // session user wont be null because order history can only access by user after login
-        modelMap.addAttribute("order", orderRepository.findById(id));
+        modelMap.addAttribute("order", orderRepository.findOrderById(id));
         modelMap.addAttribute("user", sessionUser);
 
         return "view-order.html";
     }
 
-    /*@GetMapping("/view-order-owner/{id}")
-    public String viewOrderChangeState(Model model, @PathVariable Long id) {
-        model.addAttribute("order", orderRepository.findById(id));
-        return "view-all-orders";
-    }*/
-
     @PostMapping("/view-order/{id}")
     public String orderChangeState(@ModelAttribute("order") Order order, @PathVariable Long id) {
         Order orderStateToBeUpdated = orderRepository.findOrderById(id);
         orderStateToBeUpdated.updateState(order);
+        orderRepository.save(orderStateToBeUpdated);
         return "view-all-orders";
     }
 }

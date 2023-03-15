@@ -15,16 +15,12 @@ import java.util.Date;
 public class ContactController {
     @GetMapping("/contactUs")
     public String contact(Model model) {
-        ContactInformation c = new ContactInformation();
-        model.addAttribute("contactInformation", c);
+        model.addAttribute("contactInformation", new ContactInformation());
         return "contact-us.html";
     }
 
     @PostMapping("/contactUs")
     public String submitContact(@Valid @ModelAttribute("contactInformation") ContactInformation contactInformation, BindingResult bindingResult) {
-        System.out.println(contactInformation.getContactName());
-        System.out.println(contactInformation.getContactDate());
-        System.out.println(bindingResult.toString());
         if (bindingResult.hasErrors()) {
             return "contact-us.html";
         } else {

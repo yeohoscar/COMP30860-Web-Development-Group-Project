@@ -33,17 +33,14 @@
         </div>
     </nav>
 
-    <div>
-        <h2>Title</h2>
-    </div>
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-md">
-                <div class="content bg-pink">
-                    <h4 th:text="${model.modelName}"></h4>
+                <div th:if="${user eq null || user.class.name eq 'com.yysw.user.customer.Customer'}">
+                    <h2 th:text="${model.modelName}"></h2>
+                    <hr /><br>
                     <p th:text="${model.description}"></p>
-                    <form th:action="@{/catalogue/add-to-cart/__${id}__/__${name}__}" method="POST">
+                    <form th:action="@{/catalogue/__${id}__/__${name}__}" method="POST">
                         <label th:text="'Trained model ' + ${model.trainedPrice}"></label>
                         <input type="checkbox" name="trained">
                         <label th:text="'Untrained model ' + ${model.untrainedPrice}"></label>
@@ -52,23 +49,23 @@
                         <input type="submit" value="Add To Cart">
                     </form>
                 </div>
+                <div th:if="${user ne null && user.class.name eq 'com.yysw.user.owner.Owner'}">
+                    <form th:action="@{/catalogue/__${id}__/__${name}__}" method="POST">
+                        <input type="text" th:field="*{model.modelName}" th:value="${model.modelName}">
+                        <input type="text" th:field="*{model.description}" th:value="${model.description}">
+                        <input type="number" step=0.01 min=0 th:field="*{model.trainedPrice}" th:value="${model.trainedPrice}">
+                        <input type="number" step=0.01 min=0 th:field="*{model.untrainedPrice}" th:value="${model.untrainedPrice}">
+                        <label th:text="'Model is available' + ${model.available}"></label>
+                        <span>Tick the box if you want to make it available, otherwise leave it blank</span>
+                        <input type="checkbox" th:field="*{model.available}">
+                        <br>
+                        <input type="submit" value="Submit Change">
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 
-    <br><hr /><br>
 
-    <div>
-        <h4>Details</h4>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
-    </div>
-    <div>
-        <h4>Accuracy</h4>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
-    </div>
-    <div>
-        <h4>API</h4>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
-    </div>
 </body>
 </html>
