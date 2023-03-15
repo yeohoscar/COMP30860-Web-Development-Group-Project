@@ -96,10 +96,11 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/remove-cart-item/{id}")
-    public @ResponseBody void removeCartItem(@PathVariable(value="id") Long id,
+    public String removeCartItem(@PathVariable(value="id") Long id,
                                              HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Customer sessionUser = (Customer) request.getSession().getAttribute("user");
-        List<ShoppingCartItem> cart = customerRepository.findCustomerById(sessionUser.getId()).getCart();
+        User sessionUser = (User) request.getSession().getAttribute("user");
+        Customer customer = customerRepository.findCustomerById(sessionUser.getId());
+        List<ShoppingCartItem> cart = customer.getCart();
         System.out.println("hi");
         for (ShoppingCartItem s : cart) {
             System.out.println(s.getItem().toString());
@@ -109,8 +110,9 @@ public class ShoppingCartController {
         for (ShoppingCartItem s : cart) {
             System.out.println(s.getItem().toString());
         }
+        customerRepository.save(customer);
 
-        response.sendRedirect("/shopping-cart");
+        return "redirect:/shopping-cart";
     }
 
     public void updateCustomerCart(Long id, ShoppingCartItem item) {
@@ -123,6 +125,11 @@ public class ShoppingCartController {
     public String shoppingCart(Model model, HttpServletRequest request) {
         Customer customer = (Customer) request.getSession().getAttribute("user");
         List<ShoppingCartItem> userCart = customerRepository.findCustomerById(customer.getId()).getCart();
+        System.out.println("okay");
+        for (ShoppingCartItem s : userCart) {
+            System.out.println(s.getItem().toString());
+        }
+
         model.addAttribute("size", userCart.size());
         model.addAttribute("products", userCart);
         double sub = 0.0;
