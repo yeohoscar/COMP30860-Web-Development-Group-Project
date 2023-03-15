@@ -14,17 +14,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
-        function trainUntrain() {
-            selElement = document.querySelector('select');
-            selectedValue = selElement.value;
-            isTrained = (selectedValue === 'trained');
-
-            if (isTrained) {
-
-            } else {
-
+        $("#changeModel :input").change(function() {
+            var changed = $("#changeModel").data("changed",true);
+            if (changed) {
+                //change cart
+                $$("#changeModel").data("changed",false);
             }
-        }
+        });
     </script>
 
 </head>
@@ -54,15 +50,18 @@
                 </thead>
                 <tbody>
                 <tr th:each="ele:${products}">
-                    <td class="wrapTextInTableCell" th:text="${ele.item.getModelName()}">Name+Descritpion</td>
-                    <td class="wrapTextInTableCell" th:if="${ele.isTrainedModel()}">
-                        <select onchange="trainUntrain()">
-                            <option value="trained">trained</option>
-                            <option value="untrained">untrained</option>
-                        </select>
-                    </td>
-                    <td class="wrapTextInTableCell" th:text="'£'+${ele.getPrice()}"></td>
-                    <td class="wrapTextInTableCell" th:text="'£'+${ele.getPrice()}"></td>
+                    <form id="changeModel" method="post">
+                        <td class="wrapTextInTableCell" th:text="${ele.item.getModelName()}">Name+Descritpion</td>
+                        <td class="wrapTextInTableCell">
+                            <select>
+                                <option value="trained">trained</option>
+                                <option value="untrained">untrained</option>
+                                <option value="remove">remove</option>
+                            </select>
+                        </td>
+                        <td class="wrapTextInTableCell" th:text="'£'+${ele.getPrice()}"></td>
+                        <td class="wrapTextInTableCell" th:text="'£'+${ele.getPrice()}"></td>
+                    </form>
                 </tr>
                 </tbody>
             </table>
