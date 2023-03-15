@@ -18,7 +18,7 @@
 <div >
     <div class="row">
         <div class="col-lg">
-            <div class="row" th:if="${user.class.name eq 'com.yysw.user.customer.Customer'}">
+            <div class="row" th:if="${user.class.name eq 'com.yysw.user.owner.Owner'}">
                 <div class="col-sm-8"></div>
                 <div class="col-sm-4">
                     <form action="#" th:action="@{/view-order/{id}(id=${order.getId()})}" th:object="${order}" method="POST">
@@ -29,7 +29,7 @@
                     </form>
                 </div>
             </div>
-            <div class="row" th:if="${user.class.name eq 'com.yysw.user.owner.Owner'}">
+            <div class="row" th:if="${user.class.name eq 'com.yysw.user.customer.Customer'}">
                 <div class="col-sm-8"></div>
                 <div class="col-sm-4">
                     <h5 th:text="${order.state}"></h5>
@@ -40,7 +40,6 @@
                     <h1 th:text="'Order: ' + ${order.getId()}"></h1>
                 </div>
                 <div class="col-sm-4">
-                    <h5 th:text="${order.getOrderDate()}"></h5>
                     <h5 th:text="'Date:' + ' ' + ${#dates.format(order.getOrderDate(), 'dd/MM/yyyy')}"></h5>
                 </div>
             </div>
@@ -56,7 +55,6 @@
 
                     <th class="col-lg-2">Quantity</th>
                     <th class="col-lg-2">Price</th>
-                    <th class="col-lg-2">Subtotal</th>
                 </tr>
                 </thead>
 
@@ -66,8 +64,7 @@
                     <td class="col-sm-2"></td>
                     <td class="col-sm-2"></td>
                     <td class="wrapTextInTableCell col-sm-2">1</td>
-                    <td th:text="${model.getPrice()}" class="wrapTextInTableCell col-sm-2">£0</td>
-                    <td class="wrapTextInTableCell col-sm-2">£0</td>
+                    <td th:text="${model.getPrice()}" class="wrapTextInTableCell col-sm-2"></td>
                 </tr>
                 </tbody>
             </table>

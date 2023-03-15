@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class ShoppingCartController {
@@ -66,7 +67,6 @@ public class ShoppingCartController {
 
         if (sessionUser != null) {
             if (sessionUser instanceof Customer) {
-
                 if (request.getParameter("trained") != null) {
                     ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
                     shoppingCartItem.setItem(ai);
@@ -93,6 +93,14 @@ public class ShoppingCartController {
 
         assert ai != null;
         response.sendRedirect("/catalogue/" + id + "/" + ai.getModelName());
+    }
+
+    @PostMapping("/remove-cart-item/{id}")
+    public String removeCartItem(@PathVariable(value="id") Long id, HttpServletRequest request) {
+        Customer sessionUser = (Customer) request.getSession().getAttribute("user");
+        List<ShoppingCartItem> cart = customerRepository.findCustomerById(sessionUser.getId()).getCart();
+        cart.removeIf(item -> Objects.equals(item.getId(), id));
+        return "shopping-cart.html";
     }
 
     public void updateCustomerCart(Long id, ShoppingCartItem item) {

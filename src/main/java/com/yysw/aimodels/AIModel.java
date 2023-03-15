@@ -28,9 +28,6 @@ public class AIModel implements Serializable {
 
     private boolean available;
 
-    @OneToOne(mappedBy = "item")
-    private ShoppingCartItem item;
-
     public void updateModel(AIModel model) {
         this.modelName = model.modelName;
         this.trainedPrice = model.trainedPrice;
