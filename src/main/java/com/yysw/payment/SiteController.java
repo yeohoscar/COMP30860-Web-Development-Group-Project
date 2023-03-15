@@ -3,7 +3,9 @@ package com.yysw.payment;
 import com.yysw.user.User;
 import com.yysw.user.UserRepository;
 import com.yysw.user.customer.Customer;
+import com.yysw.user.customer.CustomerRepository;
 import com.yysw.user.owner.Owner;
+import com.yysw.user.owner.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Objects;
 
@@ -19,14 +22,28 @@ import java.util.Objects;
 public class SiteController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
+    @Autowired
+    private OwnerRepository ownerRepository;
 
     @GetMapping("/")
-    public String home() {
-        return "index.html";
+    public String home(HttpServletRequest request, Model model){
+        User sessionUser = (User) request.getSession().getAttribute("username");
+        if(sessionUser == null)
+        {
+            return "index.html";
+        }
+        else {
+            User repoUser = userRepository.findUserById(sessionUser.getId());
+            model.addAttribute("user", repoUser);
+            return "index.html";
+        }
+//        System.out.println("not in else");
     }
-    @GetMapping("/successLogIn")
-    public String successLogIn() {
-        return "successLogIn.html";
+    @GetMapping("/customer")
+    public String customer() {
+        return "customer.html";
     }
     @GetMapping("/logInAgain")
     public String logInAgain() {
@@ -54,8 +71,11 @@ public class SiteController {
         if (registerInformation.getAdminKey() != null &&
                 Objects.equals(registerInformation.getAdminKey(), "verycooladminkey")) {
             userRepository.save(new Owner(registerInformation.getUsername(), registerInformation.getPasswd()));
+            ownerRepository.save((Owner) userRepository.findByUsernameAndPasswd(registerInformation.getUsername(), registerInformation.getPasswd()));
         } else {
             userRepository.save(new Customer(registerInformation.getUsername(), registerInformation.getPasswd()));
+            customerRepository.save((Customer) userRepository.findByUsernameAndPasswd(registerInformation.getUsername(), registerInformation.getPasswd()));
+
         }
         return "login.html";
     }
