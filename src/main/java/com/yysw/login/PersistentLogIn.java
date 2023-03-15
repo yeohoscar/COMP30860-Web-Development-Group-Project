@@ -51,8 +51,8 @@ public class PersistentLogIn extends HttpServlet {
         System.out.println("Persist Last Accessed Time: " + new Date(session.getLastAccessedTime()));
 
         //说明还没有用户登录
-        if(session.getAttribute("username") == null) {
-            session.setAttribute("username", repoUser);
+        if(session.getAttribute("user") == null) {
+            session.setAttribute("user", repoUser);
             if (repoUser != null) {
                 if (repoUser instanceof Customer) {
                     if (repoUser.getUsername().equals(username)) {
@@ -60,11 +60,7 @@ public class PersistentLogIn extends HttpServlet {
                             Cookie cookie = new Cookie("sessionId", sessionId);
                             cookie.setMaxAge(-1);//let's say the cookie is valid in two minutes
                             response.addCookie(cookie);//server return this cookie to browser so that it can be checked next time when user log in
-                            System.out.println("Customer Log In Successfully\n");
-
                             response.sendRedirect("/");
-
-
                         } else {
                             System.out.println("Wrong Customer Password!");
                             out.write("<html"
@@ -115,13 +111,10 @@ public class PersistentLogIn extends HttpServlet {
                         + "<body></body></html>");
             }
         }
-        //otherwise, there is an account already login
+        //否则, 已经有一个账户登录了
         else {
             System.out.println("there already has one account login");
-//            User occupiedUser = userRepository.findUserById(repoUser.getId());
-//            model.addAttribute("user", occupiedUser);
-            response.sendRedirect("/index");
-//            JOptionPane.showMessageDialog(null, "At most log in one account at the same time!");
+            response.sendRedirect("/logInOccupied");
         }
     }
 

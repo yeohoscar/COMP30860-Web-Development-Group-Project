@@ -28,32 +28,39 @@ public class SiteController {
     private OwnerRepository ownerRepository;
 
     @GetMapping("/")
-    public String home(HttpServletRequest request, Model model){
+    public String home(HttpServletRequest request, Model model) {
         User sessionUser = (User) request.getSession().getAttribute("username");
-        if(sessionUser == null)
-        {
+        if (sessionUser == null) {
             return "index.html";
-        }
-        else {
+        } else {
             User repoUser = userRepository.findUserById(sessionUser.getId());
             model.addAttribute("user", repoUser);
-            return "index.html";
         }
-//        System.out.println("not in else");
+        return "index.html";
     }
+
+    @GetMapping("/successLogIn")
+    public String successLogIn() {
+        return "login-success.html";
+    }
+
     @GetMapping("/customer")
     public String customer() {
         return "customer.html";
+
     }
+
     @GetMapping("/logInAgain")
     public String logInAgain() {
         return "logInAgain.html";
     }
+
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("user", new User());
         return "login.html";
     }
+
     @GetMapping("/logInOccupied")
     public String logInOccupied(Model model) {
         model.addAttribute("user", new User());
@@ -96,22 +103,7 @@ public class SiteController {
         if (bindingResult.hasErrors()) {
             return "payment.html";
         } else {
-            return "payment_success.html";
+            return "catalogueMain.html";
         }
     }
-
-//    @PostMapping("/submit-login")
-//    public String loginAcc(@ModelAttribute("user") User user) {
-//        User repoUser = userRepository.findByUsernameAndPasswd(user.getUsername(), user.getPasswd());
-//        if (repoUser != null &&
-//                Objects.equals(repoUser.getUsername(), user.getUsername()) &&
-//                Objects.equals(repoUser.getPasswd(), user.getPasswd())
-//        ) {
-//                /*TODO: smth about differentiating owner and customer acc
-//                        and persisting login
-//                 */
-//            return "index.html";
-//        }
-//        return "login.html";
-//    }
 }

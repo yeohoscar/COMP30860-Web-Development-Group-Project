@@ -8,17 +8,16 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "shopping_cart_item", schema = "yysw-db")
 public class ShoppingCartItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private AIModel item;
 
     private boolean trainedModelOrNot;
-
-//    private boolean untrainedModel;
 
     private Double price;
 
@@ -36,10 +35,6 @@ public class ShoppingCartItem implements Serializable {
     public boolean isTrainedModel() { return trainedModelOrNot; }
 
     public void setTrainedModel(boolean trainedModel) { this.trainedModelOrNot = trainedModel; }
-
-//    public boolean isUntrainedModel() { return untrainedModel; }
-
-//    public void setUntrainedModel(boolean untrainedModel) { this.untrainedModel = untrainedModel; }
 
     public Double getPrice() { return price; }
 

@@ -12,6 +12,7 @@ import com.yysw.user.customer.Customer;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "aimodel", schema = "yysw-db")
 public class AIModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,12 +26,15 @@ public class AIModel implements Serializable {
 
     private String description;
 
-    private String photoURL;
-
     private boolean available;
 
-    @OneToOne(mappedBy = "item")
-    private ShoppingCartItem item;
+    public void updateModel(AIModel model) {
+        this.modelName = model.modelName;
+        this.trainedPrice = model.trainedPrice;
+        this.untrainedPrice = model.untrainedPrice;
+        this.description = model.description;
+        this.available = model.available;
+    }
 
     public Long getId() { return id; }
 
@@ -52,10 +56,6 @@ public class AIModel implements Serializable {
 
     public void setDescription(String description) { this.description = description; }
 
-    public String getPhotoURL() { return photoURL; }
-
-    public void setPhotoURL(String photoURL) { this.photoURL = photoURL; }
-
     public boolean isAvailable() { return available; }
 
     public void setAvailable(boolean available) { this.available = available; }
@@ -68,7 +68,6 @@ public class AIModel implements Serializable {
                 ", trainedPrice=" + trainedPrice +
                 ", untrainedPrice=" + untrainedPrice +
                 ", description='" + description + '\'' +
-                ", photoURL='" + photoURL + '\'' +
                 ", available=" + available +
                 '}';
     }

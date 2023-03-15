@@ -3,8 +3,7 @@ COPY src /app/src
 COPY pom.xml /app
 RUN mvn -f /app/pom.xml clean package spring-boot:repackage -DskipTests
 
-FROM dostiharise/ubuntu-java-mysql:latest
-COPY start.sh /app/out/
+FROM openjdk:8-jdk-alpine
 COPY --from=build /app/target/COMP30860-Web-Development-Group-Project-1.0-SNAPSHOT.jar /app/out/COMP30860-Web-Development-Group-Project-1.0-SNAPSHOT.jar
 EXPOSE 8080
-ENTRYPOINT ["bash", "/app/out/start.sh"]
+ENTRYPOINT ["java", "-jar", "/app/out/COMP30860-Web-Development-Group-Project-1.0-SNAPSHOT.jar"]
