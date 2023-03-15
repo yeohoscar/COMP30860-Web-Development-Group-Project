@@ -14,105 +14,148 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
-<body>
-<div >
-    <div class="row">
-        <div class="col-lg">
-            <div class="row" th:if="${user.class.name eq 'com.yysw.user.owner.Owner'}">
-                <div class="col-sm-8"></div>
-                <div class="col-sm-4">
-                    <form action="#" th:action="@{/view-order/{id}(id=${order.getId()})}" th:object="${order}" method="POST">
-                        <select name="state" onchange="this.form.submit()">
-                            <option th:each="stateOpt: ${T(com.yysw.order.State).values()}"
-                                    th:value="${stateOpt}" th:text="${stateOpt.displayValue}"></option>
-                        </select>
-                    </form>
-                </div>
-            </div>
-            <div class="row" th:if="${user.class.name eq 'com.yysw.user.customer.Customer'}">
-                <div class="col-sm-8"></div>
-                <div class="col-sm-4">
-                    <h5 th:text="${order.state}"></h5>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-8">
-                    <h1 th:text="'Order: ' + ${order.getId()}"></h1>
-                </div>
-                <div class="col-sm-4">
-                    <h5 th:text="'Date:' + ' ' + ${#dates.format(order.getOrderDate(), 'dd/MM/yyyy')}"></h5>
-                </div>
-            </div>
-
-            <hr class=" hhr">
-
-            <table class="table">
-                <thead>
-                <tr>
-                    <th class="col-lg-2">items</th>
-                    <th class="col-lg-2"></th>
-                    <th class="col-lg-2"></th>
-
-                    <th class="col-lg-2">Quantity</th>
-                    <th class="col-lg-2">Price</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr th:each="model: ${order.getOrderedModels()}">
-                    <td th:text="${model.getModel_id()}" class="wrapTextInTableCell col-sm-2" ></td>
-                    <td class="col-sm-2"></td>
-                    <td class="col-sm-2"></td>
-                    <td class="wrapTextInTableCell col-sm-2">1</td>
-                    <td th:text="${model.getPrice()}" class="wrapTextInTableCell col-sm-2"></td>
-                </tr>
-                </tbody>
-            </table>
+<body data-spy="scroll" data-target="#navbar0" data-offser="0">
+    <nav class="navbar sticky-top navbar-expand-md bg-body-tertiary pad-side" id="navbar0" th:object="${user}">
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="logo" href="/">
+            <img src="/image/logo.png" width="30" height="30" alt="">
+            YYWS
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto mb-md-0">
+                <li class="nav-item">
+                    <a class="nav-link main-color" id="catalogue" href="/catalogue">Catalogue</a>
+                </li>
+                <li class="nav-item" th:if="${user == null || user != null && user.class.name == 'com.yysw.user.customer.Customer'}">
+                    <a class="nav-link main-color" id="contact" href="/contactUs">Contact Us</a>
+                </li>
+            </ul>
         </div>
-    </div>
-    <div class="row myDiv">
-    <hr class="hrr">
-        <div class="col-lg">
-            <div class="row ">
-                <div class="col-sm-8"></div>
-                <div class="col-sm-4">
-<!--                    <div class="row">-->
-<!--                        <div class="col-sm-6">-->
-<!--                            <h6>SUBTOTAL</h6>-->
-<!--                        </div>-->
-<!--                        <div class="col-sm-6">-->
-<!--                            <h7 th:text="${order.totalPriceOfOrderedModels()}">SUBTOTAL</h7>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-sm-6">-->
-<!--                            <h6>FEES</h6>-->
-<!--                        </div>-->
-<!--                        <div class="col-sm-6">-->
-<!--                            <h7>XX.XX</h7>-->
-<!--                        </div>-->
-<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-sm-6">-->
-<!--                            <h6>DISCOUNT</h6>-->
-<!--                        </div>-->
-<!--                        <div class="col-sm-6">-->
-<!--                            <h7>XX.XX</h7>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <br>-->
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h6>TOTAL</h6>
-                        </div>
-                        <div class="col-sm-6">
-                            <h7 th:text="${order.totalPriceOfOrderedModels()}"></h7>
+        <span th:if="${user eq null}">
+                <button class="white-button-sm" type="button" onclick="window.location.href='/login'">Log In</button>
+            </span>
+        <div th:unless="${user eq null}">
+                <span th:if="${user.class.name eq 'com.yysw.user.customer.Customer'}">
+                    <a th:href="@{/orderHistory}"><img src="/image/order-history.png " width="30" height="30" alt=""></a>
+                    <a th:href="@{/shoppingCart}"><img src="/image/shopping-cart.png " width="30" height="30" alt=""></a>
+                    <div class="dropstart" style="display: inline-block">
+                        <a
+                                role="button"
+                                id="dropDownMenuLink1"
+                                data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                        >
+                            <img src="/image/acc-icon.png" width="30" height="30" alt="">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropDownMenuLink1">
+                            <li><a class="dropdown-item" th:href="@{/quitLogin}">Log out</a></li>
+                        </ul>
+                    </div>
+                </span>
+            <span th:if="${user.class.name eq 'com.yysw.user.owner.Owner'}">
+                <a th:href="@{/orderHistory}"><img src="/image/order-history.png " width="30" height="30" alt=""></a>
+                <div class="dropstart" style="display: inline-block">
+                    <a
+                            role="button"
+                            id="dropDownMenuLink2"
+                            data-bs-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                    >
+                        <img src="/image/acc-icon.png" width="30" height="30" alt="">
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropDownMenuLink2">
+                        <li><a class="dropdown-item" th:href="@{/quitLogin}">Log out</a></li>
+                    </ul>
+                </div>
+            </span>
+        </div>
+    </nav>
+    <div>
+        <div class="row">
+            <div class="col-lg">
+                <div class="row" th:if="${user.class.name eq 'com.yysw.user.owner.Owner'}">
+                    <div class="col-sm-8"></div>
+                    <div class="col-sm-4">
+                        <form action="#" th:action="@{/view-order/{id}(id=${order.getId()})}" th:object="${order}" method="POST">
+                            <select name="state" onchange="this.form.submit()">
+                                <option th:each="stateOpt: ${T(com.yysw.order.State).values()}"
+                                        th:value="${stateOpt}" th:text="${stateOpt.displayValue}" th:selected="${order.state}"></option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
+                <div class="row" th:if="${user.class.name eq 'com.yysw.user.customer.Customer'}">
+                    <div class="col-sm-8"></div>
+                    <div class="col-sm-4">
+                        <h5 th:text="${order.state}"></h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <h1 th:text="'Order: ' + ${order.getId()}"></h1>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 th:text="'Date:' + ' ' + ${#dates.format(order.getOrderDate(), 'dd/MM/yyyy')}"></h5>
+                    </div>
+                </div>
+
+                <hr class=" hhr">
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th class="col-lg-2">items</th>
+                        <th class="col-lg-2"></th>
+                        <th class="col-lg-2"></th>
+
+                        <th class="col-lg-2">Quantity</th>
+                        <th class="col-lg-2">Price</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="model: ${order.getOrderedModels()}">
+                        <td th:text="${model.getModel_id()}" class="wrapTextInTableCell col-sm-2" ></td>
+                        <td class="col-sm-2"></td>
+                        <td class="col-sm-2"></td>
+                        <td class="wrapTextInTableCell col-sm-2">1</td>
+                        <td th:text="${model.getPrice()}" class="wrapTextInTableCell col-sm-2"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row myDiv">
+        <hr class="hrr">
+            <div class="col-lg">
+                <div class="row ">
+                    <div class="col-sm-8"></div>
+                    <div class="col-sm-4">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h6>TOTAL</h6>
+                            </div>
+                            <div class="col-sm-6">
+                                <h7 th:text="${order.totalPriceOfOrderedModels()}"></h7>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
-</div>
 </body>
 </html>

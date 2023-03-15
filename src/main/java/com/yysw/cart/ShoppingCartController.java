@@ -3,19 +3,21 @@ package com.yysw.cart;
 import com.yysw.aimodels.AIModel;
 import com.yysw.aimodels.AIModelRepository;
 import com.yysw.user.User;
+import com.yysw.user.UserRepository;
 import com.yysw.user.customer.Customer;
 import com.yysw.user.customer.CustomerRepository;
 import com.yysw.user.owner.Owner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 public class ShoppingCartController {
@@ -24,10 +26,16 @@ public class ShoppingCartController {
     @Autowired
     private AIModelRepository aiModelRepository;
 
-    @GetMapping("/catalogue")
-    public String marketplace(Model model, HttpServletRequest request) {
-        User sessionUser = (User) request.getSession().getAttribute("user");
+    @Autowired
+    private ShoppingCartRepository shoppingCartRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @GetMapping("/catalogue")
+    public String marketplace(Model model, HttpSession session) {
+        Long sessionUserID = (Long) session.getAttribute("user_id");
+        User sessionUser = userRepository.findUserById(sessionUserID);
         List<AIModel> modelsToDisplay;
         if (sessionUser == null) {
             modelsToDisplay = aiModelRepository.findAIModelByAvailable(true);
@@ -46,13 +54,26 @@ public class ShoppingCartController {
 
     @GetMapping("/catalogue/{id}/{name}")
     public String modelDetails(@PathVariable(value="id") Long id, @PathVariable(value="name") String name,
-                               Model model, HttpServletRequest request) {
-        User sessionUser = (User) request.getSession().getAttribute("user");
+                               Model model, HttpSession session) {
+        Long sessionUserID = (Long) session.getAttribute("user_id");
+        User sessionUser = userRepository.findUserById(sessionUserID);
+        AIModel aiModel = aiModelRepository.findAIModelById(id);
+        boolean hasItem = false;
 
         if (sessionUser != null) {
             model.addAttribute("user", sessionUser);
+            if (sessionUser instanceof Customer) {
+                List<ShoppingCartItem> cartItems = customerRepository.findCustomerById(sessionUser.getId()).getCart();
+                for (ShoppingCartItem item : cartItems) {
+                    if (item.getItem() == aiModel) {
+                        hasItem = true;
+                        break;
+                    }
+                }
+            }
         }
-        model.addAttribute("model", aiModelRepository.findAIModelById(id));
+        model.addAttribute("hasItem", hasItem);
+        model.addAttribute("model", aiModel);
 
         return "model-detail.html";
     }
@@ -61,7 +82,8 @@ public class ShoppingCartController {
     public @ResponseBody void addCart(@ModelAttribute("model") AIModel aiModel, @PathVariable(value="id") Long id,
                                         @PathVariable(value="name") String name, Model model,
                                         HttpServletRequest request, HttpServletResponse response) throws IOException {
-        User sessionUser = (User) request.getSession().getAttribute("user");
+        Long sessionUserID = (Long) request.getSession().getAttribute("user_id");
+        User sessionUser = userRepository.findUserById(sessionUserID);
         AIModel ai = aiModelRepository.findAIModelById(id);
 
         if (sessionUser != null) {
@@ -89,24 +111,15 @@ public class ShoppingCartController {
         response.sendRedirect("/catalogue/" + id + "/" + ai.getModelName());
     }
 
+    @Transactional
     @PostMapping("/remove-cart-item/{id}")
-    public @ResponseBody void removeCartItem(@PathVariable(value="id") Long id,
-                                             HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Customer sessionUser = customerRepository.findCustomerById(((User) request.getSession().getAttribute("user")).getId());
-        List<ShoppingCartItem> cart = sessionUser.getCart();
-        System.out.println("hi");
-        for (ShoppingCartItem s : cart) {
-            System.out.println(s.getItem().toString());
-        }
-        cart.removeIf(item -> Objects.equals(item.getId(), id));
-        System.out.println("bye");
-        customerRepository.save(sessionUser);
+    public String removeCartItem(@PathVariable(value="id") Long id,
+                                 HttpSession session, HttpServletResponse response) throws IOException {
+        Long sessionUserID = (Long) session.getAttribute("user_id");
+        Customer customer = customerRepository.findCustomerById(sessionUserID);
+        shoppingCartRepository.deleteByIdAndCustomer(id, customer);
 
-        for (ShoppingCartItem s : customerRepository.findCustomerById(((Customer) request.getSession().getAttribute("user")).getId()).getCart()) {
-            System.out.println(s.getItem().toString());
-        }
-
-        response.sendRedirect("/shopping-cart");
+        return "redirect:/shopping-cart";
     }
 
     public void updateCustomerCart(Long id, ShoppingCartItem item) {
@@ -134,9 +147,14 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/shopping-cart")
-    public String shoppingCart(Model model, HttpServletRequest request) {
-        Customer customer = (Customer) request.getSession().getAttribute("user");
-        List<ShoppingCartItem> userCart = customerRepository.findCustomerById(customer.getId()).getCart();
+    public String shoppingCart(Model model, HttpSession session) {
+        Long sessionUserID = (Long) session.getAttribute("user_id");
+        List<ShoppingCartItem> userCart = customerRepository.findCustomerById(sessionUserID).getCart();
+        System.out.println("okay");
+        for (ShoppingCartItem s : userCart) {
+            System.out.println(s.getItem().toString());
+        }
+
         model.addAttribute("size", userCart.size());
         model.addAttribute("products", userCart);
         double sub = 0.0;
