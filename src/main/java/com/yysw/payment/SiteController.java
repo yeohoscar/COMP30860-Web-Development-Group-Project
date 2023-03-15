@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Objects;
 
@@ -28,20 +29,15 @@ public class SiteController {
     private OwnerRepository ownerRepository;
 
     @GetMapping("/")
-    public String home(HttpServletRequest request, Model model) {
-        User sessionUser = (User) request.getSession().getAttribute("user");
-        if (sessionUser == null) {
+    public String home(HttpSession session, Model model) {
+        Long sessionUserID = (Long) session.getAttribute("user_id");
+        if (sessionUserID == null) {
             return "index.html";
         } else {
-            User repoUser = userRepository.findUserById(sessionUser.getId());
+            User repoUser = userRepository.findUserById(sessionUserID);
             model.addAttribute("user", repoUser);
         }
         return "index.html";
-    }
-
-    @GetMapping("/logInAgain")
-    public String logInAgain() {
-        return "login-again.html";
     }
 
     @GetMapping("/login")
@@ -50,10 +46,9 @@ public class SiteController {
         return "login.html";
     }
 
-    @GetMapping("/logInOccupied")
-    public String logInOccupied(Model model) {
-        model.addAttribute("user", new User());
-        return "login-occupied.html";
+    @GetMapping("/login-success")
+    public String loginSuccess() {
+        return "login-success.html";
     }
 
     @GetMapping("/register")
@@ -64,14 +59,12 @@ public class SiteController {
 
     @PostMapping("/register")
     public String register(@ModelAttribute("RegisterInformation") RegisterInformation registerInformation) {
-        if (registerInformation.getAdminKey() != null &&
-                Objects.equals(registerInformation.getAdminKey(), "verycooladminkey")) {
+        if (registerInformation.getAdminKey() != null
+                && Objects.equals(registerInformation.getAdminKey(), "verycooladminkey")
+                && !userRepository.existsUserByUsername(registerInformation.getUsername())) {
             userRepository.save(new Owner(registerInformation.getUsername(), registerInformation.getPasswd()));
-            ownerRepository.save((Owner) userRepository.findByUsernameAndPasswd(registerInformation.getUsername(), registerInformation.getPasswd()));
-        } else {
+        } else if (!userRepository.existsUserByUsername(registerInformation.getUsername())){
             userRepository.save(new Customer(registerInformation.getUsername(), registerInformation.getPasswd()));
-            customerRepository.save((Customer) userRepository.findByUsernameAndPasswd(registerInformation.getUsername(), registerInformation.getPasswd()));
-
         }
         return "login.html";
     }
