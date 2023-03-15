@@ -3,7 +3,9 @@ package com.yysw.payment;
 import com.yysw.user.User;
 import com.yysw.user.UserRepository;
 import com.yysw.user.customer.Customer;
+import com.yysw.user.customer.CustomerRepository;
 import com.yysw.user.owner.Owner;
+import com.yysw.user.owner.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,10 @@ import java.util.Objects;
 public class SiteController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
+    @Autowired
+    private OwnerRepository ownerRepository;
 
     @GetMapping("/")
     public String home(HttpServletRequest request, Model model) {
@@ -72,8 +78,11 @@ public class SiteController {
         if (registerInformation.getAdminKey() != null &&
                 Objects.equals(registerInformation.getAdminKey(), "verycooladminkey")) {
             userRepository.save(new Owner(registerInformation.getUsername(), registerInformation.getPasswd()));
+            ownerRepository.save((Owner) userRepository.findByUsernameAndPasswd(registerInformation.getUsername(), registerInformation.getPasswd()));
         } else {
             userRepository.save(new Customer(registerInformation.getUsername(), registerInformation.getPasswd()));
+            customerRepository.save((Customer) userRepository.findByUsernameAndPasswd(registerInformation.getUsername(), registerInformation.getPasswd()));
+
         }
         return "login.html";
     }
