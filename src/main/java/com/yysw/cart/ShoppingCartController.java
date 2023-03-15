@@ -8,6 +8,7 @@ import com.yysw.user.customer.CustomerRepository;
 import com.yysw.user.owner.Owner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,9 @@ public class ShoppingCartController {
     private CustomerRepository customerRepository;
     @Autowired
     private AIModelRepository aiModelRepository;
+
+    @Autowired
+    private ShoppingCartRepository shoppingCartRepository;
 
     @GetMapping("/catalogue")
     public String marketplace(Model model, HttpServletRequest request) {
@@ -95,22 +99,13 @@ public class ShoppingCartController {
         response.sendRedirect("/catalogue/" + id + "/" + ai.getModelName());
     }
 
+    @Transactional
     @PostMapping("/remove-cart-item/{id}")
     public String removeCartItem(@PathVariable(value="id") Long id,
-                                             HttpServletRequest request, HttpServletResponse response) throws IOException {
+                                 HttpServletRequest request, HttpServletResponse response) throws IOException {
         User sessionUser = (User) request.getSession().getAttribute("user");
         Customer customer = customerRepository.findCustomerById(sessionUser.getId());
-        List<ShoppingCartItem> cart = customer.getCart();
-        System.out.println("hi");
-        for (ShoppingCartItem s : cart) {
-            System.out.println(s.getItem().toString());
-        }
-        cart.removeIf(item -> Objects.equals(item.getId(), id));
-        System.out.println("bye");
-        for (ShoppingCartItem s : cart) {
-            System.out.println(s.getItem().toString());
-        }
-        customerRepository.save(customer);
+        shoppingCartRepository.deleteByIdAndCustomer(id, customer);
 
         return "redirect:/shopping-cart";
     }

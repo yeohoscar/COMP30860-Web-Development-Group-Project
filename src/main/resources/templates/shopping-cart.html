@@ -28,7 +28,29 @@
     </script>
 
 </head>
-<body>
+<body data-spy="scroll" data-target="#navbar0" data-offser="0">
+<nav class="navbar sticky-top navbar-expand-md bg-body-tertiary" id="navbar0">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <a href="/">YYWS</a>
+        <ul class="navbar-nav mx-auto mb-md-0">
+            <li class="nav-item">
+                <a class="nav-link" id="catalogue" href="/catalogue">Catalogue</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="contact" href="/contactUs">Contact Us</a>
+            </li>
+        </ul>
+
+        <button type="button" onclick="window.location.href='/payment'">Pay</button>
+        <button type="button" onclick="window.location.href='/contactUs'">Contact</button>
+        <button type="button" onclick="window.location.href='/shopping-cart'">Shopping Cart</button>
+        <button type="button" onclick="window.location.href='/orderHistory'">Order History</button>
+    </div>
+</nav>
 <div>
     <div class="row">
         <div class="col-sm-7">
