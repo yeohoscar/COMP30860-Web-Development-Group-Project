@@ -119,6 +119,19 @@ public class ShoppingCartController {
         customerRepository.save(customer);
     }
 
+    public void updateItemInCart(Long customerId, String option, Long itemId) {
+        List<ShoppingCartItem> cart = customerRepository.findCustomerById(customerId).getCart();
+        for (ShoppingCartItem s : cart) {
+            if (s.getItem().getId() == itemId) {
+                if (option == "trained") {
+                    s.setTrainedModel(true);
+                } else {
+                    s.setTrainedModel(false);
+                }
+            }
+        }
+    }
+
     @GetMapping("/shopping-cart")
     public String shoppingCart(Model model, HttpServletRequest request) {
         Customer customer = (Customer) request.getSession().getAttribute("user");
@@ -132,5 +145,12 @@ public class ShoppingCartController {
         model.addAttribute("subtotal", sub);
 
         return "shopping-cart.html";
+    }
+
+    @PostMapping("/shopping-cart/{id}/{option} ")
+    public void updateCartItem(@PathVariable(value="id") Long id, @PathVariable(value="option") String option, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        User sessionUser = (User) request.getSession().getAttribute("user");
+        updateItemInCart(sessionUser.getId(), option, id);
+        response.sendRedirect("/shopping-cart");
     }
 }
