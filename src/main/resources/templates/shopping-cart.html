@@ -14,11 +14,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
-        $("#changeModel :input").change(function() {
+        $("#changeModel select").change(function() {
             var changed = $("#changeModel").data("changed",true);
+            var id = $(this).data("id");
+            var name = $(this).data("name");
+
             if (changed) {
-                //change cart
-                $$("#changeModel").data("changed",false);
+                $.ajax({
+                    type: "POST",
+                    url: "/catalogue/" + id + "/" + name, // URL for the server-side endpoint
+                });
+
+                $("#changeModel").data("changed",false);
             }
         });
     </script>
@@ -40,6 +47,28 @@
             <hr class="solid">
 
             <table class="table">
+                <tbody>
+                <form id="changeModel" method="post">
+                    <tr th:each="ele:${products}">
+                        <td class="wrapTextInTableCell" th:text="${ele.item.getModelName()}">Name+Descritpion</td>
+                        <td class="wrapTextInTableCell">
+                            <select data-id="${ele.id}" data-name="${ele.item.getModelName()}">
+                                <option value="trained" th:selected="${ele.isTrainedModel()}">trained</option>
+                                <option value="untrained" th:selected="${!ele.isTrainedModel()}">untrained</option>
+                            </select>
+
+                        </td>
+                        <td class="wrapTextInTableCell" th:text="'£'+${ele.getPrice()}"></td>
+                        <td class="wrapTextInTableCell" th:text="'£'+${ele.getPrice()}"></td>
+                        <td class="wrapTextInTableCell">
+                            <form action="#" th:action="@{/remove-cart-item/{id}(id=${ele.id})}" method="POST">
+                                <input type="submit" value="delete item">
+                            </form>
+                        </td>
+                    </tr>
+                </form>
+
+                </tbody>
                 <thead>
                 <tr>
                     <th class="col-sm-4">items</th>
@@ -48,22 +77,6 @@
                     <th class="col-sm-3">Subtotal</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr th:each="ele:${products}">
-                    <form id="changeModel" method="post">
-                        <td class="wrapTextInTableCell" th:text="${ele.item.getModelName()}">Name+Descritpion</td>
-                        <td class="wrapTextInTableCell">
-                            <select>
-                                <option value="trained">trained</option>
-                                <option value="untrained">untrained</option>
-                                <option value="remove">remove</option>
-                            </select>
-                        </td>
-                        <td class="wrapTextInTableCell" th:text="'£'+${ele.getPrice()}"></td>
-                        <td class="wrapTextInTableCell" th:text="'£'+${ele.getPrice()}"></td>
-                    </form>
-                </tr>
-                </tbody>
             </table>
         </div>
 
