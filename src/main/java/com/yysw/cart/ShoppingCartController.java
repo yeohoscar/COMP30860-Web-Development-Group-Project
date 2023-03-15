@@ -98,7 +98,7 @@ public class ShoppingCartController {
     public void updateCustomerCart(Long id, ShoppingCartItem item) {
         Customer customer = customerRepository.findCustomerById(id);
         customer.getCart().add(item);
-        customerRepository.save(customer);
+        //customerRepository.save(customer);
     }
 
 /*    @Autowired
@@ -228,7 +228,6 @@ public class ShoppingCartController {
             return "logInAgain.html";
         }
     }*/
-
 
     @GetMapping("/shoppingCart")
     public String shoppingCart(Model model, HttpServletRequest request) {
