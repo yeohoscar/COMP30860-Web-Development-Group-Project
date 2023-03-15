@@ -22,7 +22,7 @@
                 <div class="col-sm-8"></div>
                 <div class="col-sm-4">
                     <form action="#" th:action="@{/view-order/{id}(id=${order.getId()})}" th:object="${order}" method="POST">
-                        <select name="state">
+                        <select name="state" onchange="this.form.submit()">
                             <option th:each="stateOpt: ${T(com.yysw.order.State).values()}"
                                     th:value="${stateOpt}" th:text="${stateOpt.displayValue}"></option>
                         </select>
