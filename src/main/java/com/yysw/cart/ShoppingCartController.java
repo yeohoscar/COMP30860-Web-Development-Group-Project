@@ -3,6 +3,7 @@ package com.yysw.cart;
 import com.yysw.aimodels.AIModel;
 import com.yysw.aimodels.AIModelRepository;
 import com.yysw.user.User;
+import com.yysw.user.UserRepository;
 import com.yysw.user.customer.Customer;
 import com.yysw.user.customer.CustomerRepository;
 import com.yysw.user.owner.Owner;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -27,10 +29,13 @@ public class ShoppingCartController {
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
 
-    @GetMapping("/catalogue")
-    public String marketplace(Model model, HttpServletRequest request) {
-        User sessionUser = (User) request.getSession().getAttribute("user");
+    @Autowired
+    private UserRepository userRepository;
 
+    @GetMapping("/catalogue")
+    public String marketplace(Model model, HttpSession session) {
+        Long sessionUserID = (Long) session.getAttribute("user_id");
+        User sessionUser = userRepository.findUserById(sessionUserID);
         List<AIModel> modelsToDisplay;
         if (sessionUser == null) {
             modelsToDisplay = aiModelRepository.findAIModelByAvailable(true);
@@ -49,8 +54,9 @@ public class ShoppingCartController {
 
     @GetMapping("/catalogue/{id}/{name}")
     public String modelDetails(@PathVariable(value="id") Long id, @PathVariable(value="name") String name,
-                               Model model, HttpServletRequest request) {
-        User sessionUser = (User) request.getSession().getAttribute("user");
+                               Model model, HttpSession session) {
+        Long sessionUserID = (Long) session.getAttribute("user_id");
+        User sessionUser = userRepository.findUserById(sessionUserID);
         AIModel aiModel = aiModelRepository.findAIModelById(id);
         boolean hasItem = false;
 
@@ -76,7 +82,8 @@ public class ShoppingCartController {
     public @ResponseBody void addCart(@ModelAttribute("model") AIModel aiModel, @PathVariable(value="id") Long id,
                                         @PathVariable(value="name") String name, Model model,
                                         HttpServletRequest request, HttpServletResponse response) throws IOException {
-        User sessionUser = (User) request.getSession().getAttribute("user");
+        Long sessionUserID = (Long) request.getSession().getAttribute("user_id");
+        User sessionUser = userRepository.findUserById(sessionUserID);
         AIModel ai = aiModelRepository.findAIModelById(id);
 
         if (sessionUser != null) {
@@ -113,9 +120,9 @@ public class ShoppingCartController {
     @Transactional
     @PostMapping("/remove-cart-item/{id}")
     public String removeCartItem(@PathVariable(value="id") Long id,
-                                 HttpServletRequest request, HttpServletResponse response) throws IOException {
-        User sessionUser = (User) request.getSession().getAttribute("user");
-        Customer customer = customerRepository.findCustomerById(sessionUser.getId());
+                                 HttpSession session, HttpServletResponse response) throws IOException {
+        Long sessionUserID = (Long) session.getAttribute("user_id");
+        Customer customer = customerRepository.findCustomerById(sessionUserID);
         shoppingCartRepository.deleteByIdAndCustomer(id, customer);
 
         return "redirect:/shopping-cart";
@@ -128,9 +135,9 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/shopping-cart")
-    public String shoppingCart(Model model, HttpServletRequest request) {
-        Customer customer = (Customer) request.getSession().getAttribute("user");
-        List<ShoppingCartItem> userCart = customerRepository.findCustomerById(customer.getId()).getCart();
+    public String shoppingCart(Model model, HttpSession session) {
+        Long sessionUserID = (Long) session.getAttribute("user_id");
+        List<ShoppingCartItem> userCart = customerRepository.findCustomerById(sessionUserID).getCart();
         System.out.println("okay");
         for (ShoppingCartItem s : userCart) {
             System.out.println(s.getItem().toString());

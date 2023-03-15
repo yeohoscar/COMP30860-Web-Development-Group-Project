@@ -9,7 +9,7 @@ import java.io.PrintWriter;
 import java.util.Date;
 
 @Component
-@WebServlet("/quitLogIn")
+@WebServlet("/quitLogin")
 public class QuitLogIn extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(false);
