@@ -37,15 +37,10 @@ public class OwnerController {
      */
     @PostMapping("/add-model")
     public String submitModel(
-            @Valid @ModelAttribute("newModel") AIModel aiModel, BindingResult bindingResult) {
+            @Valid @ModelAttribute("newModel") AIModel aiModel) {
         System.out.println(aiModel.toString());
-
         aiModelRepository.save(aiModel);
-        if (bindingResult.hasErrors()) {
-            return "add-model.html";
-        } else {
-            return "index.html";
-        }
+        return "index.html";
     }
 
 }
