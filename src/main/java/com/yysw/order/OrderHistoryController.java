@@ -53,7 +53,7 @@ public class OrderHistoryController{
         orderStateToBeUpdated.updateState(order);
         orderRepository.save(orderStateToBeUpdated);
         try {
-            response.sendRedirect("/view-order/" + id);
+            response.sendRedirect("/order-history");
         } catch(IOException e) {e.printStackTrace();}
     }
 }

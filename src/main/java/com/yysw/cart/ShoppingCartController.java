@@ -52,11 +52,23 @@ public class ShoppingCartController {
     public String modelDetails(@PathVariable(value="id") Long id, @PathVariable(value="name") String name,
                                Model model, HttpServletRequest request) {
         User sessionUser = (User) request.getSession().getAttribute("user");
+        AIModel aiModel = aiModelRepository.findAIModelById(id);
+        boolean hasItem = false;
 
         if (sessionUser != null) {
             model.addAttribute("user", sessionUser);
+            if (sessionUser instanceof Customer) {
+                List<ShoppingCartItem> cartItems = customerRepository.findCustomerById(sessionUser.getId()).getCart();
+                for (ShoppingCartItem item : cartItems) {
+                    if (item.getItem() == aiModel) {
+                        hasItem = true;
+                        break;
+                    }
+                }
+            }
         }
-        model.addAttribute("model", aiModelRepository.findAIModelById(id));
+        model.addAttribute("hasItem", hasItem);
+        model.addAttribute("model", aiModel);
 
         return "model-detail.html";
     }

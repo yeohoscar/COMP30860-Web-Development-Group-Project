@@ -45,7 +45,7 @@
             <button type="button" onclick="window.location.href='/contactUs'">Contact</button>
             <div  th:if="${user ne null}">
                 <button type="button" onclick="window.location.href='/shopping-cart'">Shopping Cart</button>
-                <button type="button" onclick="window.location.href='/orderHistory'">Order History</button>
+                <button type="button" onclick="window.location.href='/order-history'">Order History</button>
                 <form th:action="@{/quitLogIn}" method="get">
                     <button>Logout</button>
                 </form>
@@ -71,8 +71,13 @@
                         <label th:text="'Untrained model ' + ${model.untrainedPrice}"></label>
                         <input type="checkbox" name="untrained">
                         <br>
+                        <div th:if="${hasItem} == true">
+                            <p>Model has added into cart</p>
+                        </div>
+                        <div th:if="${hasItem} == false">
+                            <input type="submit" value="Add To Cart">
+                        </div>
 
-                        <input type="submit" value="Add To Cart">
                     </form>
                 </div>
                 <div th:if="${user ne null && user.class.name eq 'com.yysw.user.owner.Owner'}">
