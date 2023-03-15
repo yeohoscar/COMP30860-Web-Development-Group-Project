@@ -1,10 +1,43 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>successPayment</title>-->
-<!--</head>-->
-<!--<body>-->
-
-<!--</body>-->
-<!--</html>-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>successPayment</title>
+</head>
+<body>
+    <h1>You have paid successfully!</h1>
+    <div ></div>
+    <div th:text="${paidCustomer.}" class="row justify-content-md-center">
+        <div class="col-lg-8 orderBack" >
+            <div class="row">
+                <div class="col-lg-9">
+                    <h5 th:text="'Order Number: ' + ${order.id}"></h5>
+                </div>
+                <div class="col-lg-3" th:text="'Date:' + ' ' + ${#dates.format(order.orderDate, 'dd/MM/yyyy')}"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col" th:text="'Quantity:' + ' ' + ${order.quantityOfOrder()}"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col" th:text="'State:' + ' ' + ${order.state}"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col" th:text="'Total:' + ' ' + ${order.totalPriceOfOrderedModels()}">
+                    Total: sum_up()
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-9"></div>
+                <div class="col-lg-3 ">
+                    <form method="get" th:action="@{/view-order/{id}(id=${order.getId()})}">
+                        <input class="buttonStyle" type="submit"  value="details >>>">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

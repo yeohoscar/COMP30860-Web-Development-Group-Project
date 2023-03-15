@@ -85,14 +85,17 @@ public class SiteController {
     @PostMapping("/payment")
     public String submitPayment(
             @Valid @ModelAttribute("paymentInformation") PaymentInformation paymentInformation,
-            BindingResult bindingResult, Model model
+            BindingResult bindingResult,
+            Model model,
+            HttpServletRequest request
     ) {
+        Customer sessionUser = (Customer) request.getSession().getAttribute("user");
         System.out.println(paymentInformation.getExpiry());
         System.out.println(paymentInformation.getCvv());
         if (bindingResult.hasErrors()) {
             return "payment.html";
         } else {
-//            model.addAttribute("paiedOrder", order);
+            model.addAttribute("paidCustomer", sessionUser);
 //            return "successPayment.html";
             return "catalogue.html";
         }
