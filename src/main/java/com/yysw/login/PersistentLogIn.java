@@ -42,12 +42,22 @@ public class PersistentLogIn extends HttpServlet {
         //obtain acc from database
         User repoUser = userRepository.findByUsernameAndPasswd(username, password);
 //        System.out.println("Null or not = "+ Objects.isNull(repoUser));
-//        System.out.println("repoUser.getUsername() = "+repoUser.getUsername());
+        System.out.println("username in database = "+repoUser.getUsername());
+        System.out.println("password in database = "+repoUser.getUsername());
 
+        if(repoUser==null)
+        {
+            System.out.println("repouser is null");
+        }
+        else
+        {
+            System.out.println("repouser is not null");
+        }
         PrintWriter out = response.getWriter();
         System.out.println("Persist Session ID: " + session.getId());
         System.out.println("Persist Creation Time: " + new Date(session.getCreationTime()));
         System.out.println("Persist Last Accessed Time: " + new Date(session.getLastAccessedTime()));
+
 
         //说明还没有用户登录
         if(session.getAttribute("username") == null) {
