@@ -92,15 +92,17 @@ public class ShoppingCartController {
     @PostMapping("/remove-cart-item/{id}")
     public @ResponseBody void removeCartItem(@PathVariable(value="id") Long id,
                                              HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Customer sessionUser = (Customer) request.getSession().getAttribute("user");
-        List<ShoppingCartItem> cart = customerRepository.findCustomerById(sessionUser.getId()).getCart();
+        Customer sessionUser = customerRepository.findCustomerById(((User) request.getSession().getAttribute("user")).getId());
+        List<ShoppingCartItem> cart = sessionUser.getCart();
         System.out.println("hi");
         for (ShoppingCartItem s : cart) {
             System.out.println(s.getItem().toString());
         }
         cart.removeIf(item -> Objects.equals(item.getId(), id));
         System.out.println("bye");
-        for (ShoppingCartItem s : cart) {
+        customerRepository.save(sessionUser);
+
+        for (ShoppingCartItem s : customerRepository.findCustomerById(((Customer) request.getSession().getAttribute("user")).getId()).getCart()) {
             System.out.println(s.getItem().toString());
         }
 
@@ -113,33 +115,22 @@ public class ShoppingCartController {
         customerRepository.save(customer);
     }
 
-    public void updateItemInCart(Customer customer, String option, Long itemId) {
-        List<ShoppingCartItem> cart = customerRepository.findCustomerById(customer.getId()).getCart();
-
-        System.out.println("OPTION passed in: "+ option);
-
-        System.out.println("before");
-        System.out.println(cart);
-
+    public void updateItemInCart(String option, Long itemId, HttpServletRequest request) {
+        Customer customer = customerRepository.findCustomerById(((User) request.getSession().getAttribute("user")).getId());
+        List<ShoppingCartItem> cart = customer.getCart();
         for (ShoppingCartItem s : cart) {
-            if (s.getItem().getId() == itemId) {
-                if (option == "trained") {
+            if (s.getId() == itemId) {
+                if (option.equals("trained")) {
                     s.setTrainedModelOrNot(true);
+                    s.setPrice(s.getItem().getTrainedPrice());
                 } else {
                     s.setTrainedModelOrNot(false);
+                    s.setPrice(s.getItem().getUntrainedPrice());
                 }
             }
         }
-
-        System.out.println("after");
-        System.out.println(cart);
-
-
         customerRepository.save(customer);
-
-        System.out.println("double check:");
         System.out.println(customer.getCart());
-
     }
 
     @GetMapping("/shopping-cart")
@@ -157,10 +148,11 @@ public class ShoppingCartController {
         return "shopping-cart.html";
     }
 
-    @GetMapping("/shopping-cart/{id}/{option}")
-    public void updateCartItem(@PathVariable(value="id") Long id, @PathVariable(value="option") String option, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        updateItemInCart((Customer) request.getSession().getAttribute("user"), option, id);
+    @GetMapping("/shopping-cart/{id}")
+    public void updateCartItem(@PathVariable(value="id") Long id, @RequestParam("selectOption") String option, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        updateItemInCart(option, id, request);
         System.out.println("METHOD update cart item called");
         response.sendRedirect("/shopping-cart");
+        System.out.println("redirect happened");
     }
 }
