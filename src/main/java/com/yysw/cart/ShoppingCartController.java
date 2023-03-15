@@ -121,6 +121,12 @@ public class ShoppingCartController {
 
     public void updateItemInCart(Long customerId, String option, Long itemId) {
         List<ShoppingCartItem> cart = customerRepository.findCustomerById(customerId).getCart();
+
+        System.out.println("before");
+        for (ShoppingCartItem s : cart) {
+            System.out.println(s.getItem().toString());
+        }
+
         for (ShoppingCartItem s : cart) {
             if (s.getItem().getId() == itemId) {
                 if (option == "trained") {
@@ -130,6 +136,12 @@ public class ShoppingCartController {
                 }
             }
         }
+
+        System.out.println("after");
+        for (ShoppingCartItem s : cart) {
+            System.out.println(s.getItem().toString());
+        }
+
     }
 
     @GetMapping("/shopping-cart")
@@ -147,10 +159,14 @@ public class ShoppingCartController {
         return "shopping-cart.html";
     }
 
-    @PostMapping("/shopping-cart/{id}/{option} ")
+    @GetMapping("/shopping-cart/{id}/{option}")
     public void updateCartItem(@PathVariable(value="id") Long id, @PathVariable(value="option") String option, HttpServletRequest request, HttpServletResponse response) throws IOException {
         User sessionUser = (User) request.getSession().getAttribute("user");
         updateItemInCart(sessionUser.getId(), option, id);
         response.sendRedirect("/shopping-cart");
+    }
+
+    @PostMapping("/shopping-cart/{id}/{option}")
+    public void updateCartItemPostmapping(@PathVariable(value="id") Long id, @PathVariable(value="option") String option, HttpServletRequest request, HttpServletResponse response) throws IOException {
     }
 }

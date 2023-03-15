@@ -31,11 +31,10 @@
 
             <table class="table">
                 <tbody>
-                <form id="changeModel" method="post">
                     <tr th:each="ele:${products}">
                         <td class="wrapTextInTableCell" th:text="${ele.item.getModelName()}">Name+Descritpion</td>
                         <td class="wrapTextInTableCell">
-                            <form method="post" th:action="@{/shopping-cart/{id}/{option} (id=${ele.getId()}, option=${ele.isTrainedModel() ? 'trained' : 'untrained'})}">
+                            <form action="#" method="get" th:action="@{/shopping-cart/{id}/{option}(id=${ele.getId()}, option=${ele.isTrainedModel() ? 'trained' : 'untrained'})}">
                                 <select onchange="this.form.submit()">
                                     <option value="trained" th:selected="${ele.isTrainedModel()}">trained</option>
                                     <option value="untrained" th:selected="${!ele.isTrainedModel()}">untrained</option>
@@ -45,12 +44,11 @@
                         <td class="wrapTextInTableCell" th:text="'£'+${ele.getPrice()}"></td>
                         <td class="wrapTextInTableCell" th:text="'£'+${ele.getPrice()}"></td>
                         <td class="wrapTextInTableCell">
-                            <form action="#" th:action="@{/remove-cart-item/{id}(id=${ele.id})}" method="POST">
+                            <form action="#" th:action="@{/remove-cart-item/{id}(id=${ele.getId})}" method="POST">
                                 <input type="submit" value="delete item">
                             </form>
                         </td>
                     </tr>
-                </form>
 
                 </tbody>
                 <thead>
