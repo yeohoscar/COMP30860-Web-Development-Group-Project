@@ -61,8 +61,13 @@
                             <option value="untrained">untrained</option>
                         </select>
                     </td>
-                    <td class="wrapTextInTableCell" th:text="'£'+${ele.getPrice()}"></td>
-                    <td class="wrapTextInTableCell" th:text="'£'+${ele.getPrice()}"></td>
+                    <td class="wrapTextInTableCell" th:text="'€'+${ele.getPrice()}"></td>
+                    <td class="wrapTextInTableCell" th:text="'€'+${ele.getPrice()}"></td>
+                    <td class="wrapTextInTableCell">
+                        <form action="#" th:action="@{/remove-cart-item/{id}(id=${ele.id})}" method="POST">
+                            <input type="submit" value="delete item">
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -75,22 +80,13 @@
             <hr class="solid">
             <div class="row">
                 <div class="col-sm-6">Subtotal</div>
-                <div class="col-sm-6 text-end" th:text="'£'+${subtotal}">£0</div>
+                <div class="col-sm-6 text-end" th:text="'€'+${subtotal}">€0</div>
             </div>
-            <div class="row">
-                <div class="col-sm-6">Processing fee</div>
-                <div class="col-sm-6 text-end" th:text="'£'+${fee}">£0</div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">Discount</div>
-                <div class="col-sm-6 text-end" th:text="'£'+${discount}">-£0</div>
-            </div>
-
             <br><br><br>
 
             <div class="row">
                 <div class="col-sm-6">Total</div>
-                <div class="col-sm-6 text-end" th:text="'£'+${subtotal}">£0</div>
+                <div class="col-sm-6 text-end" th:text="'€'+${subtotal}">€0</div>
             </div>
 
             <form method="post">

@@ -44,7 +44,7 @@
             <button type="button" onclick="window.location.href='/payment'">Pay</button>
             <button type="button" onclick="window.location.href='/contactUs'">Contact</button>
             <div  th:if="${user ne null}">
-                <button type="button" onclick="window.location.href='/shoppingCart'">Shopping Cart</button>
+                <button type="button" onclick="window.location.href='/shopping-cart'">Shopping Cart</button>
                 <button type="button" onclick="window.location.href='/orderHistory'">Order History</button>
                 <form th:action="@{/quitLogIn}" method="get">
                     <button>Logout</button>
