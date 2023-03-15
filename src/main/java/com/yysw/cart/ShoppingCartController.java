@@ -23,6 +23,7 @@ import java.util.List;
 public class ShoppingCartController {
     @Autowired
     private CustomerRepository customerRepository;
+
     @Autowired
     private AIModelRepository aiModelRepository;
 

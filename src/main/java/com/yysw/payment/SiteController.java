@@ -83,18 +83,19 @@ public class SiteController {
     @PostMapping("/payment")
     public String submitPayment(
             @Valid @ModelAttribute("paymentInformation") PaymentInformation paymentInformation,
-            HttpServletRequest request, BindingResult bindingResult) {
+            HttpSession session, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "payment.html";
         } else {
+            Long sessionUserID = (Long) session.getAttribute("user_id");
+            Customer customer = customerRepository.findCustomerById(sessionUserID);
             List<OrderedModel> orderedModels = new ArrayList<>();
-            Customer customer = (Customer) request.getSession().getAttribute("user");
-            for (ShoppingCartItem item : customer.getCart()) {
-                OrderedModel orderedModel = new OrderedModel(item.getItem().getId(), item.getPrice());
-                orderedModels.add(orderedModel);
-            }
-            Date d = Date.valueOf(LocalDate.now());
 
+            for (ShoppingCartItem item : customer.getCart()) {
+                orderedModels.add(new OrderedModel(item.getItem().getId(), item.getPrice()));
+            }
+
+            Date d = Date.valueOf(LocalDate.now());
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
@@ -103,7 +104,7 @@ public class SiteController {
             Order order = new Order(customer, orderedModels, State.NEW, d, id);
             orderRepository.save(order);
 
-            return "catalogueMain.html";
+            return "index.html";
         }
     }
 }

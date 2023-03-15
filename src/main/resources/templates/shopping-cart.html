@@ -156,8 +156,8 @@
                 <div class="col-sm-6 text-end" th:text="'€'+${subtotal}">€0</div>
             </div>
 
-            <form method="post">
-                <input type="submit" value="CHECKOUT">
+            <form action="/payment">
+                <input type="submit" value="CHECKOUT" />
             </form>
         </div>
     </div>

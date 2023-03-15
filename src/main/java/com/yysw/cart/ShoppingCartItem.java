@@ -20,7 +20,7 @@ public class ShoppingCartItem implements Serializable {
 
     private Double price;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     private Customer customer;
 

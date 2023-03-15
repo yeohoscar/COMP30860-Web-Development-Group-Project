@@ -43,11 +43,11 @@ public class OrderHistoryController{
     }
 
     @GetMapping("/view-order/{id}")
-    public String viewOrder(ModelMap modelMap, @PathVariable Long id, HttpSession session) {
+    public String viewOrder(ModelMap model, @PathVariable Long id, HttpSession session) {
         Long sessionUserID = (Long) session.getAttribute("user_id");
         // session user wont be null because order history can only access by user after login
-        modelMap.addAttribute("order", orderRepository.findOrderById(id));
-        modelMap.addAttribute("user", userRepository.findUserById(sessionUserID));
+        model.addAttribute("order", orderRepository.findOrderById(id));
+        model.addAttribute("user", userRepository.findUserById(sessionUserID));
 
         return "view-order.html";
     }
