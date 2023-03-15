@@ -6,19 +6,17 @@ h3 {
     font-size: 36px;
 }
 
-input[type=text], input[type=password] {
-    border-radius: 10px;
-    border-color: #FFB394;
-    background-color: rgba(255, 179, 148, 0.2);
+input[type=text], input[type=number] {
+    border-color: black;
     border-style: solid;
     border-width: 1px;
-    width: 100%;
+    width: 95%;
     height: 8vh;
     font-size: 24px;
-    padding: 12px;
+    padding: 16px;
 }
 
-input[type=text].adminkey {
+input[type=number].cvv {
     width: 45%;
     height: 8vh;
     font-size: 14px;
