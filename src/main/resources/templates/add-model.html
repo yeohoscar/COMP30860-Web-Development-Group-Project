@@ -54,14 +54,14 @@
             <tr>
                 <td>
                     <label for="trainedPrice">Price for trained model</label>
-                    <input type="number" step=0.01 min= 0 id="trainedPrice" th:field="*{trainedPrice}" required/>
+                    <input type="number" step=0.01 min=0 id="trainedPrice" th:field="*{trainedPrice}" required/>
                     <span th:if="${#fields.hasErrors('trainedPrice')}" th:errors="*{trainedPrice}">Valid Price Required</span>
                 </td>
             </tr>
             <tr>
                 <td>
                     <label for="untrainedPrice">Price for untrained model</label>
-                    <input type="number" step=0.01 min= 0 id="untrainedPrice" th:field="*{untrainedPrice}" required/>
+                    <input type="number" step=0.01 min=0 id="untrainedPrice" th:field="*{untrainedPrice}" required/>
                     <span th:if="${#fields.hasErrors('untrainedPrice')}" th:errors="*{untrainedPrice}">Valid Name Required</span>
                 </td>
             </tr>

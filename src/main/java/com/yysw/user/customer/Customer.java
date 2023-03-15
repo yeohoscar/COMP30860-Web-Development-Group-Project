@@ -8,16 +8,19 @@ import com.yysw.aimodels.AIModel;
 import com.yysw.cart.ShoppingCartItem;
 import com.yysw.order.Order;
 import com.yysw.user.User;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 
 @Entity
 @DiscriminatorValue("Customer")
 public class Customer extends User implements Serializable {
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private List<Order> orders = new ArrayList<Order>();
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private List<ShoppingCartItem> cart;
 
     public Customer() {}

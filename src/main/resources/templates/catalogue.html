@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="col-md-4" th:if="${iter.index + 1 < catalogue.size()}" th:with="middleModel=${catalogue.get(iter.index+1)}">
-                <div class="content bg-green">
+                <div th:attr="class=${model.available ? 'model-available' : 'model-unavailable'}">
                     <!--can use <a href> too-->
                     <a th:href="@{/catalogue/{id}/{name}(id=${middleModel.id}, name=${middleModel.modelName})}">
                         <span th:text="${middleModel.modelName}"></span>
@@ -64,7 +64,7 @@
                 </div>
             </div>
             <div class="col-md-4" th:if="${iter.index + 2 < catalogue.size()}" th:with="rightModel=${catalogue.get(iter.index+2)}">
-                <div class="content bg-green">
+                <div th:attr="class=${model.available ? 'model-available' : 'model-unavailable'}">
                     <!--can use <a href> too-->
                     <a th:href="@{/catalogue/{id}/{name}(id=${rightModel.id}, name=${rightModel.modelName})}">
                         <span th:text="${rightModel.modelName}"></span>

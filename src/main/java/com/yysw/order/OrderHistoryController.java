@@ -58,6 +58,7 @@ public class OrderHistoryController{
     public String orderChangeState(@ModelAttribute("order") Order order, @PathVariable Long id) {
         Order orderStateToBeUpdated = orderRepository.findOrderById(id);
         orderStateToBeUpdated.updateState(order);
+        orderRepository.save(orderStateToBeUpdated);
         return "view-all-orders";
     }
 }
