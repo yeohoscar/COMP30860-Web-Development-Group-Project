@@ -60,10 +60,6 @@ button {
     padding: 8px 16px; !important;
 }
 
-.pad-bottom {
-    padding-bottom: 32px;
-}
-
 .center-child {
     max-width: 960px;
     margin: auto;
@@ -74,4 +70,9 @@ button {
     justify-content: center;
     display: flex;
     flex-direction: column;
+}
+
+.logo-holder {
+    padding-top:12px;
+    padding-left: 12px;
 }
