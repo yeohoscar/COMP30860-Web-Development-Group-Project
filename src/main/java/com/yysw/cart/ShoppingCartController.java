@@ -129,7 +129,8 @@ public class ShoppingCartController {
     }
 
     public void updateItemInCart(String option, Long itemId, HttpServletRequest request) {
-        Customer customer = customerRepository.findCustomerById(((User) request.getSession().getAttribute("user")).getId());
+        Long sessionUserID = (Long) request.getSession().getAttribute("user_id");
+        Customer customer = (Customer) userRepository.findUserById(sessionUserID);
         List<ShoppingCartItem> cart = customer.getCart();
         for (ShoppingCartItem s : cart) {
             if (s.getId() == itemId) {
@@ -172,5 +173,10 @@ public class ShoppingCartController {
         System.out.println("METHOD update cart item called");
         response.sendRedirect("/shopping-cart");
         System.out.println("redirect happened");
+    }
+
+    @PostMapping("/checkoutpayment")
+    public String checkOut() {
+        return "payment.html";
     }
 }
