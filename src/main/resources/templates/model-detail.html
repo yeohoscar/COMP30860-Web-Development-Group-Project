@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>YYWS.AI</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.'[[['']0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        function checkOther(checkbox) {
+            chbx = document.querySelectorAll('input[type="checkbox"]');
+            chbx.forEach((item) => {
+                if (item !== checkbox) {
+                    item.checked = false;
+                }
+            });
+        }
+    </script>
+
+</head>
+<body data-spy="scroll" data-target="#navbar0" data-offser="0">
+    <nav class="navbar sticky-top navbar-expand-md bg-body-tertiary" id="navbar0">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <a href="/">YYWS</a>
+            <ul class="navbar-nav mx-auto mb-md-0">
+                <li class="nav-item">
+                    <a class="nav-link" id="catalogue" href="/catalogue">Catalogue</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="contact" href="/contactUs">Contact Us</a>
+                </li>
+            </ul>
+
+            <button type="button" onclick="window.location.href='/payment'">Pay</button>
+            <button type="button" onclick="window.location.href='/contactUs'">Contact</button>
+            <div  th:if="${user ne null}">
+                <button type="button" onclick="window.location.href='/shopping-cart'">Shopping Cart</button>
+                <button type="button" onclick="window.location.href='/order-history'">Order History</button>
+                <form th:action="@{/quitLogIn}" method="get">
+                    <button>Logout</button>
+                </form>
+            </div>
+            <div th:unless="${user ne null}">
+                <button type="button" onclick="window.location.href='/login'">Log In</button>
+                <button type="button" onclick="window.location.href='/register'">Register</button>
+            </div>
+
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md">
+                <div th:if="${user eq null || user.class.name eq 'com.yysw.user.customer.Customer'}">
+                    <h2 th:text="${model.modelName}"></h2>
+                    <hr /><br>
+                    <p th:text="${model.description}"></p>
+                    <form th:action="@{/catalogue/__${id}__/__${name}__}" method="POST">
+                        <label th:text="'Trained model ' + ${model.trainedPrice}"></label>
+                        <input type="checkbox" name="trained">
+                        <label th:text="'Untrained model ' + ${model.untrainedPrice}"></label>
+                        <input type="checkbox" name="untrained">
+                        <br>
+                        <div th:if="${hasItem} == true">
+                            <p>Model has added into cart</p>
+                        </div>
+                        <div th:if="${hasItem} == false">
+                            <input type="submit" value="Add To Cart">
+                        </div>
+
+                    </form>
+                </div>
+                <div th:if="${user ne null && user.class.name eq 'com.yysw.user.owner.Owner'}">
+                    <form th:action="@{/catalogue/__${id}__/__${name}__}" method="POST">
+                        <input type="text" th:field="*{model.modelName}" th:value="${model.modelName}">
+                        <input type="text" th:field="*{model.description}" th:value="${model.description}">
+                        <input type="number" step=0.01 min=0 th:field="*{model.trainedPrice}" th:value="${model.trainedPrice}">
+                        <input type="number" step=0.01 min=0 th:field="*{model.untrainedPrice}" th:value="${model.untrainedPrice}">
+                        <label th:text="'Model is available' + ${model.available}"></label>
+                        <span>Tick the box if you want to make it available, otherwise leave it blank</span>
+                        <input type="checkbox" name="available" th:field="*{model.available}">
+                        <br>
+                        <input type="submit" value="Submit Change">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br><hr /><br>
+
+    <div>
+        <h4>Details</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
+    </div>
+    <div>
+        <h4>Accuracy</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
+    </div>
+    <div>
+        <h4>API</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
+    </div>
+
+</body>
+</html>

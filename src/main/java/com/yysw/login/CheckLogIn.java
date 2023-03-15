@@ -13,6 +13,7 @@ import java.util.Date;
 @Component
 @WebServlet("/stayLogIn")
 public class CheckLogIn extends HttpServlet {
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        System.out.println("successful1");

@@ -29,7 +29,6 @@ CREATE TABLE `aimodel` (
   `available` bit(1) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `model_name` varchar(255) DEFAULT NULL,
-  `photourl` varchar(255) DEFAULT NULL,
   `trained_price` double NOT NULL,
   `untrained_price` double NOT NULL,
   PRIMARY KEY (`id`)
@@ -77,8 +76,7 @@ CREATE TABLE `orders` (
 CREATE TABLE `shopping_cart_item` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `price` double DEFAULT NULL,
-  `trained_model` bit(1) NOT NULL,
-  `untrained_model` bit(1) NOT NULL,
+  `trained_model_or_not` bit(1) NOT NULL,
   `user_id` bigint DEFAULT NULL,
   `item_id` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),

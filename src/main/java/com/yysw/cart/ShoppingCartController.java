@@ -2,19 +2,21 @@ package com.yysw.cart;
 
 import com.yysw.aimodels.AIModel;
 import com.yysw.aimodels.AIModelRepository;
+import com.yysw.user.User;
 import com.yysw.user.customer.Customer;
 import com.yysw.user.customer.CustomerRepository;
+import com.yysw.user.owner.Owner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class ShoppingCartController {
@@ -22,74 +24,127 @@ public class ShoppingCartController {
     private CustomerRepository customerRepository;
     @Autowired
     private AIModelRepository aiModelRepository;
-    List<ShoppingCartItem> modelsInCart = new ArrayList<>();
+
+    @Autowired
+    private ShoppingCartRepository shoppingCartRepository;
 
     @GetMapping("/catalogue")
-    public String marketplace(Model model) {
-        model.addAttribute("catalogue", aiModelRepository.findAll());
+    public String marketplace(Model model, HttpServletRequest request) {
+        User sessionUser = (User) request.getSession().getAttribute("user");
+
+        List<AIModel> modelsToDisplay;
+        if (sessionUser == null) {
+            modelsToDisplay = aiModelRepository.findAIModelByAvailable(true);
+        } else {
+            if (sessionUser instanceof Owner) {
+                modelsToDisplay = aiModelRepository.findAll();
+            } else {
+                modelsToDisplay = aiModelRepository.findAIModelByAvailable(true);
+            }
+        }
+
+        model.addAttribute("catalogue", modelsToDisplay);
 
         return "catalogue.html";
     }
 
     @GetMapping("/catalogue/{id}/{name}")
-    public String viewModel(@PathVariable(value="id") Long id, @PathVariable(value="name") String name, Model model) {
-        model.addAttribute("model", aiModelRepository.findAIModelById(id));
+    public String modelDetails(@PathVariable(value="id") Long id, @PathVariable(value="name") String name,
+                               Model model, HttpServletRequest request) {
+        User sessionUser = (User) request.getSession().getAttribute("user");
+        AIModel aiModel = aiModelRepository.findAIModelById(id);
+        boolean hasItem = false;
 
-        return "modelDetail.html";
+        if (sessionUser != null) {
+            model.addAttribute("user", sessionUser);
+            if (sessionUser instanceof Customer) {
+                List<ShoppingCartItem> cartItems = customerRepository.findCustomerById(sessionUser.getId()).getCart();
+                for (ShoppingCartItem item : cartItems) {
+                    if (item.getItem() == aiModel) {
+                        hasItem = true;
+                        break;
+                    }
+                }
+            }
+        }
+        model.addAttribute("hasItem", hasItem);
+        model.addAttribute("model", aiModel);
+
+        return "model-detail.html";
     }
 
     @PostMapping("/catalogue/{id}/{name}")
-    public String addCart(ShoppingCartItem shoppingCartItem, @PathVariable(value="id") Long id, @PathVariable(value="name") String name, Model model, HttpServletRequest request, BindingResult bindingResult) {
+    public @ResponseBody void addCart(@ModelAttribute("model") AIModel aiModel, @PathVariable(value="id") Long id,
+                                        @PathVariable(value="name") String name, Model model,
+                                        HttpServletRequest request, HttpServletResponse response) throws IOException {
+        User sessionUser = (User) request.getSession().getAttribute("user");
         AIModel ai = aiModelRepository.findAIModelById(id);
-        shoppingCartItem.setItem(ai);
-        shoppingCartItem.setTrainedModel(request.getParameter("trained") != null);
-        shoppingCartItem.setUntrainedModel(request.getParameter("untrained") != null);
-        if (shoppingCartItem.isTrainedModel()) {
-            if (shoppingCartItem.isUntrainedModel()) {
-                shoppingCartItem.setPrice((ai.getTrainedPrice() + ai.getUntrainedPrice()));
+
+        if (sessionUser != null) {
+            if (sessionUser instanceof Customer) {
+                if (request.getParameter("trained") != null) {
+                    ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
+                    shoppingCartItem.setItem(ai);
+                    shoppingCartItem.setPrice(ai.getTrainedPrice());
+                    shoppingCartItem.setTrainedModel(request.getParameter("trained") != null);
+                    shoppingCartItem.setCustomer((Customer) sessionUser);
+                    updateCustomerCart(sessionUser.getId(), shoppingCartItem);
+                }
+
+                if (request.getParameter("untrained") != null) {
+                    ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
+                    shoppingCartItem.setItem(ai);
+                    shoppingCartItem.setPrice(ai.getUntrainedPrice());
+                    shoppingCartItem.setTrainedModel(request.getParameter("untrained") != null);
+                    shoppingCartItem.setCustomer((Customer) sessionUser);
+                    updateCustomerCart(sessionUser.getId(), shoppingCartItem);
+                }
             } else {
-                shoppingCartItem.setPrice(ai.getTrainedPrice());
+                ai.updateModel(aiModel);
+                System.out.println(ai.isAvailable());
+                aiModelRepository.save(ai);
             }
-        } else {
-            shoppingCartItem.setPrice(ai.getUntrainedPrice());
         }
-        model.addAttribute("model", shoppingCartItem.getItem());
-        modelsInCart.add(shoppingCartItem);
+        model.addAttribute("model", ai);
 
-        if (bindingResult.hasErrors()) {
-            return "index.html";
-        } else {
-            return "modelDetail.html";
-        }
+        assert ai != null;
+        response.sendRedirect("/catalogue/" + id + "/" + ai.getModelName());
     }
 
-    public void addToCart() {
-        Customer tmp = customerRepository.findCustomerByUser_id(1L);
-        tmp.getCart().add(modelsInCart.get(modelsInCart.size()-1));
-        //customerRepository.save(tmp);
+    @Transactional
+    @PostMapping("/remove-cart-item/{id}")
+    public String removeCartItem(@PathVariable(value="id") Long id,
+                                 HttpServletRequest request, HttpServletResponse response) throws IOException {
+        User sessionUser = (User) request.getSession().getAttribute("user");
+        Customer customer = customerRepository.findCustomerById(sessionUser.getId());
+        shoppingCartRepository.deleteByIdAndCustomer(id, customer);
+
+        return "redirect:/shopping-cart";
     }
 
-    @GetMapping("/shoppingCart")
-    public String shoppingCart(Model model) {
-        addToCart();
-        List<ShoppingCartItem> userCart = customerRepository.findCustomerByUser_id(1L).getCart();
-        //TODO: just random value, no data storing, missing price etc.. need change
-//        modelsInCart = customerRepository.findCartById(1L);
+    public void updateCustomerCart(Long id, ShoppingCartItem item) {
+        Customer customer = customerRepository.findCustomerById(id);
+        customer.getCart().add(item);
+        customerRepository.save(customer);
+    }
+
+    @GetMapping("/shopping-cart")
+    public String shoppingCart(Model model, HttpServletRequest request) {
+        Customer customer = (Customer) request.getSession().getAttribute("user");
+        List<ShoppingCartItem> userCart = customerRepository.findCustomerById(customer.getId()).getCart();
+        System.out.println("okay");
         for (ShoppingCartItem s : userCart) {
-            System.out.println(s.getItem());
+            System.out.println(s.getItem().toString());
         }
+
         model.addAttribute("size", userCart.size());
         model.addAttribute("products", userCart);
         double sub = 0.0;
-//      double processfee=200;
-        for (ShoppingCartItem item : modelsInCart) {
+        for (ShoppingCartItem item : userCart) {
             sub += item.getPrice();
         }
         model.addAttribute("subtotal", sub);
-        /*model.addAttribute("fee", processfee);
-        model.addAttribute("discount", sub*0.2);
-        model.addAttribute("tot",sub+processfee-(sub*0.2));*/
 
-        return "shoppingCart.html";
+        return "shopping-cart.html";
     }
 }
