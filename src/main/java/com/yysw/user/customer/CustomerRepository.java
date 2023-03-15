@@ -10,6 +10,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Query("from Customer ")
     User findByUsernameAndPasswd(String username, String passwd);
 
-    @Query("from Customer")
-    Customer findCustomerByUser_id(Long id);
+    Customer findCustomerById(Long id);
+
 }

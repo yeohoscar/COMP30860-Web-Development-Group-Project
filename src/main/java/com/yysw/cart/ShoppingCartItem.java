@@ -2,7 +2,6 @@ package com.yysw.cart;
 
 import com.yysw.aimodels.AIModel;
 import com.yysw.user.customer.Customer;
-import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,9 +16,7 @@ public class ShoppingCartItem implements Serializable {
     @OneToOne(fetch = FetchType.EAGER)
     private AIModel item;
 
-    private boolean trainedModel;
-
-    private boolean untrainedModel;
+    private boolean trainedModelOrNot;
 
     private Double price;
 
@@ -34,25 +31,23 @@ public class ShoppingCartItem implements Serializable {
 
     public void setItem(AIModel item) { this.item = item; }
 
-    public boolean isTrainedModel() { return trainedModel; }
+    public boolean isTrainedModel() { return trainedModelOrNot; }
 
-    public void setTrainedModel(boolean trainedModel) { this.trainedModel = trainedModel; }
-
-    public boolean isUntrainedModel() { return untrainedModel; }
-
-    public void setUntrainedModel(boolean untrainedModel) { this.untrainedModel = untrainedModel; }
+    public void setTrainedModel(boolean trainedModel) { this.trainedModelOrNot = trainedModel; }
 
     public Double getPrice() { return price; }
 
     public void setPrice(Double price) { this.price = price; }
+    public void setCustomer(Customer customer) { this.customer = customer; }
+    public Customer getCustomer() { return customer; }
 
     @Override
     public String toString() {
         return "ShoppingCartItem{" +
                 "id=" + id +
                 ", item=" + item +
-                ", trainedModel=" + trainedModel +
-                ", untrainedModel=" + untrainedModel +
+                ", trainedModel=" + trainedModelOrNot +
+//                ", untrainedModel=" + untrainedModel +
                 ", price=" + price +
                 ", customer=" + customer +
                 '}';

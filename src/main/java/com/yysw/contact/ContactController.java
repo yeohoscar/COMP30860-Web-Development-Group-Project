@@ -8,27 +8,21 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.util.Date;
-
 
 @Controller
 public class ContactController {
     @GetMapping("/contactUs")
     public String contact(Model model) {
-        ContactInformation c = new ContactInformation();
-        model.addAttribute("contactInformation", c);
-        return "contactUs.html";
+        model.addAttribute("contactInformation", new ContactInformation());
+        return "contact-us.html";
     }
 
     @PostMapping("/contactUs")
     public String submitContact(@Valid @ModelAttribute("contactInformation") ContactInformation contactInformation, BindingResult bindingResult) {
-        System.out.println(contactInformation.getContactName());
-        System.out.println(contactInformation.getContactDate());
-        System.out.println(bindingResult.toString());
         if (bindingResult.hasErrors()) {
-            return "contactUs.html";
+            return "contact-us.html";
         } else {
-            return "contactSuccess.html";
+            return "contact-success.html";
         }
     }
 }

@@ -2,20 +2,18 @@ package com.yysw.login;
 
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URLDecoder;
 import java.util.Date;
 
 @Component
 @WebServlet("/stayLogIn")
 public class CheckLogIn extends HttpServlet {
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-//        System.out.println("successful1");
+            throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
 
