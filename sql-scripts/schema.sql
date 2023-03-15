@@ -61,6 +61,7 @@ CREATE TABLE `orders` (
   `order_date` datetime(6) DEFAULT NULL,
   `state` int DEFAULT NULL,
   `customer_id` bigint NOT NULL,
+  `payment_id` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FKel9kyl84ego2otj2accfd8mr7` (`customer_id`),
   CONSTRAINT `FKel9kyl84ego2otj2accfd8mr7` FOREIGN KEY (`customer_id`) REFERENCES `user` (`id`)
