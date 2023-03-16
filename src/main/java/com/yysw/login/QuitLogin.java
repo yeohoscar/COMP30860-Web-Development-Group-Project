@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Component
 @WebServlet("/quitLogin")
-public class QuitLogIn extends HttpServlet {
+public class QuitLogin extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(false);
         boolean alreadyLogIn = false;
