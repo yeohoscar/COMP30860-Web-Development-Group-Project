@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class ShoppingCartController {
@@ -118,6 +119,7 @@ public class ShoppingCartController {
                                  HttpSession session, HttpServletResponse response) throws IOException {
         Long sessionUserID = (Long) session.getAttribute("user_id");
         Customer customer = customerRepository.findCustomerById(sessionUserID);
+        customer.getCart().removeIf(item -> Objects.equals(item.getId(), id));
         shoppingCartRepository.deleteByIdAndCustomer(id, customer);
 
         return "redirect:/shopping-cart";
