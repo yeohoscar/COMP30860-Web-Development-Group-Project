@@ -108,3 +108,7 @@ button {
 .navbar {
     --bs-navbar-padding-x: 1rem;
 }
+
+.pad-64 {
+    padding: 64px;
+}
