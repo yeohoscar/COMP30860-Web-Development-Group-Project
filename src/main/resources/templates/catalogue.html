@@ -40,8 +40,9 @@
             </ul>
         </div>
         <span th:if="${user eq null}">
-                <button class="white-button-sm" type="button" onclick="window.location.href='/login'">Log In</button>
-            </span>
+            <button class="white-button-sm" type="button" onclick="window.location.href='/login'">Log In</button>
+            <button class="white-button-sm" type="button" onclick="window.location.href='/register'">Register</button>
+        </span>
         <div th:unless="${user eq null}">
                 <span th:if="${user.class.name eq 'com.yysw.user.customer.Customer'}">
                     <a th:href="@{/order-history}"><img src="/image/order-history.png " width="30" height="30" alt=""></a>
