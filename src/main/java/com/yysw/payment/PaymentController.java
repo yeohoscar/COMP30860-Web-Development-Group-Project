@@ -44,7 +44,6 @@ public class PaymentController {
             sub += item.getPrice();
         }
         DecimalFormat df = new DecimalFormat("####0.00");
-        System.out.println("currentOrderPrice = "+df.format(sub));
         model.addAttribute("currentOrderPrice", df.format(sub));
         model.addAttribute("paymentInformation", new PaymentInformation());
         return "payment.html";

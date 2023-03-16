@@ -94,28 +94,22 @@
             <div class="row" th:each="model, iter : ${catalogue}" th:if="${iter.index % 3 == 0 && iter.index < catalogue.size()}">
                 <div class="col-sm-3 c-btn">
                     <div th:attr="class=${model.available ? 'model-available' : 'model-unavailable'}">
-                        <!--can use <a href> too-->
                         <a th:href="@{/catalogue/{id}/{name}(id=${model.id}, name=${model.modelName})}">
-                            <span th:text="${model.modelName}"></span>
-                            <span th:text="${model.id}"></span>
+                            <span th:text="${model.id} + '. ' + ${model.modelName}"></span>
                         </a>
                     </div>
                 </div>
                 <div class="col-sm-3 c-btn" th:if="${iter.index + 1 < catalogue.size()}" th:with="middleModel=${catalogue.get(iter.index+1)}">
                     <div th:attr="class=${middleModel.available ? 'model-available' : 'model-unavailable'}">
-                        <!--can use <a href> too-->
                         <a th:href="@{/catalogue/{id}/{name}(id=${middleModel.id}, name=${middleModel.modelName})}">
-                            <span th:text="${middleModel.modelName}"></span>
-                            <span th:text="${middleModel.id}"></span>
+                            <span th:text="${middleModel.id} + '. ' + ${middleModel.modelName}"></span>
                         </a>
                     </div>
                 </div>
                 <div class="col-sm-3 c-btn" th:if="${iter.index + 2 < catalogue.size()}" th:with="rightModel=${catalogue.get(iter.index+2)}">
                     <div th:attr="class=${rightModel.available ? 'model-available' : 'model-unavailable'}">
-                        <!--can use <a href> too-->
                         <a th:href="@{/catalogue/{id}/{name}(id=${rightModel.id}, name=${rightModel.modelName})}">
-                            <span th:text="${rightModel.modelName}"></span>
-                            <span th:text="${rightModel.id}"></span>
+                            <span th:text="${rightModel.id} + '. ' + ${rightModel.modelName}"></span>
                         </a>
                     </div>
                 </div>

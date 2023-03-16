@@ -20,7 +20,6 @@ public class QuitLogin extends HttpServlet {
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
-                    System.out.println("cookie name = "+cookie.getName());
                     if (cookie.getName().equals("sessionId")) { // this means current username already logged in
                         alreadyLogIn = true;
                         cookie.setMaxAge(0);

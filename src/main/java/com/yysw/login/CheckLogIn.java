@@ -27,7 +27,6 @@ public class CheckLogIn extends HttpServlet {
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
-                    System.out.println("Cookie name= "+cookie.getName());
                     if (cookie.getName().equals("sessionId")) { // 表明已经登陆过了，就直接跳转了
                         alreadyLogIn = true;
                     }
