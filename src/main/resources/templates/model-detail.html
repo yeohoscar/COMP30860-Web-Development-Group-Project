@@ -45,7 +45,7 @@
             <button type="button" onclick="window.location.href='/contactUs'">Contact</button>
             <div  th:if="${user ne null}">
                 <button type="button" onclick="window.location.href='/shopping-cart'">Shopping Cart</button>
-                <button type="button" onclick="window.location.href='/orderHistory'">Order History</button>
+                <button type="button" onclick="window.location.href='/order-history'">Order History</button>
                 <form th:action="@{/quitLogIn}" method="get">
                     <button>Logout</button>
                 </form>
@@ -69,7 +69,15 @@
                             <option th:value="'false'" th:text="'Untrained model ' + ${model.untrainedPrice}"></option>
                             <option th:value="'true'" th:text="'Trained model ' + ${model.trainedPrice}"></option>
                         </select>
-                        <input th:if="${user.class.name eq 'com.yysw.user.customer.Customer'}" type="submit" value="Add To Cart">
+                        <br>
+                        <div th:if="${user.class.name eq 'com.yysw.user.customer.Customer'}">
+                            <div th:if="${hasItem} == true">
+                                <p>Model has added into cart</p>
+                            </div>
+                            <div th:if="${hasItem} == false">
+                                <input type="submit" value="Add To Cart">
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div th:if="${user ne null && user.class.name eq 'com.yysw.user.owner.Owner'}">
