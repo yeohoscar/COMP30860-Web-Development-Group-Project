@@ -26,7 +26,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="logo" href="/">
-            <img src="/image/logo.png" width="30" height="30" alt="">
+            <img src="/image/logo.png" width="25" height="25" alt="">
             YYWS
         </a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -90,32 +90,30 @@
         </div>
 
         <div class="container-fluid">
-            <!-- Thymeleaf iterator that takes a model containing all the models and formats them into rows of three -->
             <div class="row" th:each="model, iter : ${catalogue}" th:if="${iter.index % 3 == 0 && iter.index < catalogue.size()}">
                 <div class="col-sm-3 c-btn">
                     <div th:attr="class=${model.available ? 'model-available' : 'model-unavailable'}">
-                        <a th:href="@{/catalogue/{id}/{name}(id=${model.id}, name=${model.modelName})}">
-                            <span th:text="'#' + ${model.id} + ' ' + ${model.modelName}"></span>
+                        <a class="white-text" th:href="@{/catalogue/{id}/{name}(id=${model.id}, name=${model.modelName})}">
+                            <span th:text="${model.id} + '. ' + ${model.modelName}"></span>
                         </a>
                     </div>
                 </div>
                 <div class="col-sm-3 c-btn" th:if="${iter.index + 1 < catalogue.size()}" th:with="middleModel=${catalogue.get(iter.index+1)}">
                     <div th:attr="class=${middleModel.available ? 'model-available' : 'model-unavailable'}">
-                        <a th:href="@{/catalogue/{id}/{name}(id=${middleModel.id}, name=${middleModel.modelName})}">
-                            <span th:text="'#' + ${middleModel.id} + ' ' + ${middleModel.modelName}"></span>
+                        <a class="white-text" th:href="@{/catalogue/{id}/{name}(id=${middleModel.id}, name=${middleModel.modelName})}">
+                            <span th:text="${middleModel.id} + '. ' + ${middleModel.modelName}"></span>
                         </a>
                     </div>
                 </div>
                 <div class="col-sm-3 c-btn" th:if="${iter.index + 2 < catalogue.size()}" th:with="rightModel=${catalogue.get(iter.index+2)}">
                     <div th:attr="class=${rightModel.available ? 'model-available' : 'model-unavailable'}">
-                        <a th:href="@{/catalogue/{id}/{name}(id=${rightModel.id}, name=${rightModel.modelName})}">
-                            <span th:text="'#' + ${rightModel.id} + ' ' + ${rightModel.modelName}"></span>
+                        <a class="white-text" th:href="@{/catalogue/{id}/{name}(id=${rightModel.id}, name=${rightModel.modelName})}">
+                            <span th:text="${rightModel.id} + '. ' + ${rightModel.modelName}"></span>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </body>
 </html>

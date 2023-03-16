@@ -1,10 +1,3 @@
-h2 {
-    margin-left: 80px;
-    margin-top: 50px;
-    margin-bottom: 30px;
-    font-size: xxx-large;
-}
-
 .move-right {
     margin-left: 70px;
 }
@@ -19,7 +12,7 @@ h2 {
 .grey-bg {
     /*float: right;*/
     /*background-color: rgba(217, 217, 217, 0.6);*/
-    border: 10px solid #ccc; /* 定义边框，1像素宽，颜色为灰色 */
+    border: 3px solid #ccc; /* 定义边框，1像素宽，颜色为灰色 */
     background-color: #f2f2f2; /* 定义背景颜色，浅灰色 */
     padding: 10px; /* 定义内边距，10像素 */
 }
@@ -41,4 +34,8 @@ input[type=submit] {
     height: 40px;
     width: 150px;
     font-size: 18px;
+}
+
+.space-mx-40 {
+    height: 4vh;
 }
