@@ -17,6 +17,7 @@ import java.util.Objects;
 public class LogInController {
     @Autowired
     private UserRepository userRepository;
+
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("user", new User());
