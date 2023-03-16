@@ -101,7 +101,8 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-8">
-                        <h1 th:text="'Order: ' + ${order.getId()}"></h1>
+                        <h3 th:text="'Order: ' + ${order.getId()}"></h3>
+                        <h3 th:text="'Your Name: ' + ${user.getUsername()}"></h3>
                     </div>
                     <div class="col-sm-4">
                         <h5 th:text="'Date:' + ' ' + ${#dates.format(order.getOrderDate(), 'dd/MM/yyyy')}"></h5>
