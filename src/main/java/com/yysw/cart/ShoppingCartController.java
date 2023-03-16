@@ -66,22 +66,22 @@ public class ShoppingCartController {
 
         if (sessionUser != null) {
             if (sessionUser instanceof Customer) {
-                if (request.getParameter("trained") != null) {
-                    ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
-                    shoppingCartItem.setItem(ai);
-                    shoppingCartItem.setPrice(ai.getTrainedPrice());
-                    shoppingCartItem.setTrainedModel(request.getParameter("trained") != null);
-                    shoppingCartItem.setCustomer((Customer) sessionUser);
-                    updateCustomerCart(sessionUser.getId(), shoppingCartItem);
-                }
-
-                if (request.getParameter("untrained") != null) {
-                    ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
-                    shoppingCartItem.setItem(ai);
-                    shoppingCartItem.setPrice(ai.getUntrainedPrice());
-                    shoppingCartItem.setTrainedModel(request.getParameter("untrained") != null);
-                    shoppingCartItem.setCustomer((Customer) sessionUser);
-                    updateCustomerCart(sessionUser.getId(), shoppingCartItem);
+                if (request.getParameter("trainedOrNot") != null) {
+                    if (Objects.equals(request.getParameter("trainedOrNot"), "true")) {
+                        ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
+                        shoppingCartItem.setItem(ai);
+                        shoppingCartItem.setPrice(ai.getTrainedPrice());
+                        shoppingCartItem.setTrainedModel(true);
+                        shoppingCartItem.setCustomer((Customer) sessionUser);
+                        updateCustomerCart(sessionUser.getId(), shoppingCartItem);
+                    } else {
+                        ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
+                        shoppingCartItem.setItem(ai);
+                        shoppingCartItem.setPrice(ai.getUntrainedPrice());
+                        shoppingCartItem.setTrainedModel(false);
+                        shoppingCartItem.setCustomer((Customer) sessionUser);
+                        updateCustomerCart(sessionUser.getId(), shoppingCartItem);
+                    }
                 }
             } else {
                 ai.updateModel(aiModel);
