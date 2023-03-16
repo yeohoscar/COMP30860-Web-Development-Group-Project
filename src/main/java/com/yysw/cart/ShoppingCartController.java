@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class ShoppingCartController {
@@ -89,17 +90,18 @@ public class ShoppingCartController {
 
         if (sessionUser != null) {
             if (sessionUser instanceof Customer) {
-                ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
-                shoppingCartItem.setItem(ai);
-                if (request.getParameter("trained") != null) {
-                    shoppingCartItem.setPrice(ai.getTrainedPrice());
-                    shoppingCartItem.setTrainedModelOrNot(true);
-                } else {
-                    shoppingCartItem.setPrice(ai.getUntrainedPrice());
-                    shoppingCartItem.setTrainedModelOrNot(false);
+
+                if (request.getParameter("trainedOrNot") != null) {
+                    if (Objects.equals(request.getParameter("trainedOrNot"), "true")) {
+                        ShoppingCartItem shoppingCartItem = new ShoppingCartItem(ai, true, ai.getTrainedPrice(), (Customer) sessionUser);
+                        updateCustomerCart(sessionUser.getId(), shoppingCartItem);
+                    } else {
+                        ShoppingCartItem shoppingCartItem = new ShoppingCartItem(ai, false, ai.getUntrainedPrice(), (Customer) sessionUser);
+                        updateCustomerCart(sessionUser.getId(), shoppingCartItem);
+                    }
+
                 }
-                shoppingCartItem.setCustomer((Customer) sessionUser);
-                updateCustomerCart(sessionUser.getId(), shoppingCartItem);
+
             } else {
                 ai.updateModel(aiModel);
                 System.out.println(ai.isAvailable());
@@ -118,6 +120,7 @@ public class ShoppingCartController {
                                  HttpSession session, HttpServletResponse response) throws IOException {
         Long sessionUserID = (Long) session.getAttribute("user_id");
         Customer customer = customerRepository.findCustomerById(sessionUserID);
+        customer.getCart().removeIf(item -> Objects.equals(item.getId(), id));
         shoppingCartRepository.deleteByIdAndCustomer(id, customer);
 
         return "redirect:/shopping-cart";

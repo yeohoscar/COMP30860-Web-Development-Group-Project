@@ -35,8 +35,12 @@ a, a:link, a:visited, a:hover, a:active {
     color: black;
 }
 
-.main-color {
+.main-color-text {
     color: #FFB394;
+}
+
+.main-color-bg {
+    background-color: #FFB394;
 }
 
 button {
@@ -82,4 +86,25 @@ button {
 .logo-holder {
     padding-top:12px;
     padding-left: 12px;
+}
+
+.center-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 95vh;
+}
+
+.center-box {
+    max-width: 50vw;
+    max-height: 50vh;
+    min-width: 50vw;
+    min-height: 50vh;
+    border-radius: 10px;
+    color: white;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 0 25px 0 rgba(0,5,0,.2);
 }

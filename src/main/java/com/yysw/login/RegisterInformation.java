@@ -1,4 +1,4 @@
-package com.yysw.payment;
+package com.yysw.login;
 
 import javax.validation.constraints.NotBlank;
 

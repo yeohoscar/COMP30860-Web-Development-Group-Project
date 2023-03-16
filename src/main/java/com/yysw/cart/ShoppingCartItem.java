@@ -24,6 +24,16 @@ public class ShoppingCartItem implements Serializable {
     @JoinColumn(name = "user_id")
     private Customer customer;
 
+    public ShoppingCartItem() {}
+
+    public ShoppingCartItem(AIModel aiModel, boolean trainedModelOrNot, Double price, Customer customer) {
+        item = aiModel;
+        this.trainedModelOrNot = trainedModelOrNot;
+        this.price = price;
+        this.customer = customer;
+
+    }
+
     public void setId(Long id) { this.id = id; }
 
     public Long getId() { return id; }
@@ -31,9 +41,7 @@ public class ShoppingCartItem implements Serializable {
 
     public void setItem(AIModel item) { this.item = item; }
 
-    public boolean isTrainedModelOrNot() {
-        return trainedModelOrNot;
-    }
+    public boolean isTrainedModelOrNot() { return trainedModelOrNot; }
 
     public void setTrainedModelOrNot(boolean trainedModelOrNot) {
         this.trainedModelOrNot = trainedModelOrNot;
