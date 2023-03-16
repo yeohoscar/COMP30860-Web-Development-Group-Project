@@ -87,7 +87,7 @@
 
     <div class="container-fluid move-right">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="content bg-green">
                     <p class="p-space">
                         Email: contact@yyws.ai<br>
@@ -103,11 +103,11 @@
                         <li>Meeting details provided upon confirmation</li>
                     </ul>
                     <form action="#" th:action="@{/contactUs}" th:object="${contactInformation}" method="POST">
-                        <div class="row">
+                        <div class="row pinkBox">
                             <input type="text" th:field="*{contactName}" placeholder="Name" required/>
                             <span th:if="${#fields.hasErrors('contactName')}" th:errors="*{contactName}">Valid Name Required</span>
                         </div>
-                        <div class="row">
+                        <div class="row pinkBox">
                             <input type="datetime-local" th:field="*{contactDate}" id="contactDate" required/>
                             <span th:if="${#fields.hasErrors('contactDate')}" th:errors="*{contactDate}">Valid Date Required</span>
                         </div>
@@ -115,6 +115,7 @@
                     </form>
                 </div>
             </div>
+            <div class="col-md-1"></div>
         </div>
     </div>
 </body>
