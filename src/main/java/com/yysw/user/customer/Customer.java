@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.yysw.aimodels.AIModel;
 import com.yysw.cart.ShoppingCartItem;
 import com.yysw.order.Order;
 import com.yysw.user.User;
@@ -17,9 +16,10 @@ import javax.persistence.*;
 public class Customer extends User implements Serializable {
     @OneToMany(mappedBy = "customer", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    private List<Order> orders = new ArrayList<Order>();
+    private List<Order> orders = new ArrayList<>();
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private List<ShoppingCartItem> cart;
 

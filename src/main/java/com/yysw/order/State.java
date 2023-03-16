@@ -15,13 +15,9 @@ public enum State {
 
     private final String displayValue;
 
-    private State(String displayValue) {
-        this.displayValue = displayValue;
-    }
+    State(String displayValue) { this.displayValue = displayValue; }
 
-    public String getDisplayValue() {
-        return displayValue;
-    }
+    public String getDisplayValue() { return displayValue; }
 
 }
 

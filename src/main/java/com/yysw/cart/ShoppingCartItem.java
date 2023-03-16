@@ -2,7 +2,6 @@ package com.yysw.cart;
 
 import com.yysw.aimodels.AIModel;
 import com.yysw.user.customer.Customer;
-import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -21,7 +20,7 @@ public class ShoppingCartItem implements Serializable {
 
     private Double price;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     private Customer customer;
 
@@ -32,9 +31,13 @@ public class ShoppingCartItem implements Serializable {
 
     public void setItem(AIModel item) { this.item = item; }
 
-    public boolean isTrainedModel() { return trainedModelOrNot; }
+    public boolean isTrainedModelOrNot() {
+        return trainedModelOrNot;
+    }
 
-    public void setTrainedModel(boolean trainedModel) { this.trainedModelOrNot = trainedModel; }
+    public void setTrainedModelOrNot(boolean trainedModelOrNot) {
+        this.trainedModelOrNot = trainedModelOrNot;
+    }
 
     public Double getPrice() { return price; }
 
@@ -48,7 +51,6 @@ public class ShoppingCartItem implements Serializable {
                 "id=" + id +
                 ", item=" + item +
                 ", trainedModel=" + trainedModelOrNot +
-//                ", untrainedModel=" + untrainedModel +
                 ", price=" + price +
                 ", customer=" + customer +
                 '}';

@@ -32,7 +32,7 @@ CREATE TABLE `aimodel` (
   `trained_price` double NOT NULL,
   `untrained_price` double NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_as_cs;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,7 +47,7 @@ CREATE TABLE `order_ordered_models` (
   `price` double DEFAULT NULL,
   KEY `FKla25dukk7tyhr3td3bh2d3tcg` (`order_id`),
   CONSTRAINT `FKla25dukk7tyhr3td3bh2d3tcg` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_as_cs;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -61,10 +61,11 @@ CREATE TABLE `orders` (
   `order_date` datetime(6) DEFAULT NULL,
   `state` int DEFAULT NULL,
   `customer_id` bigint NOT NULL,
+  `payment_id` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FKel9kyl84ego2otj2accfd8mr7` (`customer_id`),
   CONSTRAINT `FKel9kyl84ego2otj2accfd8mr7` FOREIGN KEY (`customer_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_as_cs;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -84,7 +85,7 @@ CREATE TABLE `shopping_cart_item` (
   KEY `FKowq8cu2qbrcylcong8q6uuged` (`item_id`),
   CONSTRAINT `FKmkvei20h3d5ems2dmub3h4esg` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `FKowq8cu2qbrcylcong8q6uuged` FOREIGN KEY (`item_id`) REFERENCES `aimodel` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_as_cs;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,7 +101,7 @@ CREATE TABLE `user` (
   `username` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_sb8bbouer5wak8vyiiy4pf2bx` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_as_cs;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

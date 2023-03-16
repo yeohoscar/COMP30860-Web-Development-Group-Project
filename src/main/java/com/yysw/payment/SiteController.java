@@ -1,11 +1,10 @@
 package com.yysw.payment;
 
-import com.yysw.user.User;
-import com.yysw.user.UserRepository;
-import com.yysw.user.customer.Customer;
-import com.yysw.user.customer.CustomerRepository;
-import com.yysw.user.owner.Owner;
-import com.yysw.user.owner.OwnerRepository;
+import com.yysw.order.*;
+import com.yysw.user.*;
+import com.yysw.user.customer.*;
+import com.yysw.user.owner.*;
+import com.yysw.cart.ShoppingCartItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +14,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Objects;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.sql.Date;
 
 @Controller
 public class SiteController {
@@ -26,22 +30,19 @@ public class SiteController {
     private CustomerRepository customerRepository;
     @Autowired
     private OwnerRepository ownerRepository;
+    @Autowired
+    private  OrderRepository orderRepository;
 
     @GetMapping("/")
-    public String home(HttpServletRequest request, Model model) {
-        User sessionUser = (User) request.getSession().getAttribute("user");
-        if (sessionUser == null) {
+    public String home(HttpSession session, Model model) {
+        Long sessionUserID = (Long) session.getAttribute("user_id");
+        if (sessionUserID == null) {
             return "index.html";
         } else {
-            User repoUser = userRepository.findUserById(sessionUser.getId());
+            User repoUser = userRepository.findUserById(sessionUserID);
             model.addAttribute("user", repoUser);
         }
         return "index.html";
-    }
-
-    @GetMapping("/logInAgain")
-    public String logInAgain() {
-        return "logInAgain.html";
     }
 
     @GetMapping("/login")
@@ -50,10 +51,9 @@ public class SiteController {
         return "login.html";
     }
 
-    @GetMapping("/logInOccupied")
-    public String logInOccupied(Model model) {
-        model.addAttribute("user", new User());
-        return "logInOccupied.html";
+    @GetMapping("/login-success")
+    public String loginSuccess() {
+        return "login-success.html";
     }
 
     @GetMapping("/register")
@@ -64,14 +64,12 @@ public class SiteController {
 
     @PostMapping("/register")
     public String register(@ModelAttribute("RegisterInformation") RegisterInformation registerInformation) {
-        if (registerInformation.getAdminKey() != null &&
-                Objects.equals(registerInformation.getAdminKey(), "verycooladminkey")) {
+        if (registerInformation.getAdminKey() != null
+                && Objects.equals(registerInformation.getAdminKey(), "verycooladminkey")
+                && !userRepository.existsUserByUsername(registerInformation.getUsername())) {
             userRepository.save(new Owner(registerInformation.getUsername(), registerInformation.getPasswd()));
-            ownerRepository.save((Owner) userRepository.findByUsernameAndPasswd(registerInformation.getUsername(), registerInformation.getPasswd()));
-        } else {
+        } else if (!userRepository.existsUserByUsername(registerInformation.getUsername())){
             userRepository.save(new Customer(registerInformation.getUsername(), registerInformation.getPasswd()));
-            customerRepository.save((Customer) userRepository.findByUsernameAndPasswd(registerInformation.getUsername(), registerInformation.getPasswd()));
-
         }
         return "login.html";
     }
@@ -85,19 +83,28 @@ public class SiteController {
     @PostMapping("/payment")
     public String submitPayment(
             @Valid @ModelAttribute("paymentInformation") PaymentInformation paymentInformation,
-            BindingResult bindingResult,
-            Model model,
-            HttpServletRequest request
-    ) {
-        Customer sessionUser = (Customer) request.getSession().getAttribute("user");
-        System.out.println(paymentInformation.getExpiry());
-        System.out.println(paymentInformation.getCvv());
+            HttpSession session, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "payment.html";
         } else {
-            model.addAttribute("paidCustomer", sessionUser);
-//            return "successPayment.html";
-            return "catalogue.html";
+            Long sessionUserID = (Long) session.getAttribute("user_id");
+            Customer customer = customerRepository.findCustomerById(sessionUserID);
+            List<OrderedModel> orderedModels = new ArrayList<>();
+
+            for (ShoppingCartItem item : customer.getCart()) {
+                orderedModels.add(new OrderedModel(item.getItem().getId(), item.getPrice()));
+            }
+
+            Date d = Date.valueOf(LocalDate.now());
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+
+            String id = customer.getId() + "#" +  dtf.format(now);
+
+            Order order = new Order(customer, orderedModels, State.NEW, d, id);
+            orderRepository.save(order);
+
+            return "index.html";
         }
     }
 }
