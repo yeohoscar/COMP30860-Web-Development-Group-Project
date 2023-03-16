@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta field="*{iewport" content="width=device-width, initial-scale=1">
+    <meta field="viewport" content="width=device-width, initial-scale=1">
 
     <title>YYWS.AI</title>
 
@@ -37,7 +37,7 @@
             </ul>
         </div>
         <span th:if="${user.class.name eq 'com.yysw.user.owner.Owner'}">
-                <a th:href="@{/orderHistory}"><img src="/image/order-history.png " width="30" height="30" alt=""></a>
+                <a th:href="@{/order-history}"><img src="/image/order-history.png " width="30" height="30" alt=""></a>
                 <div class="dropstart" style="display: inline-block">
                     <a
                             role="button"

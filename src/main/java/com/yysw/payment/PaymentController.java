@@ -61,7 +61,7 @@ public class PaymentController {
             Order order = new Order(customer, orderedModels, State.NEW, d, id);
             orderRepository.save(order);
 
-            return "index.html";
+            return "payment-success.html";
         }
     }
 }
