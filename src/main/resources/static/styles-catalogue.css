@@ -9,6 +9,10 @@ h1 {
     font-weight: bold;
 }
 
+h2 {
+    color: cadetblue;
+}
+
 .title {
     text-align: left;
     font-size: 18px;
@@ -26,8 +30,9 @@ h1 {
     opacity: 50%;
 }
 
-.c-btn {
+.c-btn, input[type=submit] {
     background-color: #FFB394;
+    color: white;
     border: none;
     border-radius: 7px;
     padding: 15px 0;
@@ -39,7 +44,7 @@ h1 {
     margin: 10px 30px;
 }
 
-.c-btn:hover {
+.c-btn:hover, input[type=submit]:hover {
     background-color: #fa9d75;
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
@@ -108,17 +113,4 @@ button {
     align-items: center;
     text-align: center;
     min-height: 95vh;
-}
-
-.center-box {
-    max-width: 50vw;
-    max-height: 50vh;
-    min-width: 50vw;
-    min-height: 50vh;
-    border-radius: 10px;
-    color: white;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    box-shadow: 0 0 25px 0 rgba(0,5,0,.2);
 }
