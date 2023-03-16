@@ -9,10 +9,6 @@ h1 {
     font-weight: bold;
 }
 
-h2 {
-    color: cadetblue;
-}
-
 .title {
     text-align: left;
     font-size: 18px;
@@ -44,73 +40,12 @@ h2 {
     margin: 10px 30px;
 }
 
+input[type=submit] {
+    width: 200px;
+    margin: 10px 0; !important;
+}
+
 .c-btn:hover, input[type=submit]:hover {
     background-color: #fa9d75;
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-}
-
-a, a:link, a:visited, a:hover, a:active {
-    text-decoration: none;
-    color: white;
-}
-
-.logo {
-    color: black;
-}
-
-.main-color {
-    background-color: #FFB394;
-}
-
-button {
-    border-style: none;
-}
-
-.orange-button-sm, .white-button-sm {
-    border-radius: 5px;
-}
-
-.orange-button-md, .white-button-md {
-    border-radius: 10px;
-}
-
-.orange-button-sm, .orange-button-md {
-    color: white;
-    background-color: #FFB394;
-    border: none;
-}
-
-.white-button-sm, .white-button-md {
-    color: #FFB394;
-    border-color: #FFB394;
-    background-color: white;
-}
-
-.pad-nav {
-    padding: 8px 16px; !important;
-}
-
-.center-child {
-    max-width: 960px;
-    margin: auto;
-    min-width: 500px;
-}
-
-.container-center {
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
-}
-
-.logo-holder {
-    padding-top:12px;
-    padding-left: 12px;
-}
-
-.center-screen {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    min-height: 95vh;
 }

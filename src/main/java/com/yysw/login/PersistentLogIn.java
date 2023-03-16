@@ -28,12 +28,8 @@ public class PersistentLogIn extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("passwd");
-        System.out.println("current username that wants to login = " + username);
 
         PrintWriter out = response.getWriter();
-        System.out.println("Persist Session ID: " + session.getId());
-        System.out.println("Persist Creation Time: " + new Date(session.getCreationTime()));
-        System.out.println("Persist Last Accessed Time: " + new Date(session.getLastAccessedTime()));
 
         //说明还没有用户登录
         if (session.getAttribute("user_id") == null) {

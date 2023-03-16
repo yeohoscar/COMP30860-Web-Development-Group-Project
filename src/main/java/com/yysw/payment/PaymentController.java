@@ -52,6 +52,7 @@ public class PaymentController {
             Long sessionUserID = (Long) session.getAttribute("user_id");
             Customer customer = customerRepository.findCustomerById(sessionUserID);
             List<OrderedModel> orderedModels = new ArrayList<>();
+
             for (ShoppingCartItem item : customer.getCart()) {
                 orderedModels.add(new OrderedModel(item.getItem().getId(), item.getPrice()));
             }
@@ -69,7 +70,7 @@ public class PaymentController {
             model.addAttribute("order", order);
             customer.setCart(new ArrayList<>());
             shoppingCartRepository.deleteAllByCustomer(customer);
-            System.out.println("delete all items of a customer");
+
             return "orderReceipt.html";
         }
     }

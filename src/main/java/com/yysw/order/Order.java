@@ -1,6 +1,7 @@
 package com.yysw.order;
 
 import com.yysw.user.customer.Customer;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.*;
@@ -14,6 +15,7 @@ public class Order {
     private Long id;
 
     @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 

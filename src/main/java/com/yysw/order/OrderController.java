@@ -5,6 +5,7 @@ import com.yysw.user.UserRepository;
 import com.yysw.user.customer.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,23 +24,20 @@ public class OrderController {
 
     //DO NOT DELETE THIS METHOD!!!
     @GetMapping("/order-history")
-    public String orderHistory(Customer customer, ModelMap modelMap, HttpSession session) {
+    public String orderHistory(Model model, HttpSession session) {
         System.out.println("Get into orderHistory");
         Long sessionUserID = (Long) session.getAttribute("user_id");
         System.out.println("get sessionUserID: "+sessionUserID);
         // session user wont be null because order history can only access by user after login
-        User sessionUser = userRepository.findUserById(sessionUserID);
-        System.out.println("get sessionUser: "+sessionUser);
+        User user = userRepository.findUserById(sessionUserID);
         List<Order> orders;
-        if (sessionUser instanceof Customer) {
-            orders = orderRepository.findByCustomerOrderByOrderDateDesc(customer);
+        if (user instanceof Customer) {
+            orders = orderRepository.findOrderByCustomerOrderByOrderDateDesc((Customer) user);
         } else {
             orders = orderRepository.findAllByOrderByOrderDateDescStateAsc();
         }
-        System.out.println("Username is = "+sessionUser.getUsername());
-        modelMap.addAttribute("orders", orders);
-        modelMap.addAttribute("user", sessionUser);
-        System.out.println("Ready to go to order-history");
+        model.addAttribute("orders", orders);
+        model.addAttribute("user", user);
         return "order-history.html";
     }
 

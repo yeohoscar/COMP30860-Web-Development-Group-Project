@@ -35,7 +35,6 @@ public class OwnerController {
     @PostMapping("/add-model")
     public String submitModel(
             @Valid @ModelAttribute("newModel") AIModel aiModel) {
-        System.out.println(aiModel.toString());
         aiModelRepository.save(aiModel);
         return "index.html";
     }

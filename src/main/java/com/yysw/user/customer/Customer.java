@@ -14,8 +14,7 @@ import javax.persistence.*;
 @Entity
 @DiscriminatorValue("Customer")
 public class Customer extends User implements Serializable {
-    @OneToMany(mappedBy = "customer", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Order> orders = new ArrayList<>();
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER,
