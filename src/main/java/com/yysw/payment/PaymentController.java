@@ -10,6 +10,7 @@ import com.yysw.user.customer.Customer;
 import com.yysw.user.customer.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +40,7 @@ public class PaymentController {
         return "payment.html";
     }
 
+    @Transactional
     @PostMapping("/payment")
     public String submitPayment(
             @Valid @ModelAttribute("paymentInformation") PaymentInformation paymentInformation,
@@ -61,15 +63,12 @@ public class PaymentController {
             String id = customer.getId() + "#" + dtf.format(now);
 
             Order order = new Order(customer, orderedModels, State.NEW, d, id);
-            System.out.println("paymentInformation.getName() = "+paymentInformation.getName());
             orderRepository.save(order);
-            System.out.println("Ready to go orderReceipt");
+
             model.addAttribute("name", paymentInformation.getName());
             model.addAttribute("order", order);
-
-
-//            customer.setCart(new ArrayList<ShoppingCartItem>());
-//            shoppingCartRepository.deleteAllByCustomer_Id(customer.getId());
+            customer.setCart(new ArrayList<>());
+            shoppingCartRepository.deleteAllByCustomer(customer);
             System.out.println("delete all items of a customer");
             return "orderReceipt.html";
         }

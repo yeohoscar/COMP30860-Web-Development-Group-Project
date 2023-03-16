@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -105,7 +106,6 @@ public class ShoppingCartController {
 
             } else {
                 ai.updateModel(aiModel);
-                System.out.println(ai.isAvailable());
                 aiModelRepository.save(ai);
             }
         }
@@ -149,25 +149,23 @@ public class ShoppingCartController {
             }
         }
         customerRepository.save(customer);
-        System.out.println(customer.getCart());
     }
 
     @GetMapping("/shopping-cart")
     public String shoppingCart(Model model, HttpSession session) {
         Long sessionUserID = (Long) session.getAttribute("user_id");
         List<ShoppingCartItem> userCart = customerRepository.findCustomerById(sessionUserID).getCart();
-        System.out.println("okay");
-        for (ShoppingCartItem s : userCart) {
-            System.out.println(s.getItem().toString());
-        }
+        double sub = 0.0;
 
         model.addAttribute("size", userCart.size());
         model.addAttribute("products", userCart);
-        double sub = 0.0;
+
         for (ShoppingCartItem item : userCart) {
             sub += item.getPrice();
         }
-        model.addAttribute("subtotal", sub);
+
+        DecimalFormat df = new DecimalFormat("####0.00");
+        model.addAttribute("subtotal", df.format(sub));
 
         return "shopping-cart.html";
     }
@@ -175,13 +173,8 @@ public class ShoppingCartController {
     @GetMapping("/shopping-cart/{id}")
     public void updateCartItem(@PathVariable(value="id") Long id, @RequestParam("selectOption") String option, HttpServletRequest request, HttpServletResponse response) throws IOException {
         updateItemInCart(option, id, request);
-        System.out.println("METHOD update cart item called");
         response.sendRedirect("/shopping-cart");
-        System.out.println("redirect happened");
     }
 
-    @PostMapping("/checkoutpayment")
-    public String checkOut() {
-        return "payment.html";
-    }
+
 }
