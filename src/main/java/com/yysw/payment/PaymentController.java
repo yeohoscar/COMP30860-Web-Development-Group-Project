@@ -5,7 +5,6 @@ import com.yysw.order.Order;
 import com.yysw.order.OrderRepository;
 import com.yysw.order.OrderedModel;
 import com.yysw.order.State;
-import com.yysw.user.UserRepository;
 import com.yysw.user.customer.Customer;
 import com.yysw.user.customer.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;

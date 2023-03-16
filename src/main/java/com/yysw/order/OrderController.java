@@ -28,7 +28,6 @@ public class OrderController {
         // session user wont be null because order history can only access by user after login
         User sessionUser = userRepository.findUserById(sessionUserID);
         List<Order> orders;
-        // TODO: CHECK IF USER IS OWNER OR CUSTOMER
         if (sessionUser instanceof Customer) {
             orders = orderRepository.findByCustomerOrderByOrderDateDesc(customer);
         } else {

@@ -1,27 +1,12 @@
 package com.yysw;
 
-import com.yysw.order.*;
-import com.yysw.payment.PaymentInformation;
-import com.yysw.login.RegisterInformation;
-import com.yysw.user.*;
-import com.yysw.user.customer.*;
-import com.yysw.user.owner.*;
-import com.yysw.cart.ShoppingCartItem;
+import com.yysw.user.User;
+import com.yysw.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
-import java.sql.Date;
 
 @Controller
 public class SiteController {

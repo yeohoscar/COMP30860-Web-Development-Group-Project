@@ -70,7 +70,7 @@
                         <tr>
                             <caption style="caption-side: top; text-align: center;">Requirement & Member Assigned To Each Task</caption>
                         </tr>
-                        
+
                         <tr>
                             <th>Requirement</th>
                             <th>Name</th>
@@ -81,11 +81,11 @@
                         </tr>
                         <tr>
                             <td>G1 : View details about a particular model.</td>
-                            <td>Oscar</td>
+                            <td>Kar Yen</td>
                         </tr>
                         <tr>
                             <td>G2 : Add a model to a shopping cart.</td>
-                            <td>Yan Hao</td>
+                            <td>Ru Bing, Kar Yen</td>
                         </tr>
                         <tr>
                             <td>G3 : Update the shopping cart.</td>
@@ -93,15 +93,11 @@
                         </tr>
                         <tr>
                             <td>G4 : Create a customer account.</td>
-                            <td>Kar Yen</td>
-                        </tr>
-                        <tr>
-                            <td>G5 : Log in to their account.</td>
                             <td>Oscar</td>
                         </tr>
                         <tr>
-                            <td>G6 : Something extra</td>
-                            <td>Yan Hao</td>
+                            <td>G5 : Log in to their account.</td>
+                            <td>Yanhao</td>
                         </tr>
                         <tr>
                             <td>C0 : Go to the checkout to purchase orders in their shopping cart.</td>
@@ -109,27 +105,23 @@
                         </tr>
                         <tr>
                             <td>C1 : Use a (fake) payment portal to pay for their goods.</td>
-                            <td>Kar Yen</td>
+                            <td>Oscar, Kar Yen</td>
                         </tr>
                         <tr>
                             <td>C2 : View their order history.</td>
-                            <td>Oscar</td>
-                        </tr>
-                        <tr>
-                            <td>C3 : Something extra</td>
-                            <td>Yan Hao</td>
+                            <td>Oscar, Yanhao</td>
                         </tr>
                         <tr>
                             <td>O0 : Login to the marketplace.</td>
-                            <td>Ru Bing</td>
+                            <td>Yan Hao</td>
                         </tr>
                         <tr>
                             <td>O1 : Add models to the marketplace.</td>
-                            <td>Kar Yen</td>
+                            <td>Oscar, Kar Yen</td>
                         </tr>
                         <tr>
                             <td>O2 : Hide models to make them no longer available.</td>
-                            <td>Oscar</td>
+                            <td>Oscar, Kar Yen</td>
                         </tr>
                         <tr>
                             <td>O3 : View all orders.</td>
@@ -137,15 +129,23 @@
                         </tr>
                         <tr>
                             <td>O4 : Change the state of orders.</td>
-                            <td>Ru Bing</td>
-                        </tr>
-                        <tr>
-                            <td>O5 : Edit model details.</td>
                             <td>Kar Yen</td>
                         </tr>
                         <tr>
-                            <td>O6 : Something extra</td>
-                            <td>Oscar</td>
+                            <td>O5 : Edit model details.</td>
+                            <td>Oscar, Kar Yen</td>
+                        </tr>
+                        <tr>
+                            <td>E1 : Dockerisation</td>
+                            <td>RuBing</td>
+                        </tr>
+                        <tr>
+                            <td>E2 : Docker Compose</td>
+                            <td>Oscar, Kar Yen</td>
+                        </tr>
+                        <tr>
+                            <td>E3 : Database</td>
+                            <td>RuBing, Oscar</td>
                         </tr>
                         <tr>
                             <td>D0 : Team registration</td>
@@ -165,11 +165,41 @@
                         </tr>
                         <tr>
                             <td>D5 : Individual report</td>
-                            <td>Yan Hao</td>
-                        </tr>        
-                    </table>  
+                            <td>All</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
+        </div>
+        <div class="container-fluid content" style="margin-top: 30px;">
+            <h2>Wireframe</h2>
+            <iframe src="img/wireframe.pdf" width="100%", height="800px"></iframe>
+        </div>
+        <div class="container-fluid content" style="margin-top: 30px;">
+            <h2>How to install and run project</h2>
+            <ol>
+                <li>
+                    Clone repository to your computer.
+                </li>
+                <li>
+                    Download and install <a href="https://www.docker.com/products/docker-desktop/">Docker Desktop.</a>
+                </li>
+                <li>
+                    Navigate to the root of the repository in a terminal.
+                </li>
+                <li>
+                    Run following command: docker-compose up --build
+                </li>
+                <li>
+                    Once terminal declares that the app has started, go to localhost:8080 on your browser of choice.
+                </li>
+            </ol>
+        </div>
+        <div class="container-fluid content" style="margin-top: 30px;">
+            <h2>Reflections</h2>
+            <p>
+
+            </p>
         </div>
     </body>
 </html>
