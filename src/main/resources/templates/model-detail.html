@@ -50,7 +50,8 @@
                     <button>Logout</button>
                 </form>
             </div>
-            <div th:unless="${user ne null}"> ref='/login'">Log In</button>
+            <div th:unless="${user ne null}">
+                <button type="button" onclick="window.location.href='/login'">Log In</button>
                 <button type="button" onclick="window.location.href='/register'">Register</button>
             </div>
 
@@ -64,21 +65,19 @@
                     <h2 th:text="${model.modelName}"></h2>
                     <hr /><br>
                     <p th:text="${model.description}"></p>
-                    <form action="#" th:action="@{/catalogue/__${id}__/__${name}__}" method="POST">
-                        <select name="trainedOrNot">
-                            <option th:value="'false'" th:text="'Untrained model ' + ${model.untrainedPrice}"></option>
-                            <option th:value="'true'" th:text="'Trained model ' + ${model.trainedPrice}"></option>
-                        </select>
-
+                    <form th:action="@{/catalogue/__${id}__/__${name}__}" method="POST">
+                        <label th:text="'Trained model ' + ${model.trainedPrice}"></label>
+                        <input type="checkbox" name="trained" onclick="checkOther(this)">
+                        <label th:text="'Untrained model ' + ${model.untrainedPrice}"></label>
+                        <input type="checkbox" name="untrained" onclick="checkOther(this)">
                         <br>
-                        <div th:if="${user.class.name eq 'com.yysw.user.customer.Customer'}">
-                            <div th:if="${hasItem} == true">
-                                <p>Model has added into cart</p>
-                            </div>
-                            <div th:if="${hasItem} == false">
-                                <input type="submit" value="Add To Cart">
-                            </div>
+                        <div th:if="${hasItem} == true">
+                            <p>Model has added into cart</p>
                         </div>
+                        <div th:if="${hasItem} == false">
+                            <input type="submit" value="Add To Cart">
+                        </div>
+
                     </form>
                 </div>
                 <div th:if="${user ne null && user.class.name eq 'com.yysw.user.owner.Owner'}">

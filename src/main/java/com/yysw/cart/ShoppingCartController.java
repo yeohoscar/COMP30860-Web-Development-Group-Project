@@ -90,24 +90,14 @@ public class ShoppingCartController {
 
         if (sessionUser != null) {
             if (sessionUser instanceof Customer) {
-
-                if (request.getParameter("trainedOrNot") != null) {
-                    if (Objects.equals(request.getParameter("trainedOrNot"), "true")) {
-                        ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
-                        shoppingCartItem.setItem(ai);
-                        shoppingCartItem.setPrice(ai.getTrainedPrice());
-                        shoppingCartItem.setTrainedModel(true);
-                        shoppingCartItem.setCustomer((Customer) sessionUser);
-                        updateCustomerCart(sessionUser.getId(), shoppingCartItem);
-                    } else {
-                        ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
-                        shoppingCartItem.setItem(ai);
-                        shoppingCartItem.setPrice(ai.getUntrainedPrice());
-                        shoppingCartItem.setTrainedModel(false);
-                        shoppingCartItem.setCustomer((Customer) sessionUser);
-                        updateCustomerCart(sessionUser.getId(), shoppingCartItem);
-                    }
-
+                ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
+                shoppingCartItem.setItem(ai);
+                if (request.getParameter("trained") != null) {
+                    shoppingCartItem.setPrice(ai.getTrainedPrice());
+                    shoppingCartItem.setTrainedModelOrNot(true);
+                } else {
+                    shoppingCartItem.setPrice(ai.getUntrainedPrice());
+                    shoppingCartItem.setTrainedModelOrNot(false);
                 }
                 shoppingCartItem.setCustomer((Customer) sessionUser);
                 updateCustomerCart(sessionUser.getId(), shoppingCartItem);
