@@ -1,6 +1,7 @@
 package com.yysw.payment;
 
 import com.yysw.cart.ShoppingCartItem;
+import com.yysw.cart.ShoppingCartRepository;
 import com.yysw.order.Order;
 import com.yysw.order.OrderRepository;
 import com.yysw.order.OrderedModel;
@@ -30,6 +31,8 @@ public class PaymentController {
     private OrderRepository orderRepository;
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private ShoppingCartRepository shoppingCartRepository;
     @GetMapping("/payment")
     public String payment(Model model) {
         model.addAttribute("paymentInformation", new PaymentInformation());
@@ -39,14 +42,14 @@ public class PaymentController {
     @PostMapping("/payment")
     public String submitPayment(
             @Valid @ModelAttribute("paymentInformation") PaymentInformation paymentInformation,
-            HttpSession session, BindingResult bindingResult) {
+            HttpSession session, BindingResult bindingResult,
+            Model model) {
         if (bindingResult.hasErrors()) {
             return "payment.html";
         } else {
             Long sessionUserID = (Long) session.getAttribute("user_id");
             Customer customer = customerRepository.findCustomerById(sessionUserID);
             List<OrderedModel> orderedModels = new ArrayList<>();
-
             for (ShoppingCartItem item : customer.getCart()) {
                 orderedModels.add(new OrderedModel(item.getItem().getId(), item.getPrice()));
             }
@@ -58,9 +61,17 @@ public class PaymentController {
             String id = customer.getId() + "#" + dtf.format(now);
 
             Order order = new Order(customer, orderedModels, State.NEW, d, id);
+            System.out.println("paymentInformation.getName() = "+paymentInformation.getName());
             orderRepository.save(order);
+            System.out.println("Ready to go orderReceipt");
+            model.addAttribute("name", paymentInformation.getName());
+            model.addAttribute("order", order);
 
-            return "payment-success.html";
+
+//            customer.setCart(new ArrayList<ShoppingCartItem>());
+//            shoppingCartRepository.deleteAllByCustomer_Id(customer.getId());
+            System.out.println("delete all items of a customer");
+            return "orderReceipt.html";
         }
     }
 }

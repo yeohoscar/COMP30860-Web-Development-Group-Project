@@ -24,19 +24,22 @@ public class OrderController {
     //DO NOT DELETE THIS METHOD!!!
     @GetMapping("/order-history")
     public String orderHistory(Customer customer, ModelMap modelMap, HttpSession session) {
+        System.out.println("Get into orderHistory");
         Long sessionUserID = (Long) session.getAttribute("user_id");
+        System.out.println("get sessionUserID: "+sessionUserID);
         // session user wont be null because order history can only access by user after login
         User sessionUser = userRepository.findUserById(sessionUserID);
+        System.out.println("get sessionUser: "+sessionUser);
         List<Order> orders;
         if (sessionUser instanceof Customer) {
             orders = orderRepository.findByCustomerOrderByOrderDateDesc(customer);
         } else {
             orders = orderRepository.findAllByOrderByOrderDateDescStateAsc();
         }
-
+        System.out.println("Username is = "+sessionUser.getUsername());
         modelMap.addAttribute("orders", orders);
         modelMap.addAttribute("user", sessionUser);
-
+        System.out.println("Ready to go to order-history");
         return "order-history.html";
     }
 
