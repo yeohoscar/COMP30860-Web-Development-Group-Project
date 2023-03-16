@@ -24,11 +24,12 @@ function validateRegister() {
     }
 }
 
-/*$(function () {
+$(function () {
+    $()
     $("select[name='state']").each(function () {
         var selectedVal = $(this).prev("input[type='hidden']").val();
         if (selectedVal != "") {
             $(this).val(selectedVal);
         }
     })
-}) */
+})
