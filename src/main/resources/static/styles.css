@@ -104,3 +104,7 @@ button {
 .wrapTextInTableCell {
     word-break: break-all;
 }
+
+.navbar {
+    --bs-navbar-padding-x: 1rem;
+}

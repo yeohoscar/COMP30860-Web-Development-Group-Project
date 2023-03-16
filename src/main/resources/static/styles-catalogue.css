@@ -141,3 +141,7 @@ button {
     padding-top:12px;
     padding-left: 12px;
 }
+
+.navbar {
+    --bs-navbar-padding-x: 1rem;
+}
