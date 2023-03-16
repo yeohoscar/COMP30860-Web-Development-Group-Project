@@ -42,3 +42,7 @@ input[type=submit] {
     width: 150px;
     font-size: 18px;
 }
+
+.space-mx-40 {
+    height: 4vh;
+}

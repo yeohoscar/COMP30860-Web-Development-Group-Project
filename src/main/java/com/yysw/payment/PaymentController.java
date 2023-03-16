@@ -80,7 +80,7 @@ public class PaymentController {
             customer.setCart(new ArrayList<>());
             shoppingCartRepository.deleteAllByCustomer(customer);
 
-            return "orderReceipt.html";
+            return "order-receipt.html";
         }
     }
 }

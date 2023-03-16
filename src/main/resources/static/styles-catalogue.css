@@ -56,8 +56,11 @@ input[type=submit] {
 
 a, a:link, a:visited, a:hover, a:active {
     text-decoration: none;
-    color: white;
     cursor: pointer;
+}
+
+.white-text {
+    color: white;
 }
 
 input[type=text], input[type=number], textarea, select {

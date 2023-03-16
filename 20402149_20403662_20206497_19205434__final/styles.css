@@ -12,3 +12,20 @@
     margin-right: auto;
     max-width: 980px;
 }
+
+img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: solid 2px #f19393;
+    text-align: left;
+    padding: 10px;
+}

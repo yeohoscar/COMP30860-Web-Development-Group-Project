@@ -107,6 +107,7 @@
                             <input type="text" th:field="*{contactName}" placeholder="Name" required/>
                             <span th:if="${#fields.hasErrors('contactName')}" th:errors="*{contactName}">Valid Name Required</span>
                         </div>
+                        <div class="space-mx-40"></div>
                         <div class="row pinkBox">
                             <input type="datetime-local" th:field="*{contactDate}" id="contactDate" required/>
                             <span th:if="${#fields.hasErrors('contactDate')}" th:errors="*{contactDate}">Valid Date Required</span>
