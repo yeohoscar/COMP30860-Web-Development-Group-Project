@@ -8,19 +8,18 @@ public class OrderedModel {
 
     private Double price;
 
-    public Long getModel_id() {
-        return model_id;
-    }
+    public OrderedModel() { }
 
-    public void setModel_id(Long id) {
-        this.model_id = id;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
+    public OrderedModel(Long model_id, Double price) {
+        this.model_id = model_id;
         this.price = price;
     }
+
+    public Long getModel_id() { return model_id; }
+
+    public void setModel_id(Long id) { this.model_id = id; }
+
+    public Double getPrice() { return price; }
+
+    public void setPrice(Double price) { this.price = price; }
 }

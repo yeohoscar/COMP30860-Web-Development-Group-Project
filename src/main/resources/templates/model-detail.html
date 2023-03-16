@@ -69,6 +69,7 @@
                             <option th:value="'false'" th:text="'Untrained model ' + ${model.untrainedPrice}"></option>
                             <option th:value="'true'" th:text="'Trained model ' + ${model.trainedPrice}"></option>
                         </select>
+
                         <br>
                         <div th:if="${user.class.name eq 'com.yysw.user.customer.Customer'}">
                             <div th:if="${hasItem} == true">
@@ -97,6 +98,20 @@
         </div>
     </div>
 
+    <br><hr /><br>
+
+    <div>
+        <h4>Details</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
+    </div>
+    <div>
+        <h4>Accuracy</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
+    </div>
+    <div>
+        <h4>API</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
+    </div>
 
 </body>
 </html>

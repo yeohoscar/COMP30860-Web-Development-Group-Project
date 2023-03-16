@@ -2,19 +2,16 @@ package com.yysw.login;
 
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.Date;
 
 @Component
-@WebServlet("/quitLogIn")
+@WebServlet("/quitLogin")
 public class QuitLogIn extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(false);
         boolean alreadyLogIn = false;
         if(session != null) {

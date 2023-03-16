@@ -1,10 +1,10 @@
 package com.yysw.order;
 
-import com.yysw.aimodels.AIModel;
 import com.yysw.user.customer.Customer;
 
 import javax.persistence.*;
 import java.util.*;
+import java.sql.Date;
 
 @Entity
 @Table(name = "orders", schema = "yysw-db")
@@ -22,8 +22,20 @@ public class Order {
 
     private State state;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
+
+    private String paymentId;
+
+    public Order() { };
+
+    public Order(Customer customer, List<OrderedModel> orderedModels,
+                 State state, Date orderDate, String paymentId) {
+        this.customer = customer;
+        this.orderedModels = orderedModels;
+        this.state = state;
+        this.orderDate = orderDate;
+        this.paymentId = paymentId;
+    }
 
     public void updateState(Order order) {
         this.state = order.state;
@@ -41,9 +53,7 @@ public class Order {
         return state;
     }
 
-    public void setState(State state) {
-        this.state = state;
-    }
+    public void setState(State state) { this.state = state; }
 
     public Customer getCustomer() {
         return customer;
@@ -61,9 +71,7 @@ public class Order {
         this.orderedModels = orderedModels;
     }
 
-    public Date getOrderDate() {
-        return orderDate;
-    }
+    public Date getOrderDate() { return orderDate; }
 
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
@@ -81,4 +89,8 @@ public class Order {
         }
         return totalPrice;
     }
+
+    public String getPaymentId() { return paymentId; }
+
+    public void setPaymentId(String paymentId) { this.paymentId = paymentId; }
 }
