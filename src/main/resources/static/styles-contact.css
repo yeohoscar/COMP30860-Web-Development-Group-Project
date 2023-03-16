@@ -13,10 +13,15 @@ h2 {
     line-height: 3.5;
     font-size: x-large;
 }
-
+.pinkBox{
+    padding-left: 10px;
+}
 .grey-bg {
-    float: right;
-    background-color: rgba(217, 217, 217, 0.6);
+    /*float: right;*/
+    /*background-color: rgba(217, 217, 217, 0.6);*/
+    border: 10px solid #ccc; /* 定义边框，1像素宽，颜色为灰色 */
+    background-color: #f2f2f2; /* 定义背景颜色，浅灰色 */
+    padding: 10px; /* 定义内边距，10像素 */
 }
 
 input[type=text], input[type=datetime-local] {
