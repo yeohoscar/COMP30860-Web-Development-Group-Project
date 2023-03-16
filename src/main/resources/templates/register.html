@@ -26,9 +26,9 @@
             <h3>REGISTER</h3>
             <div class="space-mx-60"></div>
             <form name="register" th:action="@{/register}" onsubmit="return validateRegister()" method="post">
-                <input type="text" id="username" placeholder="Username" required/>
+                <input type="text" id="username" th:name="username" placeholder="Username" required/>
                 <div class="space-mx-60"></div>
-                <input type="password" id="passwd" placeholder="Password" required/>
+                <input type="password" id="passwd" th:name="passwd" placeholder="Password" required/>
                 <div class="space-mx-60"></div>
                 <input type="password" id="cpasswd" placeholder="Confirm Password" required/>
                 <div class="space-mx-60"></div>
