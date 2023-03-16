@@ -88,7 +88,7 @@
                         <form action="#" th:action="@{/view-order/{id}(id=${order.getId()})}" th:object="${order}" method="POST">
                             <select name="state" onchange="this.form.submit()">
                                 <option th:each="stateOpt: ${T(com.yysw.order.State).values()}"
-                                        th:value="${stateOpt}" th:text="${stateOpt.displayValue}" th:selected="${order.state}"></option>
+                                        th:value="${stateOpt}" th:text="${stateOpt.displayValue}"></option>
                             </select>
                         </form>
                     </div>

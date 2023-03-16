@@ -33,9 +33,9 @@ public class OwnerController {
      * Either through validation in this method or like PaymentInformation using javax
      */
     @PostMapping("/add-model")
-    public String submitModel(
-            @Valid @ModelAttribute("newModel") AIModel aiModel) {
+    public String submitModel(@Valid @ModelAttribute("newModel") AIModel aiModel) {
         aiModelRepository.save(aiModel);
+
         return "index.html";
     }
 
