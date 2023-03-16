@@ -27,7 +27,7 @@ USE `yysw-db`;
 CREATE TABLE `aimodel` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `available` bit(1) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
+  `description` varchar(5000) DEFAULT NULL,
   `model_name` varchar(255) DEFAULT NULL,
   `trained_price` double NOT NULL,
   `untrained_price` double NOT NULL,
