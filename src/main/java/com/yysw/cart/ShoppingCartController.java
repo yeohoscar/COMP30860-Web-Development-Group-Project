@@ -48,7 +48,7 @@ public class ShoppingCartController {
                 modelsToDisplay = aiModelRepository.findAIModelByAvailable(true);
             }
         }
-
+        model.addAttribute("user", sessionUser);
         model.addAttribute("catalogue", modelsToDisplay);
 
         return "catalogue.html";
