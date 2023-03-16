@@ -34,7 +34,7 @@
                 <li class="nav-item">
                     <a class="nav-link main-color-text" id="catalogue" href="/catalogue">Catalogue</a>
                 </li>
-                <li class="nav-item" th:if="${user == null || user != null && user.class.name == 'com.yysw.user.customer.Customer'}">
+                <li class="nav-item" th:if="${user eq null || user ne null && user.class.name eq 'com.yysw.user.customer.Customer'}">
                     <a class="nav-link main-color-text" id="contact" href="/contactUs">Contact Us</a>
                 </li>
             </ul>

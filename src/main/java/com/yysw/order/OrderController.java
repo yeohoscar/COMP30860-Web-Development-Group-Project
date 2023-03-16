@@ -30,9 +30,7 @@ public class OrderController {
     //DO NOT DELETE THIS METHOD!!!
     @GetMapping("/order-history")
     public String orderHistory(Model model, HttpSession session) {
-        System.out.println("Get into orderHistory");
         Long sessionUserID = (Long) session.getAttribute("user_id");
-        System.out.println("get sessionUserID: "+sessionUserID);
         // session user wont be null because order history can only access by user after login
         User user = userRepository.findUserById(sessionUserID);
         List<Order> orders;
@@ -41,15 +39,6 @@ public class OrderController {
         } else {
             orders = orderRepository.findAllByOrderByOrderDateDescStateAsc();
         }
-//        double sub = 0.0;
-//        for(Order orderedModel: orders)
-//        {
-//            sub += orderedModel.getPrice();
-//        }
-//
-//        DecimalFormat df = new DecimalFormat("####0.00");
-
-
         model.addAttribute("orders", orders);
         model.addAttribute("user", user);
         return "order-history.html";
