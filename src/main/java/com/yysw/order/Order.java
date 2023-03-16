@@ -4,6 +4,7 @@ import com.yysw.user.customer.Customer;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.sql.Date;
 
@@ -89,7 +90,9 @@ public class Order {
         {
             totalPrice += a.getPrice();
         }
-        return totalPrice;
+        DecimalFormat df = new DecimalFormat("####0.00");
+        return Double.valueOf(df.format(totalPrice));
+//        return totalPrice;
     }
 
     public String getPaymentId() { return paymentId; }
