@@ -96,7 +96,7 @@
                 <div class="row" th:if="${user.class.name eq 'com.yysw.user.customer.Customer'}">
                     <div class="col-sm-8"></div>
                     <div class="col-sm-4">
-                        <h5 th:text="${order.state}"></h5>
+                        <h5 th:text="'State:'+' '+${order.state}"></h5>
                     </div>
                 </div>
                 <div class="row">
@@ -146,7 +146,9 @@
                                 <h6>TOTAL</h6>
                             </div>
                             <div class="col-sm-6">
-                                <h7 th:text="${order.totalPriceOfOrderedModels()}"></h7>
+<!--                                <h7 th:text="${order.totalPriceOfOrderedModels()}"></h7>-->
+                                <h7 th:text="${price}"></h7>
+
                             </div>
                         </div>
                     </div>

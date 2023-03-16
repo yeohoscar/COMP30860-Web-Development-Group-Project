@@ -1,8 +1,10 @@
 package com.yysw.order;
 
+import com.yysw.cart.ShoppingCartItem;
 import com.yysw.user.User;
 import com.yysw.user.UserRepository;
 import com.yysw.user.customer.Customer;
+import com.yysw.user.customer.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.List;
 
 @Controller
@@ -21,6 +24,8 @@ public class OrderController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
     //DO NOT DELETE THIS METHOD!!!
     @GetMapping("/order-history")
@@ -36,6 +41,15 @@ public class OrderController {
         } else {
             orders = orderRepository.findAllByOrderByOrderDateDescStateAsc();
         }
+//        double sub = 0.0;
+//        for(Order orderedModel: orders)
+//        {
+//            sub += orderedModel.getPrice();
+//        }
+//
+//        DecimalFormat df = new DecimalFormat("####0.00");
+
+
         model.addAttribute("orders", orders);
         model.addAttribute("user", user);
         return "order-history.html";
@@ -44,7 +58,17 @@ public class OrderController {
     @GetMapping("/view-order/{id}")
     public String viewOrder(ModelMap model, @PathVariable Long id, HttpSession session) {
         Long sessionUserID = (Long) session.getAttribute("user_id");
+        Order order = orderRepository.findOrderById(id);
+        double sub = 0.0;
+
+        for(OrderedModel orderedModel: order.getOrderedModels())
+        {
+            sub += orderedModel.getPrice();
+        }
+
+        DecimalFormat df = new DecimalFormat("####0.00");
         // session user wont be null because order history can only access by user after login
+        model.addAttribute("price", df.format(sub));
         model.addAttribute("order", orderRepository.findOrderById(id));
         model.addAttribute("user", userRepository.findUserById(sessionUserID));
 

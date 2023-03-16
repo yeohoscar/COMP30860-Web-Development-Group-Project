@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.sql.Date;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -35,7 +36,16 @@ public class PaymentController {
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
     @GetMapping("/payment")
-    public String payment(Model model) {
+    public String payment(Model model, HttpSession session) {
+        Long sessionUserID = (Long) session.getAttribute("user_id");
+        List<ShoppingCartItem> userCart = customerRepository.findCustomerById(sessionUserID).getCart();
+        double sub = 0.0;
+        for (ShoppingCartItem item : userCart) {
+            sub += item.getPrice();
+        }
+        DecimalFormat df = new DecimalFormat("####0.00");
+        System.out.println("currentOrderPrice = "+df.format(sub));
+        model.addAttribute("currentOrderPrice", df.format(sub));
         model.addAttribute("paymentInformation", new PaymentInformation());
         return "payment.html";
     }
