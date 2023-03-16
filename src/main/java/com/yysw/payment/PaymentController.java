@@ -75,12 +75,13 @@ public class PaymentController {
             Order order = new Order(customer, orderedModels, State.NEW, d, id);
             orderRepository.save(order);
 
-            model.addAttribute("name", paymentInformation.getName());
+            model.addAttribute("items", customer.getCart());
+            model.addAttribute("name", customer.getUsername());
             model.addAttribute("order", order);
             customer.setCart(new ArrayList<>());
             shoppingCartRepository.deleteAllByCustomer(customer);
 
-            return "orderReceipt.html";
+            return "order-receipt.html";
         }
     }
 }
