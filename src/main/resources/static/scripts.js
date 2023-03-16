@@ -24,7 +24,7 @@ function validateRegister() {
     }
 }
 
-$(function () {
+/*$(function () {
     $()
     $("select[name='state']").each(function () {
         var selectedVal = $(this).prev("input[type='hidden']").val();
@@ -32,4 +32,4 @@ $(function () {
             $(this).val(selectedVal);
         }
     })
-})
+}) */
