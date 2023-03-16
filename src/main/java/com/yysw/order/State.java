@@ -1,9 +1,7 @@
 package com.yysw.order;
 
-
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-
 
 public enum State {
     @Enumerated(EnumType.STRING)
@@ -18,7 +16,6 @@ public enum State {
     State(String displayValue) { this.displayValue = displayValue; }
 
     public String getDisplayValue() { return displayValue; }
-
 }
 
 

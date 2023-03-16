@@ -1,9 +1,6 @@
 package com.yysw.login;
 
-import com.yysw.user.User;
 import com.yysw.user.UserRepository;
-import com.yysw.user.customer.Customer;
-import com.yysw.user.owner.Owner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +12,6 @@ import java.util.Date;
 
 @Component
 @WebServlet("/submit-login")
-//@Controller
 public class PersistentLogIn extends HttpServlet {
     @Autowired
     private UserRepository userRepository;

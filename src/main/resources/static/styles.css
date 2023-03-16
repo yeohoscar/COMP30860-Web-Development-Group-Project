@@ -27,7 +27,11 @@ a, a:link, a:visited, a:hover, a:active {
     color: black;
 }
 
-.main-color {
+.main-color-text {
+    color: #FFB394;
+}
+
+.main-color-bg {
     background-color: #FFB394;
 }
 

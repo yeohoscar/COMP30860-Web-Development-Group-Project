@@ -8,14 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
 @Controller
-public class OrderHistoryController{
+public class OrderController {
     @Autowired
     private OrderRepository orderRepository;
 
@@ -29,7 +28,6 @@ public class OrderHistoryController{
         // session user wont be null because order history can only access by user after login
         User sessionUser = userRepository.findUserById(sessionUserID);
         List<Order> orders;
-        // TODO: CHECK IF USER IS OWNER OR CUSTOMER
         if (sessionUser instanceof Customer) {
             orders = orderRepository.findByCustomerOrderByOrderDateDesc(customer);
         } else {
