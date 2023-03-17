@@ -32,9 +32,13 @@ public class OwnerController {
     }
 
     @PostMapping("/add-model")
-    public String submitModel(@Valid @ModelAttribute("newModel") AIModel aiModel) {
+    public String submitModel(@Valid @ModelAttribute("newModel") AIModel aiModel, Model model, HttpSession session) {
+        Long sessionUserID = (Long) session.getAttribute("user_id");
+        User user = userRepository.findUserById(sessionUserID);
+        model.addAttribute("user", user);
+        aiModel.setModelName(aiModelRepository.findAIModelById(aiModel.getId()).getModelName());
         aiModelRepository.save(aiModel);
-        return "index.html";
+        return "catalogue.html";
     }
 
 }

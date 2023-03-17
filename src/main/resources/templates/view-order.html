@@ -95,7 +95,7 @@
                                         th:value="${stateOpt}" th:text="${stateOpt.displayValue}"></option>
                             </select>
                         </form>
-                        <div th:if="${user.class.name eq 'com.yysw.user.customer.Customer'}>
+                        <div th:if="${user.class.name eq 'com.yysw.user.customer.Customer'}">
                             <h5 th:text="'State:'+' '+${order.state}"></h5>
                         </div>
                     </div>
