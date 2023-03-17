@@ -89,7 +89,6 @@ public class ShoppingCartController {
         Long sessionUserID = (Long) request.getSession().getAttribute("user_id");
         User sessionUser = userRepository.findUserById(sessionUserID);
         AIModel ai = aiModelRepository.findAIModelById(id);
-        ai.setModelName(aiModelRepository.findAIModelById(id).getModelName());
 
         if (sessionUser != null) {
             if (sessionUser instanceof Customer) {

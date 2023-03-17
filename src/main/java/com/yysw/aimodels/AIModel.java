@@ -26,7 +26,6 @@ public class AIModel implements Serializable {
     private boolean available;
 
     public void updateModel(AIModel model) {
-        this.modelName = model.modelName;
         this.trainedPrice = model.trainedPrice;
         this.untrainedPrice = model.untrainedPrice;
         this.description = model.description;
