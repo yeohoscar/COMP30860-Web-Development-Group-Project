@@ -38,6 +38,10 @@
                 <li class="nav-item" th:if="${user eq null || user ne null && user.class.name eq 'com.yysw.user.customer.Customer'}">
                     <a class="nav-link main-color-text" id="contact" href="/contactUs">Contact Us</a>
                 </li>
+                <li class="nav-item" th:if="${user eq null || user ne null && user.class.name eq 'com.yysw.user.owner.Owner'}">
+                    <a class="nav-link main-color-text" id="add-model" href="/add-model">Add Model</a>
+                </li>
+            </ul>
             </ul>
         </div>
         <span th:if="${user eq null}">
