@@ -29,3 +29,7 @@ th, td {
     text-align: left;
     padding: 10px;
 }
+
+p {
+    text-align: justify;
+}

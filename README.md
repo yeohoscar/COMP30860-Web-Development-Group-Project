@@ -11,3 +11,21 @@ KarYen Yap 20202149
 3. Navigate to the root folder of the project.
 4. Run docker-compose up --build
 5. Go to localhost:8080 on your browser of choice
+
+## Accounts
+#### Customer
+Username: Egg  
+Password: Egg  
+
+#### Owner
+Username: Admin  
+Password: Admin  
+
+## Features
+### Admin
+To add a model, login as an admin and navigate to the catalogue page. From there, click the "Add Models" button in the navigation bar. Fill out the details and click submit.  
+
+To edit a model, click into a model via the catalogue and edit using the form in that page.  
+
+To view all orders, click the order icon in right side of the navigation bar.
+

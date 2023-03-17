@@ -90,6 +90,11 @@
                             <p th:text="${#dates.format(order.orderDate, 'dd/MM/yyyy')}"></p>
                         </span>
                     </div>
+                    <div class="row">
+                        <span class="left">
+                            <h3 th:text="'Payment #' + ${order.paymentId}"></h3>
+                        </span>
+                    </div>
                     <div class="row divpadding">
                         <span class="leftright">
                             <span th:text="'Quantity:' + ' ' + ${order.quantityOfOrder()}"></span>
