@@ -36,7 +36,6 @@ public class OwnerController {
         Long sessionUserID = (Long) session.getAttribute("user_id");
         User user = userRepository.findUserById(sessionUserID);
         model.addAttribute("user", user);
-        aiModel.setModelName(aiModelRepository.findAIModelById(aiModel.getId()).getModelName());
         aiModelRepository.save(aiModel);
         return "catalogue.html";
     }
