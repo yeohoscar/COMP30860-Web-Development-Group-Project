@@ -37,6 +37,7 @@ public class OwnerController {
         User user = userRepository.findUserById(sessionUserID);
         model.addAttribute("user", user);
         aiModelRepository.save(aiModel);
+        model.addAttribute(aiModelRepository.findAll());
         return "catalogue.html";
     }
 
